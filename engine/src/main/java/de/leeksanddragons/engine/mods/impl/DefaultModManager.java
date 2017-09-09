@@ -23,6 +23,9 @@ public class DefaultModManager implements ModManager {
     //list with all loaded mods
     protected List<ModInfo> loadedModsList = new ArrayList<>();
 
+    //list with all mods, which supports asset loading
+    protected List<ModInfo> assetLoadingModList = new ArrayList<>();
+
     //list with all mod names
     protected List<String> modNameList = new ArrayList<>();
 
@@ -41,6 +44,11 @@ public class DefaultModManager implements ModManager {
     @Override
     public List<ModInfo> listLoadedMods() {
         return Collections.unmodifiableList(this.loadedModsList);
+    }
+
+    @Override
+    public List<ModInfo> listAssetLoadingMods() {
+        return this.assetLoadingModList;
     }
 
     @Override
@@ -88,6 +96,11 @@ public class DefaultModManager implements ModManager {
         if (mod.isActiaved()) {
             this.loadedModsList.add(mod);
             this.modNameList.add(mod.getName());
+
+            //check, if mod can pre-load assets
+            if (mod.isAssetsLoadable()) {
+                this.assetLoadingModList.add(mod);
+            }
 
             Gdx.app.log(LOG_TAG, "mod loaded: " + mod.getName());
 
