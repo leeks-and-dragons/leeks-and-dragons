@@ -47,7 +47,7 @@ public class ModInfoTest {
         assertEquals("author isnt equals.", "Leeks & Dragons Team", mod.getAuthor());
         assertEquals("credits exists, but wasnt detected.", true, mod.hasCredits());
         assertEquals("credits arent equals.", "CONTRIBUTORS.md", mod.getCreditsFile());
-        assertEquals("isLoadable() isnt equals.", true, mod.isLoadable());
+        assertEquals("isAssetsLoadable() isnt equals.", true, mod.isAssetsLoadable());
         assertEquals("min engine version isnt equals.", "1.0.0", mod.getMinEngineVersion());
         assertEquals("min engine version number isnt equals.", 1, mod.getMinEngineVersionNumber());
         assertArrayEquals("supported languages arent equals.", new String[] {"de", "en"}, mod.getSupportedLanguages());

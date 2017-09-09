@@ -20,6 +20,9 @@
         <junit.version>4.12</junit.version>
         <json.version>20170516</json.version>
         <libgdx.version>1.9.5</libgdx.version>
+
+        <!-- for libGDX tests -->
+        <mockito.version>2.2.7</mockito.version>
     </properties>
 
     <build>

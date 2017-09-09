@@ -183,7 +183,7 @@ public class ModInfo implements Comparable<ModInfo> {
         return this.supportedLanguages;
     }
 
-    public boolean isLoadable () {
+    public boolean isAssetsLoadable() {
         return new File(this.modPath + "/load_assets.json").exists();
     }
 

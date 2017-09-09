@@ -1,5 +1,8 @@
 package de.leeksanddragons.engine.mods;
 
+import de.leeksanddragons.engine.exception.InvalideModJSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,7 +35,9 @@ public interface ModManager {
     * load an single mod
      *
      * @param modDirPath path to mod directory
+     *
+     * @return true, if mod was loaded successfully
     */
-    public void loadMod (String modDirPath);
+    public boolean loadMod (String modDirPath) throws IOException, InvalideModJSONException;
 
 }
