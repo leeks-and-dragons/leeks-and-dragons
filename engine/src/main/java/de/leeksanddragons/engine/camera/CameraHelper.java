@@ -161,6 +161,10 @@ public class CameraHelper implements ModificationFinishedListener {
             mod.onUpdate(time, this.tempCameraParams, this);
         }
 
+        //set libGDX camera dimension
+        this.camera.viewportWidth = this.width;
+        this.camera.viewportHeight = this.height;
+
         //set camera position to libGDX camera
         this.camera.position.x = this.tempCameraParams.getX() + cameraOffsetX;
         this.camera.position.y = this.tempCameraParams.getY() + cameraOffsetY;
