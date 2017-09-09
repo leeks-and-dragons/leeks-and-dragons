@@ -11,6 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by Justin on 09.09.2017.
  */
@@ -53,6 +55,11 @@ public class DefaultModManagerTest {
 
         //load mods
         modManager.loadMods("../junit-tests/mods-2");
+
+        assertEquals(2, modManager.countLoadedMods());
+        assertEquals("mod1 wasnt detected.", true, modManager.listLoadedModNames().contains("mod1"));
+        assertEquals(false, modManager.listLoadedModNames().contains("mod2.deactivated"));
+        assertEquals(true, modManager.listLoadedModNames().contains("mod3"));
     }
 
 }

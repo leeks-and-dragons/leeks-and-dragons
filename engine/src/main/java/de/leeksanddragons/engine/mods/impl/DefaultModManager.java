@@ -44,6 +44,11 @@ public class DefaultModManager implements ModManager {
     }
 
     @Override
+    public int countLoadedMods() {
+        return this.listLoadedMods().size();
+    }
+
+    @Override
     public void loadMods(String dirPath) {
         File dir = new File(dirPath);
 

@@ -25,6 +25,13 @@ public interface ModManager {
     public List<ModInfo> listLoadedMods ();
 
     /**
+    * get number of loaded mods
+     *
+     * @return number of loaded mods
+    */
+    public int countLoadedMods ();
+
+    /**
     * load mods from directory
      *
      * @param dirPath path to mods directory
