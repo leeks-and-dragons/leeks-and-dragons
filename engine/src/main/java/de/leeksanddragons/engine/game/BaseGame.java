@@ -2,8 +2,14 @@ package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
+import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
+import de.leeksanddragons.engine.cursor.CursorManager;
+import de.leeksanddragons.engine.cursor.DefaultCursorManager;
 import de.leeksanddragons.engine.utils.GameTime;
 
 import java.util.ArrayList;
@@ -14,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by Justin on 09.09.2017.
  */
-public class BaseGame extends ApplicationAdapter {
+public abstract class BaseGame extends ApplicationAdapter {
 
     //camera manager
     protected CameraManager cameraManager = null;
@@ -31,13 +37,23 @@ public class BaseGame extends ApplicationAdapter {
     //last second of FPS warning
     protected long lastFPSWarning = 0;
 
+    //cursor manager
+    protected CursorManager cursorManager = null;
+
+    //window background (clear) color
+    protected Color bgColor = Color.BLACK;
+
     @Override
-    public void create () {
-        //
+    public final void create () {
+        //create new camera manager and set viewport of current window dimensions
+        this.cameraManager = new DefaultCameraManager(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        //create new cursor manager
+        this.cursorManager = new DefaultCursorManager();
     }
 
     @Override
-    public void resize (int width, int height) {
+    public final void resize (int width, int height) {
         //call resize listeners
         this.resizeListeners.stream().forEach(consumer -> {
             consumer.onResize(width, height);
@@ -63,7 +79,7 @@ public class BaseGame extends ApplicationAdapter {
     }
 
     @Override
-    public void render () {
+    public final void render () {
         //update game time
         this.time.update();
 
@@ -90,6 +106,21 @@ public class BaseGame extends ApplicationAdapter {
 
             runnable = uiQueue.poll();
         }
+
+        //update game
+        this.update(this.time);
+
+        // set cursor
+        this.cursorManager.update(this, this.time);
+
+        //update cameras
+        this.cameraManager.update(this.time);
+
+        //clear all color buffer bits and clear screen
+        Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //TODO: add code here, begin spritebatch, render game and end spritebatch
     }
 
     /**
@@ -119,19 +150,39 @@ public class BaseGame extends ApplicationAdapter {
         this.uiQueue.offer(runnable);
     }
 
+    /**
+    * update game
+     *
+     * @param time current game time
+    */
+    protected abstract void update(GameTime time);
+
+    /**
+    * draw game
+     *
+     * @param time current game time
+     * @param batch instance of sprite batch
+    */
+    protected abstract void draw(GameTime time, SpriteBatch batch);
+
+    /**
+    * cleanup game
+    */
+    protected abstract void destroyGame();
+
     @Override
     public void pause () {
-        //
+        Gdx.app.debug("Window-Lifecycle", "window rendering paused.");
     }
 
     @Override
     public void resume () {
-        //
+        Gdx.app.debug("Window-Lifecycle", "window rendering resumed.");
     }
 
     @Override
-    public void dispose () {
-        //
+    public final void dispose () {
+        this.destroyGame();
     }
 
 }

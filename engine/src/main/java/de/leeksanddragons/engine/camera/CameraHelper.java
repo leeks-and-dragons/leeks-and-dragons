@@ -119,6 +119,24 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * get viewport width
+     *
+     * @return viewport width
+    */
+    public int getViewportWidth () {
+        return this.width;
+    }
+
+    /**
+     * get viewport height
+     *
+     * @return viewport height
+     */
+    public int getViewportHeight () {
+        return this.height;
+    }
+
+    /**
     * resize camera viewport (set new dimension)
      *
      * @param width viewport width
