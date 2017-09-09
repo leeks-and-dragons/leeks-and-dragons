@@ -1,0 +1,5 @@
+[
+	{"path": "data/mods/maingame/asset1.png", "type": "texture"},
+	{"path": "data/mods/maingame/asset2.png", "type": "texture"},
+	{"path": "data/mods/maingame/asset1.wav", "type": "music"}
+]
