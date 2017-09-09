@@ -77,7 +77,7 @@ public class DefaultModManager implements ModManager {
             //first load mod.json file
             mod = ModInfo.create(modDirPath);
         } catch (InvalideModJSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
             Gdx.app.error(LOG_TAG, "Cannot load plugin, caused by invalide mod.json exception: " + modDirPath);
 

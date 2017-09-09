@@ -45,6 +45,6 @@ public interface ModManager {
      *
      * @return true, if mod was loaded successfully
     */
-    public boolean loadMod (String modDirPath) throws IOException, InvalideModJSONException;
+    public boolean loadMod (String modDirPath) throws IOException;
 
 }

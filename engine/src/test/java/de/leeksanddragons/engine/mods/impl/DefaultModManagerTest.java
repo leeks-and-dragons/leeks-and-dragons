@@ -5,11 +5,14 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.graphics.GL20;
+import de.leeksanddragons.engine.exception.InvalideModJSONException;
 import de.leeksanddragons.engine.mods.ModManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,6 +49,26 @@ public class DefaultModManagerTest {
         // Exit the application first
         application.exit();
         application = null;
+    }
+
+    @Test
+    public void testLoadInvalideMod () throws IOException {
+        //create new instance of mod manager
+        ModManager modManager = new DefaultModManager();
+
+        //try to load invalide mod
+        boolean res = modManager.loadMod("../junit-tests/mods/invalide-mod");
+        assertEquals(false, res);
+    }
+
+    @Test
+    public void testLoadValideMod () throws IOException {
+        //create new instance of mod manager
+        ModManager modManager = new DefaultModManager();
+
+        //try to load valide mod
+        boolean res = modManager.loadMod("../junit-tests/mods/mod1");
+        assertEquals(true, res);
     }
 
     @Test
