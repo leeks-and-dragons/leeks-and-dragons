@@ -87,6 +87,19 @@ public class CameraHelper implements ModificationFinishedListener {
         this.registerMod(new Shake3CameraModification(), Shake3CameraModification.class);
     }
 
+    /**
+    * translate camera
+     *
+     * @param x x
+     * @param y y
+     * @param zoom zoom
+    */
+    public void translate(float x, float y, float zoom) {
+        this.targetX += x;
+        this.targetY += y;
+        this.zoom += zoom;
+    }
+
     public float getX () {
         return this.x;
     }
