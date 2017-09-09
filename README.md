@@ -14,3 +14,11 @@
   - 30.09.2017 - TGD finished
   - 12.10.2017 - Style Guide fertig
   - 12.10.2017 - **Official Project Kickoff** (Official Project Start)
+  
+## CONTRIBUTORS & Credits
+
+You will find all Contributors & Credits in [CONTRIBUTORS.md file](https://github.com/leeks-and-dragons/leeks-and-dragons/blob/master/CONTRIBUTORS.md).
+
+## License
+
+Code & internal assets are licensed under **[CC-BY-SA 3.0 license](https://creativecommons.org/licenses/by-sa/3.0/)**, external assets can use another license. Please look into specific asset directory for an LICENSE file.

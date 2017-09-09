@@ -7,7 +7,7 @@ Here you can see a list of all contributors and used assets from external author
 
   - Victoria Wohlwend (Product Owner)
   - Sima Spielmann (Creative Director)
-  - Justin Künzel (Technical Director)
+  - Justin Künzel (Technical Director, [http://jukusoft.com](http://jukusoft.com))
   
 ## External Assets
 
