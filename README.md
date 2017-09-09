@@ -13,4 +13,4 @@
   - 30.09.2017 - GDD finished
   - 30.09.2017 - TGD finished
   - 12.10.2017 - Style Guide fertig
-  - 12.10.2017 - **Official Project Kickoff**
+  - 12.10.2017 - **Official Project Kickoff** (Official Project Start)
