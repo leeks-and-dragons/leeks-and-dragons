@@ -37,7 +37,7 @@
 
 		<!-- startup directory -->
 		<fileSet>
-			<directory>startup</directory>
+			<directory>../startup</directory>
 			<outputDirectory>.</outputDirectory>
 			<includes>
 				<include>*</include>

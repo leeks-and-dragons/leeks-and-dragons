@@ -12,10 +12,17 @@
     <artifactId>desktop</artifactId>
 
     <properties>
-        <mainClass>de.leeksanddragons</mainClass>
+        <mainClass>de.leeksanddragons.desktop.DesktopLauncher</mainClass>
     </properties>
 
     <dependencies>
+        <!-- Engine -->
+        <dependency>
+            <groupId>de.leeksanddragons</groupId>
+            <artifactId>engine</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- Game -->
         <dependency>
             <groupId>de.leeksanddragons</groupId>
