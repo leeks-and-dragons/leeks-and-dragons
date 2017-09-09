@@ -26,6 +26,9 @@ public class ModInfo implements Comparable<ModInfo> {
     //path to mod directory
     protected String modPath = "";
 
+    //mod name
+    protected String name = "";
+
     //mod title
     protected String title = "";
 
@@ -49,17 +52,29 @@ public class ModInfo implements Comparable<ModInfo> {
     //load priority
     protected int load_priority = 5;
 
+    //some constants for json keys
+    protected static final String KEY_MOD_NAME = "mod_name";
+    protected static final String KEY_MOD_TITLE = "mod_title";
+    protected static final String KEY_MOD_VERSION = "mod_version";
+    protected static final String KEY_MOD_VERSION_NUMBER = "mod_version_number";
+    protected static final String KEY_AUTHOR = "author";
+    protected static final String KEY_CREDITS = "credits";
+    protected static final String KEY_MIN_ENGINE_VERSION = "min_engine_version";
+    protected static final String KEY_MIN_ENGINE_VERSION_NUMBER = "min_engine_version_number";
+    protected static final String KEY_SUPPORTED_LANGUAGES = "supported_languages";
+    protected static final String KEY_LOAD_PRIORITY = "load_priority";
+
     protected static final String[] REQUIRED_JSON_KEYS = new String[] {
-            "mod_name",
-            "mod_title",
-            "mod_version",
-            "mod_version_number",
-            "author",
-            "credits",
-            "min_engine_version",
-            "min_engine_version_number",
-            "supported_languages",
-            "load_priority"
+            KEY_MOD_NAME,
+            KEY_MOD_TITLE,
+            KEY_MOD_VERSION,
+            KEY_MOD_VERSION_NUMBER,
+            KEY_AUTHOR,
+            KEY_CREDITS,
+            KEY_MIN_ENGINE_VERSION,
+            KEY_MIN_ENGINE_VERSION_NUMBER,
+            KEY_SUPPORTED_LANGUAGES,
+            KEY_LOAD_PRIORITY
     };
 
     /**
@@ -107,6 +122,26 @@ public class ModInfo implements Comparable<ModInfo> {
 
         //create new instance
         ModInfo mod = new ModInfo();
+
+        //set mod information
+        mod.modPath = new File(modPath).getAbsolutePath();
+        mod.name = json.getString(KEY_MOD_NAME);
+        mod.title = json.getString(KEY_MOD_TITLE);
+        mod.version = json.getString(KEY_MOD_VERSION);
+        mod.versionNumber = json.getInt(KEY_MOD_VERSION_NUMBER);
+        mod.author = json.getString(KEY_AUTHOR);
+        mod.creditsFile = json.getString(KEY_CREDITS);
+        mod.minVersion = json.getString(KEY_MIN_ENGINE_VERSION);
+        mod.minVersionNumber = json.getInt(KEY_MIN_ENGINE_VERSION_NUMBER);
+
+        JSONArray jsonArray = json.getJSONArray(KEY_SUPPORTED_LANGUAGES);
+        mod.supportedLanguages = new String[jsonArray.length()];
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            mod.supportedLanguages[i] = jsonArray.getString(i);
+        }
+
+        mod.load_priority = json.getInt(KEY_LOAD_PRIORITY);
 
         return mod;
     }
