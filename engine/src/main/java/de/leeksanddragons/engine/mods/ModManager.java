@@ -15,6 +15,13 @@ public interface ModManager {
     public List<String> listLoadedModNames ();
 
     /**
+    * list all loaded mods
+     *
+     * @return list of all loaded mods
+    */
+    public List<ModInfo> listLoadedMods ();
+
+    /**
     * load mods from directory
      *
      * @param dirPath path to mods directory
