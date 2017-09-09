@@ -84,8 +84,116 @@ public class ModInfo implements Comparable<ModInfo> {
         //
     }
 
+    /**
+    * get path to mod directory
+     *
+     * @return path to mod directory
+    */
+    public String getPath () {
+        return this.modPath;
+    }
+
+    /**
+    * get unique name of mod
+     *
+     * @return unique name of mod
+    */
+    public String getName () {
+        return this.name;
+    }
+
+    /**
+    * get title of mod
+     *
+     * @return title of mod
+    */
+    public String getTitle () {
+        return this.title;
+    }
+
+    /**
+    * get version as string
+     *
+     * @return version as string
+    */
+    public String getVersion () {
+        return this.version;
+    }
+
+    /**
+    * get version number as integer
+     *
+     * @return version (build) number
+    */
+    public int getVersionNumber () {
+        return this.versionNumber;
+    }
+
+    /**
+    * get author of mod
+     *
+     * @return author of mod
+    */
+    public String getAuthor () {
+        return this.author;
+    }
+
+    /**
+    * check, if mod has credit information
+     *
+     * @return true, if mod contains credit information
+    */
+    public boolean hasCredits () {
+        return !this.creditsFile.equals("none");
+    }
+
+    /**
+    * get path to credits file
+     *
+     * @return path to credits file
+    */
+    public String getCreditsFile () {
+        return this.creditsFile;
+    }
+
+    /**
+    * get minimum required version of engine
+     *
+     * @return minimum required version of engine
+    */
+    public String getMinEngineVersion () {
+        return this.minVersion;
+    }
+
+    /**
+    * get minimum required version number of engine
+     *
+     * @return minimum required version number of engine
+    */
+    public int getMinEngineVersionNumber () {
+        return this.minVersionNumber;
+    }
+
+    /**
+    * get list of supported languages
+     *
+     * @return list of supported languages
+    */
+    public String[] getSupportedLanguages () {
+        return this.supportedLanguages;
+    }
+
     public boolean isLoadable () {
-        throw new UnsupportedOperationException("method isnt implemented yet.");
+        return new File(this.modPath + "/load_assets.json").exists();
+    }
+
+    /**
+    * get load priority
+     *
+     * @return load priority
+    */
+    public int getLoadPriority () {
+        return this.load_priority;
     }
 
     @Override
