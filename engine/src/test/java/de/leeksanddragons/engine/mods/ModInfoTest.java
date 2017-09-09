@@ -52,6 +52,14 @@ public class ModInfoTest {
         assertEquals("min engine version number isnt equals.", 1, mod.getMinEngineVersionNumber());
         assertArrayEquals("supported languages arent equals.", new String[] {"de", "en"}, mod.getSupportedLanguages());
         assertEquals("load_priority isnt 10.", 10, mod.getLoadPriority());
+        assertEquals("mod is activated.", true, mod.isActiaved());
+    }
+
+    @Test
+    public void testDeactivatedMod () throws IOException, InvalideModJSONException {
+        ModInfo mod = ModInfo.create("../junit-tests/mods/mod2.deactivated");
+
+        assertEquals("mod isnt activated.", false, mod.isActiaved());
     }
 
 }

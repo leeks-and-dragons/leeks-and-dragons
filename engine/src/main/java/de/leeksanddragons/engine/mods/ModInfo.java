@@ -196,6 +196,10 @@ public class ModInfo implements Comparable<ModInfo> {
         return this.load_priority;
     }
 
+    public boolean isActiaved () {
+        return !this.modPath.contains(".deactivated");
+    }
+
     @Override
     public int compareTo(ModInfo o) {
         return o.load_priority > this.load_priority ? 1 : o.load_priority < this.load_priority ? -1 : 0;
