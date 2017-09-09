@@ -5,6 +5,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import de.leeksanddragons.engine.utils.FileUtils;
+import de.leeksanddragons.game.Game;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -28,37 +29,7 @@ public class DesktopLauncher {
 
         try {
             // start game
-            new LwjglApplication(/*new Game()*/new ApplicationListener() {
-                @Override
-                public void create() {
-
-                }
-
-                @Override
-                public void resize(int width, int height) {
-
-                }
-
-                @Override
-                public void render() {
-
-                }
-
-                @Override
-                public void pause() {
-
-                }
-
-                @Override
-                public void resume() {
-
-                }
-
-                @Override
-                public void dispose() {
-
-                }
-            }, config);
+            new LwjglApplication(new Game(), config);
         } catch (Exception e) {
             e.printStackTrace();
 
