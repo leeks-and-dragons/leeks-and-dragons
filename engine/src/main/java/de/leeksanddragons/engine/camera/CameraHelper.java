@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import de.leeksanddragons.engine.camera.impl.Shake1CameraModification;
+import de.leeksanddragons.engine.camera.impl.Shake2CameraModification;
+import de.leeksanddragons.engine.camera.impl.Shake3CameraModification;
 import de.leeksanddragons.engine.utils.GameTime;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class CameraHelper implements ModificationFinishedListener {
     protected float targetY = 0;
 
     //camera mode
-    protected CameraMode mode = CameraMode.SMOOTH_CAMERA;
+    protected CameraMode mode = CameraMode.DIRECT_CAMERA;
 
     //list with resize listeners
     protected List<ResizeListener> resizeListeners = new ArrayList<>();
@@ -77,6 +80,11 @@ public class CameraHelper implements ModificationFinishedListener {
 
         //create new temp camera params
         this.tempCameraParams = new TempCameraParams(this.x, this.y, 1);
+
+        //add some basic camera modifications
+        this.registerMod(new Shake1CameraModification(), Shake1CameraModification.class);
+        this.registerMod(new Shake2CameraModification(), Shake2CameraModification.class);
+        this.registerMod(new Shake3CameraModification(), Shake3CameraModification.class);
     }
 
     public float getX () {
@@ -89,6 +97,12 @@ public class CameraHelper implements ModificationFinishedListener {
 
     public float getZoom () {
         return this.zoom;
+    }
+
+    public void setZoom(float zoom) {
+        this.zoom = zoom;
+
+        this.syncPosToCamera();
     }
 
     /**
@@ -121,6 +135,8 @@ public class CameraHelper implements ModificationFinishedListener {
     * update camera
     */
     public void update (GameTime time) {
+        //TODO: check, if camera can scroll
+
         //move camera to target position
         if (mode == CameraMode.DIRECT_CAMERA) {
             //set x and y position directly to target position
@@ -130,6 +146,11 @@ public class CameraHelper implements ModificationFinishedListener {
             //TODO: add code here
         } else if (mode == CameraMode.FIXED_CAMERA) {
             //dont move camera
+        } else if (mode == CameraMode.MOUSE_CAMERA) {
+            //TODO: add code here
+        } else {
+            //throw exception
+            throw new IllegalStateException("Unknown camera mode: " + mode.name());
         }
 
         //reset temporary camera position
@@ -219,9 +240,14 @@ public class CameraHelper implements ModificationFinishedListener {
     * sync camera helper position to libGDX original camera
     */
     protected void syncPosToCamera() {
-        this.camera.position.x = x + cameraOffsetX;
+        /*this.camera.position.x = x + cameraOffsetX;
         this.camera.position.y = y + cameraOffsetY;
-        this.camera.zoom = zoom;
+        this.camera.zoom = zoom;*/
+
+        //set camera position to libGDX camera
+        this.camera.position.x = this.tempCameraParams.getX() + cameraOffsetX;
+        this.camera.position.y = this.tempCameraParams.getY() + cameraOffsetY;
+        this.camera.zoom = this.tempCameraParams.getZoom();
     }
 
     /**
@@ -255,7 +281,88 @@ public class CameraHelper implements ModificationFinishedListener {
 
     @Override
     public <T extends CameraModification> void onModificationFinished(T mod, Class<T> cls) {
-        //
+        if (mod == null) {
+            throw new NullPointerException("mod cannot be null.");
+        }
+
+        this.deactivateMod(cls);
+        // this.activeModifications.remove(mod);
+    }
+
+    public <T extends CameraModification> void registerMod(T mod, Class<T> cls) {
+        if (mod == null) {
+            throw new NullPointerException("mod cannot be null.");
+        }
+
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        this.cameraModificationMap.put(cls, mod);
+    }
+
+    public <T extends CameraModification> void removeMod(Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod != null) {
+            this.activeModifications.remove(mod);
+        }
+
+        this.cameraModificationMap.remove(cls);
+    }
+
+    public <T extends CameraModification> T getMod(Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            return null;
+        }
+
+        return cls.cast(mod);
+    }
+
+    public <T extends CameraModification> void activateMod(Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            throw new IllegalStateException("camera modification is not registered: " + cls.getName());
+        }
+
+        if (!this.activeModifications.contains(mod)) {
+            this.activeModifications.add(mod);
+        }
+    }
+
+    public <T extends CameraModification> void deactivateMod(Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            throw new IllegalStateException("camera modification is not registered: " + cls.getName());
+        }
+
+        if (this.activeModifications.contains(mod)) {
+            this.activeModifications.remove(mod);
+        }
+    }
+
+    public int countActiveMods() {
+        return this.activeModifications.size();
     }
 
 }
