@@ -1,11 +1,1 @@
-{
-	"mod_name": "mod1",
-	"mod_title": "Leeks & Dragons - Mod 1",
-	"mod_version": "1.0.0",
-	"author": "Leeks & Dragons Team",
-	"credits": "CONTRIBUTORS.md",
-	"min_engine_version": "1.0.0",
-	"min_engine_version_number": 1,
-	"supported_languages": ["de", "en"],
-	"load_priority": 10
-}
+{"supported_languages":["de","en"],"min_engine_version":"1.0.0","credits":"CONTRIBUTORS.md","author":"Leeks & Dragons Team","mod_version_number":1,"min_engine_version_number":1,"mod_name":"mod1","mod_title":"Leeks & Dragons - Mod 1","load_priority":10}
