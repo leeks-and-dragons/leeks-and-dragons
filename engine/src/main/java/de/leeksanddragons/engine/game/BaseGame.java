@@ -73,6 +73,8 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     @Override
     public final void resize (int width, int height) {
+        Gdx.app.debug("Window", "new window size: " + width + "x" + height + "");
+
         //call resize listeners
         this.resizeListeners.stream().forEach(consumer -> {
             consumer.onResize(width, height);

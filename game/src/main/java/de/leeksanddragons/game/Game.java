@@ -11,7 +11,7 @@ public class Game extends BaseGame {
 
     @Override
     protected void initGame() {
-        
+
     }
 
     @Override
