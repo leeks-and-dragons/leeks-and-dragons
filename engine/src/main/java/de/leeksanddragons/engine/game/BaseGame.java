@@ -10,8 +10,11 @@ import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
 import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
+import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -50,6 +53,22 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         //create new cursor manager
         this.cursorManager = new DefaultCursorManager();
+
+        //try to initialize game, if an exception is thrown log will be written to application directory
+        try {
+            this.initGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            try {
+                // write crash dump
+                FileUtils.writeFile("./crash.log", e.getLocalizedMessage(), StandardCharsets.UTF_8);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            System.exit(0);
+        }
     }
 
     @Override
@@ -149,6 +168,11 @@ public abstract class BaseGame extends ApplicationAdapter {
     public void runOnUIThread(Runnable runnable) {
         this.uiQueue.offer(runnable);
     }
+
+    /**
+    * initialize game
+    */
+    protected abstract void initGame();
 
     /**
     * update game
