@@ -288,6 +288,67 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * check, if camera can scroll on x axis (and is in bounds)
+     *
+     * @param deltaX value which is added to current x position to check
+     *
+     * @return true, if camera can scroll on x axis
+    */
+    public boolean canScrollX (float deltaX) {
+        float newX = this.x + deltaX;
+
+        return newX >= this.minX && newX <= this.maxX;
+    }
+
+    /**
+     * check, if camera can scroll on y axis (and is in bounds)
+     *
+     * @param deltaY value which is added to current x position to check
+     *
+     * @return true, if camera can scroll on y axis
+     */
+    public boolean canScrollY (float deltaY) {
+        float newY = this.y + deltaY;
+
+        return newY >= this.minY && newY <= this.maxY;
+    }
+
+    /**
+    * set bounds for x coordinate
+     *
+     * @param minX minimum x value
+     * @param maxX maximum x value
+     */
+    public void setXBounds (float minX, float maxX) {
+        this.minX = minX;
+        this.maxX = maxX;
+    }
+
+    /**
+     * set bounds for y coordinate
+     *
+     * @param minY minimum x value
+     * @param maxY maximum x value
+     */
+    public void setYBounds (float minY, float maxY) {
+        this.minY = minY;
+        this.maxY = maxY;
+    }
+
+    /**
+     * set camera bounds
+     *
+     * @param minX minimum x value
+     * @param maxX maximum x value
+     * @param minY minimum y value
+     * @param maxY maximum y value
+     */
+    public void setBounds (float minX, float maxX, float minY, float maxY) {
+        this.setXBounds(minX, maxX);
+        this.setYBounds(minY, maxY);
+    }
+
+    /**
     * reset camera bounds
     */
     public void resetBounds () {
