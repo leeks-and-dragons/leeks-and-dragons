@@ -192,6 +192,26 @@ public class CameraHelperTest {
         assertEquals(true, camera.canScrollY(101));
         assertEquals(true, camera.canScrollY(200));
         assertEquals(false, camera.canScrollY(201));
+
+        //set target position
+        camera.setTargetPos(-200, -200);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position (if position is in bounds)
+        assertEquals(0, camera.getX(), 0);
+        assertEquals(0, camera.getY(), 0);
+
+        //set new target position
+        camera.setTargetPos(200, 200);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position (if position is in bounds)
+        assertEquals(100, camera.getX(), 0);
+        assertEquals(200, camera.getY(), 0);
     }
 
 }

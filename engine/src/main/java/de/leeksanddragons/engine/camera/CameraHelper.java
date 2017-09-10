@@ -173,6 +173,10 @@ public class CameraHelper implements ModificationFinishedListener {
     public void update (GameTime time) {
         //TODO: check, if camera can scroll
 
+        //save old values
+        float lastX = this.x;
+        float lastY = this.y;
+
         //move camera to target position
         if (mode == CameraMode.DIRECT_CAMERA) {
             //set x and y position directly to target position
@@ -187,6 +191,28 @@ public class CameraHelper implements ModificationFinishedListener {
         } else {
             //throw exception
             throw new IllegalStateException("Unknown camera mode: " + mode.name());
+        }
+
+        //check, if camera can scroll
+        float deltaX = this.x - lastX;
+        float deltaY = this.y - lastY;
+
+        //check, if camera can scroll on x axis and is in bounds
+        if (!this.canScrollX(deltaX)) {
+            if (this.x + deltaX < this.minX) {
+                this.x = this.minX;
+            } else if (this.x + deltaX > this.maxX) {
+                this.x = this.maxX;
+            }
+        }
+
+        //check, if camera can scroll on y axis and is in bounds
+        if (!this.canScrollY(deltaY)) {
+            if (this.y + deltaY < this.minY) {
+                this.y = this.minY;
+            } else if (this.y + deltaY > this.maxY) {
+                this.y = this.maxY;
+            }
         }
 
         //reset temporary camera position
