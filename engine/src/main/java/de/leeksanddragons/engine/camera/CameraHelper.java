@@ -77,6 +77,11 @@ public class CameraHelper implements ModificationFinishedListener {
 
         //move camera, so (0, 0) is on left bottom
         this.camera.translate(width / 2, height / 2, 0);
+        this.camera.update();
+
+        //set offset
+        this.cameraOffsetX = this.camera.position.x;
+        this.cameraOffsetY = this.camera.position.y;
 
         //create new temp camera params
         this.tempCameraParams = new TempCameraParams(this.x, this.y, 1);
@@ -192,17 +197,20 @@ public class CameraHelper implements ModificationFinishedListener {
             mod.onUpdate(time, this.tempCameraParams, this);
         }
 
-        //set libGDX camera dimension
-        this.camera.viewportWidth = this.width;
-        this.camera.viewportHeight = this.height;
-
-        //set camera position to libGDX camera
-        this.camera.position.x = this.tempCameraParams.getX() + cameraOffsetX;
-        this.camera.position.y = this.tempCameraParams.getY() + cameraOffsetY;
-        this.camera.zoom = this.tempCameraParams.getZoom();
+        //sync camera helper position to libGDX camera
+        this.syncPosToCamera();
 
         //update libGDX camera
         this.camera.update();
+    }
+
+    /**
+    * get mode
+     *
+     * @return current camera mode
+    */
+    public CameraMode getMode () {
+        return this.mode;
     }
 
     /**
@@ -262,6 +270,24 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * get camera offset x
+     *
+     * @return camera offset x
+    */
+    public float getOffsetX () {
+        return this.cameraOffsetX;
+    }
+
+    /**
+     * get camera offset y
+     *
+     * @return camera offset y
+     */
+    public float getOffsetY () {
+        return this.cameraOffsetY;
+    }
+
+    /**
     * reset camera bounds
     */
     public void resetBounds () {
@@ -278,6 +304,10 @@ public class CameraHelper implements ModificationFinishedListener {
         /*this.camera.position.x = x + cameraOffsetX;
         this.camera.position.y = y + cameraOffsetY;
         this.camera.zoom = zoom;*/
+
+        //set libGDX camera dimension
+        this.camera.viewportWidth = this.width;
+        this.camera.viewportHeight = this.height;
 
         //set camera position to libGDX camera
         this.camera.position.x = this.tempCameraParams.getX() + cameraOffsetX;
@@ -394,6 +424,15 @@ public class CameraHelper implements ModificationFinishedListener {
         if (this.activeModifications.contains(mod)) {
             this.activeModifications.remove(mod);
         }
+    }
+
+    /**
+    * get original camera, only for junit tests!
+     *
+     * @return original camera
+    */
+    protected OrthographicCamera getOriginalCamera () {
+        return this.camera;
     }
 
     public int countActiveMods() {
