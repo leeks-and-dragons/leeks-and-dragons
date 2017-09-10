@@ -84,6 +84,120 @@ public class CameraHelperTest {
     }
 
     @Test
+    public void testBounds () {
+        int width = 800;
+        int height = 600;
+
+        //create new camera
+        CameraHelper camera = new CameraHelper(width, height);
+
+        //test bounds
+        assertEquals(-Float.MAX_VALUE, camera.minX, 0);
+        assertEquals(Float.MAX_VALUE, camera.maxX, 0);
+        assertEquals(-Float.MAX_VALUE, camera.minY, 0);
+        assertEquals(Float.MAX_VALUE, camera.maxY, 0);
+
+        //set bounds
+        camera.setBounds(-10, -20, 30, 40);
+
+        //test bounds
+        assertEquals(-10, camera.minX, 0);
+        assertEquals(-20, camera.maxX, 0);
+        assertEquals(30, camera.minY, 0);
+        assertEquals(40, camera.maxY, 0);
+
+        //reset bounds
+        camera.resetBounds();
+
+        //test bounds
+        assertEquals(-Float.MAX_VALUE, camera.minX, 0);
+        assertEquals(Float.MAX_VALUE, camera.maxX, 0);
+        assertEquals(-Float.MAX_VALUE, camera.minY, 0);
+        assertEquals(Float.MAX_VALUE, camera.maxY, 0);
+
+        //set bounds
+        camera.setBounds(0, 100, 0, 200);
+
+        //test bounds
+        assertEquals(0, camera.minX, 0);
+        assertEquals(100, camera.maxX, 0);
+        assertEquals(0, camera.minY, 0);
+        assertEquals(200, camera.maxY, 0);
+
+        //test, if camera can scroll on x axis
+        assertEquals(true, camera.canScrollX(0));
+        assertEquals(false, camera.canScrollX(-10));
+        assertEquals(false, camera.canScrollX(-100));
+        assertEquals(true, camera.canScrollX(10));
+        assertEquals(true, camera.canScrollX(100));
+        assertEquals(false, camera.canScrollX(101));
+
+        //test, if camera can scroll on y axis
+        assertEquals(true, camera.canScrollY(0));
+        assertEquals(false, camera.canScrollY(-10));
+        assertEquals(false, camera.canScrollY(-100));
+        assertEquals(true, camera.canScrollY(101));
+        assertEquals(true, camera.canScrollY(200));
+        assertEquals(false, camera.canScrollY(201));
+
+        //set target position
+        camera.setTargetPos(-200, -200);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position (if position is in bounds)
+        assertEquals(0, camera.getX(), 0);
+        assertEquals(0, camera.getY(), 0);
+
+        //set new target position
+        camera.setTargetPos(200, 200);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position (if position is in bounds)
+        assertEquals(100, camera.getX(), 0);
+        assertEquals(200, camera.getY(), 0);
+    }
+
+    @Test
+    public void testUpdate () {
+        int width = 800;
+        int height = 600;
+
+        //create new camera
+        CameraHelper camera = new CameraHelper(width, height);
+
+        //set camera mode
+        camera.setMode(CameraMode.DIRECT_CAMERA);
+
+        //test position
+        assertEquals(0, camera.getX(), 0);
+        assertEquals(0, camera.getY(), 0);
+
+        //set target position
+        camera.setTargetPos(0, 0);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position
+        assertEquals(0, camera.getX(), 0);
+        assertEquals(0, camera.getY(), 0);
+
+        //set new target position
+        camera.setTargetPos(100, 200);
+
+        //update camera
+        camera.update(GameTime.getInstance());
+
+        //check camera position
+        assertEquals(100, camera.getX(), 0);
+        assertEquals(200, camera.getY(), 0);
+    }
+
+    @Test
     public void testResize () {
         int width = 800;
         int height = 600;
@@ -137,81 +251,25 @@ public class CameraHelperTest {
     }
 
     @Test
-    public void testBounds () {
+    public void testFixedCamera () {
         int width = 800;
         int height = 600;
 
         //create new camera
         CameraHelper camera = new CameraHelper(width, height);
 
-        //test bounds
-        assertEquals(Float.MIN_VALUE, camera.minX, 0);
-        assertEquals(Float.MAX_VALUE, camera.maxX, 0);
-        assertEquals(Float.MIN_VALUE, camera.minY, 0);
-        assertEquals(Float.MAX_VALUE, camera.maxY, 0);
-
-        //set bounds
-        camera.setBounds(-10, -20, 30, 40);
-
-        //test bounds
-        assertEquals(-10, camera.minX, 0);
-        assertEquals(-20, camera.maxX, 0);
-        assertEquals(30, camera.minY, 0);
-        assertEquals(40, camera.maxY, 0);
-
-        //reset bounds
-        camera.resetBounds();
-
-        //test bounds
-        assertEquals(Float.MIN_VALUE, camera.minX, 0);
-        assertEquals(Float.MAX_VALUE, camera.maxX, 0);
-        assertEquals(Float.MIN_VALUE, camera.minY, 0);
-        assertEquals(Float.MAX_VALUE, camera.maxY, 0);
-
-        //set bounds
-        camera.setBounds(0, 100, 0, 200);
-
-        //test bounds
-        assertEquals(0, camera.minX, 0);
-        assertEquals(100, camera.maxX, 0);
-        assertEquals(0, camera.minY, 0);
-        assertEquals(200, camera.maxY, 0);
-
-        //test, if camera can scroll on x axis
-        assertEquals(true, camera.canScrollX(0));
-        assertEquals(false, camera.canScrollX(-10));
-        assertEquals(false, camera.canScrollX(-100));
-        assertEquals(true, camera.canScrollX(10));
-        assertEquals(true, camera.canScrollX(100));
-        assertEquals(false, camera.canScrollX(101));
-
-        //test, if camera can scroll on y axis
-        assertEquals(true, camera.canScrollY(0));
-        assertEquals(false, camera.canScrollY(-10));
-        assertEquals(false, camera.canScrollY(-100));
-        assertEquals(true, camera.canScrollY(101));
-        assertEquals(true, camera.canScrollY(200));
-        assertEquals(false, camera.canScrollY(201));
+        //set fixed camera mode
+        camera.setMode(CameraMode.FIXED_CAMERA);
 
         //set target position
-        camera.setTargetPos(-200, -200);
+        camera.setTargetPos(100, 100);
 
         //update camera
         camera.update(GameTime.getInstance());
 
-        //check camera position (if position is in bounds)
+        //check new camera position
         assertEquals(0, camera.getX(), 0);
         assertEquals(0, camera.getY(), 0);
-
-        //set new target position
-        camera.setTargetPos(200, 200);
-
-        //update camera
-        camera.update(GameTime.getInstance());
-
-        //check camera position (if position is in bounds)
-        assertEquals(100, camera.getX(), 0);
-        assertEquals(200, camera.getY(), 0);
     }
 
 }

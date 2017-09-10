@@ -37,9 +37,9 @@ public class CameraHelper implements ModificationFinishedListener {
     protected int height = 0;
 
     //camera bounds
-    protected float minX = Float.MIN_VALUE;
+    protected float minX = -Float.MAX_VALUE;
     protected float maxX = Float.MAX_VALUE;
-    protected float minY = Float.MIN_VALUE;
+    protected float minY = -Float.MAX_VALUE;
     protected float maxY = Float.MAX_VALUE;
 
     //target camera position
@@ -193,25 +193,28 @@ public class CameraHelper implements ModificationFinishedListener {
             throw new IllegalStateException("Unknown camera mode: " + mode.name());
         }
 
-        //check, if camera can scroll
-        float deltaX = this.x - lastX;
-        float deltaY = this.y - lastY;
+        if (this.mode != CameraMode.FIXED_CAMERA) {
+            //check, if camera can scroll
+            float deltaX = this.x - lastX;
+            float deltaY = this.y - lastY;
 
-        //check, if camera can scroll on x axis and is in bounds
-        if (!this.canScrollX(deltaX)) {
-            if (this.x + deltaX < this.minX) {
-                this.x = this.minX;
-            } else if (this.x + deltaX > this.maxX) {
-                this.x = this.maxX;
+            //check, if camera can scroll on x axis and is in bounds
+            if (!this.canScrollX(deltaX)) {
+                if (this.x + deltaX < this.minX) {
+                    System.err.println("set minX, lastX: " + lastX + ", x: " + this.x + ", deltaX: " + deltaX + ", minX: " + minX + ", maxX: " + maxX);
+                    this.x = this.minX;
+                } else if (this.x + deltaX > this.maxX) {
+                    this.x = this.maxX;
+                }
             }
-        }
 
-        //check, if camera can scroll on y axis and is in bounds
-        if (!this.canScrollY(deltaY)) {
-            if (this.y + deltaY < this.minY) {
-                this.y = this.minY;
-            } else if (this.y + deltaY > this.maxY) {
-                this.y = this.maxY;
+            //check, if camera can scroll on y axis and is in bounds
+            if (!this.canScrollY(deltaY)) {
+                if (this.y + deltaY < this.minY) {
+                    this.y = this.minY;
+                } else if (this.y + deltaY > this.maxY) {
+                    this.y = this.maxY;
+                }
             }
         }
 
@@ -378,9 +381,9 @@ public class CameraHelper implements ModificationFinishedListener {
     * reset camera bounds
     */
     public void resetBounds () {
-        this.minX = Float.MIN_VALUE;
+        this.minX = -Float.MAX_VALUE;
         this.maxX = Float.MAX_VALUE;
-        this.minY = Float.MIN_VALUE;
+        this.minY = -Float.MAX_VALUE;
         this.maxY = Float.MAX_VALUE;
     }
 
