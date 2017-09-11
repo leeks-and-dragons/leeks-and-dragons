@@ -79,9 +79,8 @@ public class GameAssetManager extends AssetManager {
         this.max_Loading_Millis = max_Loading_Millis;
     }
 
-    @Override
-    public boolean update () {
-        if (this.max_Loading_Millis != -1) {
+    public boolean updateLoading () {
+        if (this.max_Loading_Millis > 0) {
             return super.update(this.max_Loading_Millis);
         } else {
             return super.update();

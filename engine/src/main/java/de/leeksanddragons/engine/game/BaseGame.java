@@ -170,7 +170,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
         }
 
         //update asset manager, so asset manager can load assets from queue
-        if(this.assetManager.update()) {
+        if(this.assetManager.updateLoading()) {
             // we are done loading, let's move to another screen!
         }
 
