@@ -2,7 +2,6 @@ package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,6 +15,7 @@ import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
+import de.leeksanddragons.engine.timer.*;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -68,6 +68,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     //last asset manager progress
     protected float lastAssetManagerProgress = 0f;
+
+    //list with timer tasks
+    protected List<GameTimerTask> timerTasks = new ArrayList<>();
 
     public BaseGame (String appName) {
         this.appName = appName.toLowerCase();
@@ -183,6 +186,18 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             this.lastAssetManagerProgress = assetManager.getProgress();
         }
 
+        //execute overdued timer tasks
+        for (GameTimerTask timerTask : this.timerTasks) {
+            //check, if delay was reached
+            if (timerTask.isDelayReached()) {
+                //execute task
+                timerTask.execute();
+
+                //remove task
+                this.timerTasks.remove(timerTask);
+            }
+        }
+
         //execute tasks, which should be executed in OpenGL context thread
         Runnable runnable = uiQueue.poll();
 
@@ -293,6 +308,23 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      */
     public SharedData getSharedData () {
         return this.sharedData;
+    }
+
+    /**
+     * add an timer task which will be executed once after an given time in milliseconds
+     *
+     * @param delay time in millis to wait, before executing task
+     * @param runnable timer task
+     */
+    public void addTimerTask (long delay, Runnable runnable) {
+        //create new timer task
+        GameTimerTask timerTask = new GameTimerTask(delay, runnable);
+
+        //set start time
+        timerTask.start();
+
+        //add task to list
+        this.timerTasks.add(timerTask);
     }
 
     /**

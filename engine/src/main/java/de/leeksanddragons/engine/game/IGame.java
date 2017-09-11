@@ -82,6 +82,14 @@ public interface IGame {
     public SharedData getSharedData ();
 
     /**
+    * add an timer task which will be executed once after an given time in milliseconds
+     *
+     * @param delay time in millis to wait, before executing task
+     * @param runnable timer task
+    */
+    public void addTimerTask (long delay, Runnable runnable);
+
+    /**
      * get asset manager
      *
      * @return instance of asset manager
