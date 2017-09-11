@@ -63,6 +63,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //shared data
     protected SharedData sharedData = null;
 
+    //asset manager
+    protected GameAssetManager assetManager = null;
+
     public BaseGame (String appName) {
         this.appName = appName.toLowerCase();
     }
@@ -77,6 +80,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new shared data
         this.sharedData = new DefaultSharedData();
+
+        //create new asset manager
+        this.assetManager = new GameAssetManager();
 
         //log user.home and app home dir
         Gdx.app.log("Files", "user.home: " + FileUtils.getUserHomeDir());
@@ -217,8 +223,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     @Override
     public GameAssetManager getAssetManager () {
-        Gdx.app.getPreferences("test");
-        return null;
+        return this.assetManager;
     }
 
     @Override
