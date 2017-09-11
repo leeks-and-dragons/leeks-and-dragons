@@ -27,6 +27,12 @@ public class GamePreferences implements IPreferences {
     //json object
     protected JSONObject json = null;
 
+    /**
+    * default constructor
+     *
+     * @param appName application name without whitespaces
+     * @param fileName file name for preferences file (without ending)
+    */
     public GamePreferences (String appName, String fileName) {
         //get preferences path
         this.prefPath = getPath(appName, fileName);
@@ -42,6 +48,14 @@ public class GamePreferences implements IPreferences {
             //set engine version
             this.json.put("engine_version", Engine.ENGINE_VERSION);
         }
+    }
+
+    /**
+    * constructor for junit tests
+    */
+    protected GamePreferences () {
+        this.prefPath = "none";
+        this.json = new JSONObject();
     }
 
     /**
