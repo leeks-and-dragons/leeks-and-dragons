@@ -19,7 +19,7 @@
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
         <json.version>20170516</json.version>
-        <libgdx.version>1.9.5</libgdx.version>
+        <libgdx.version>1.9.6</libgdx.version>
 
         <!-- for libGDX tests -->
         <mockito.version>2.2.7</mockito.version>
