@@ -62,6 +62,12 @@ public class CameraHelper implements ModificationFinishedListener {
     //temporary camera params (to avoid override values)
     protected TempCameraParams tempCameraParams = null;
 
+    //border padding on which mouse scrolling works
+    protected int mouseScrollBorder = 50;
+
+    //speed of mouse scrolling
+    protected float mouseScrollSpeed = 5;
+
     /**
     * default constructor
      *
@@ -187,12 +193,33 @@ public class CameraHelper implements ModificationFinishedListener {
         } else if (mode == CameraMode.FIXED_CAMERA) {
             //dont move camera
         } else if (mode == CameraMode.MOUSE_CAMERA) {
+            //get current mouse positon
+            float mouseX = Gdx.input.getX();
+            float mouseY = Gdx.input.getY();
+
+            if (mouseX < 0 + this.mouseScrollBorder) {
+                //scroll left
+                this.x = this.x - this.mouseScrollSpeed;
+            } else if (mouseX > getViewportWidth() - this.mouseScrollBorder) {
+                //scroll right
+                this.x = this.x + this.mouseScrollSpeed;
+            }
+
+            if (mouseY < 0 + this.mouseScrollBorder) {
+                //scroll down
+                this.y = this.y - this.mouseScrollSpeed;
+            } else if (mouseY > getViewportHeight() - this.mouseScrollBorder) {
+                //scroll up
+                this.y = this.y + this.mouseScrollSpeed;
+            }
+        } else if (mode == CameraMode.SCROLL_CAMERA_WITH_MAX_DISTANCE) {
             //TODO: add code here
         } else {
             //throw exception
             throw new IllegalStateException("Unknown camera mode: " + mode.name());
         }
 
+        //check, if new position is in bounds, if not correct position
         if (this.mode != CameraMode.FIXED_CAMERA) {
             //check, if camera can scroll
             float deltaX = this.x - lastX;
