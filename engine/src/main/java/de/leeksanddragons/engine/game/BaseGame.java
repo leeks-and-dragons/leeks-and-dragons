@@ -2,6 +2,7 @@ package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -180,6 +181,11 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     @Override
     public CameraManager getCameraManager () {
         return this.cameraManager;
+    }
+
+    @Override
+    public AssetManager getAssetManager () {
+        return null;
     }
 
     /**
