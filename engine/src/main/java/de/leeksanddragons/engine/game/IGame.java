@@ -1,5 +1,6 @@
 package de.leeksanddragons.engine.game;
 
+import com.badlogic.gdx.assets.AssetManager;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 
@@ -42,5 +43,7 @@ public interface IGame {
      * @param runnable runnable to execute in UI thread
      */
     public void runOnUIThread(Runnable runnable);
+
+    public AssetManager getAssetManager ();
 
 }
