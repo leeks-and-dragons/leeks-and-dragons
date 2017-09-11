@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.game;
 import com.badlogic.gdx.assets.AssetManager;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
+import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.preferences.IPreferences;
 
 /**
@@ -74,5 +75,12 @@ public interface IGame {
      * @return instance of preferences by category
     */
     public IPreferences getPreferences (String category);
+
+    /**
+    * get instance of shared data (non-persistent data, only available on runtime)
+     *
+     * @return instance of shared data
+    */
+    public SharedData getSharedData ();
 
 }

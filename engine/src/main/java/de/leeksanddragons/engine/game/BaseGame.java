@@ -11,6 +11,8 @@ import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
 import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
+import de.leeksanddragons.engine.data.DefaultSharedData;
+import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.utils.FileUtils;
@@ -57,6 +59,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //app name
     protected String appName = "";
 
+    //shared data
+    protected SharedData sharedData = null;
+
     public BaseGame (String appName) {
         this.appName = appName.toLowerCase();
     }
@@ -68,6 +73,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new cursor manager
         this.cursorManager = new DefaultCursorManager();
+
+        //create new shared data
+        this.sharedData = new DefaultSharedData();
 
         //log user.home and app home dir
         Gdx.app.log("Files", "user.home: " + FileUtils.getUserHomeDir());
@@ -253,6 +261,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      */
     public String getAppName () {
         return this.appName;
+    }
+
+    /**
+     * get instance of shared data (non-persistent data, only available on runtime)
+     *
+     * @return instance of shared data
+     */
+    public SharedData getSharedData () {
+        return this.sharedData;
     }
 
     /**
