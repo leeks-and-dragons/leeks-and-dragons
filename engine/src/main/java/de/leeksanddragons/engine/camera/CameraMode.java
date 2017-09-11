@@ -15,6 +15,9 @@ public enum CameraMode {
     FIXED_CAMERA,
 
     //player can move camera with mouse position
-    MOUSE_CAMERA
+    MOUSE_CAMERA,
+
+    //player can scroll with mouse (on borders), but there is an maximum distance between player can camera
+    SCROLL_CAMERA_WITH_MAX_DISTANCE
 
 }
