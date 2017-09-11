@@ -80,4 +80,17 @@ public class FileUtils {
         Files.write(Paths.get(path), content.getBytes(encoding), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
+    /**
+    * get path to user.home directory
+     *
+     * @return path to user.home directory
+    */
+    public static String getUserHomeDir () {
+        return System.getProperty("user.home");
+    }
+
+    public static String getAppHomeDir (String appName) {
+        return getUserHomeDir() + "/." + appName + "/";
+    }
+
 }
