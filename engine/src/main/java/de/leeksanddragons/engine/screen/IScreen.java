@@ -52,6 +52,6 @@ public interface IScreen {
     /**
      * destroy game screen
      */
-    public void destroy();
+    public void dispose();
 
 }

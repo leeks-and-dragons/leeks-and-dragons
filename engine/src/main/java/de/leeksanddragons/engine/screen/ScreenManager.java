@@ -57,4 +57,9 @@ public interface ScreenManager<T extends IScreen> {
      */
     public Collection<T> listActiveScreens();
 
+    /**
+    * dispose screen manager with all screens
+    */
+    public void dispose ();
+
 }
