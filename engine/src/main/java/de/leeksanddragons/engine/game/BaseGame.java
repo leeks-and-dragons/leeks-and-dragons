@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by Justin on 09.09.2017.
  */
-public abstract class BaseGame extends ApplicationAdapter {
+public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     //camera manager
     protected CameraManager cameraManager = null;
@@ -86,6 +86,7 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @param listener resize listener which is called, if window was resized
     */
+    @Override
     public void addResizeListener(ResizeListener listener) {
         this.resizeListeners.add(listener);
     }
@@ -95,6 +96,7 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @param listener resize listener which is called, if window was resized
      */
+    @Override
     public void removeResizeListener(ResizeListener listener) {
         this.resizeListeners.remove(listener);
     }
@@ -149,6 +151,7 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @return FPS count
     */
+    @Override
     public int getFPS() {
         return Gdx.graphics.getFramesPerSecond();
     }
@@ -158,6 +161,7 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @return instance of camera manager
     */
+    @Override
     public CameraManager getCameraManager () {
         return this.cameraManager;
     }
@@ -167,6 +171,7 @@ public abstract class BaseGame extends ApplicationAdapter {
      *
      * @param runnable runnable to execute in UI thread
     */
+    @Override
     public void runOnUIThread(Runnable runnable) {
         this.uiQueue.offer(runnable);
     }
