@@ -269,4 +269,13 @@ public class GamePreferences implements IPreferences {
         this.save();
     }
 
+    @Override
+    public boolean canSave() {
+        return !this.prefPath.contains("none");
+    }
+
+    @Override
+    public String getPrefsPath() {
+        return this.prefPath;
+    }
 }

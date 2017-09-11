@@ -302,6 +302,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     @Override
     public final void dispose () {
+        //save all preferences
+        for (Map.Entry<String,GamePreferences> entry : this.prefsMap.entrySet()) {
+            //check, if preferences can be saved
+            if (entry.getValue().canSave()) {
+                //save preferences
+                entry.getValue().flush();
+            }
+        }
+
         this.destroyGame();
     }
 
