@@ -1,9 +1,9 @@
 package de.leeksanddragons.engine.game;
 
-import com.badlogic.gdx.assets.AssetManager;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.data.SharedData;
+import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.IPreferences;
 
 /**
@@ -46,7 +46,7 @@ public interface IGame {
      */
     public void runOnUIThread(Runnable runnable);
 
-    public AssetManager getAssetManager ();
+    public GameAssetManager getAssetManager ();
 
     /**
     * get path to app home dir in user.home/.APPNAME/

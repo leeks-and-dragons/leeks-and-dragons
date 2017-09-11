@@ -13,6 +13,7 @@ import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
 import de.leeksanddragons.engine.data.DefaultSharedData;
 import de.leeksanddragons.engine.data.SharedData;
+import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.utils.FileUtils;
@@ -215,7 +216,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     }
 
     @Override
-    public AssetManager getAssetManager () {
+    public GameAssetManager getAssetManager () {
         Gdx.app.getPreferences("test");
         return null;
     }
