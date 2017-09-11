@@ -60,4 +60,13 @@ public class GamePreferencesTest {
         assertEquals("none", prefs.getPrefsPath());
     }
 
+    @Test
+    public void testContains () {
+        GamePreferences prefs = new GamePreferences();
+
+        prefs.putInteger("i1", 10);
+
+        assertEquals(true, prefs.contains("i1"));
+    }
+
 }
