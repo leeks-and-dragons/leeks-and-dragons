@@ -22,6 +22,9 @@ public class GameAssetManager extends AssetManager {
     //list with all assets, which cannot be blocked
     protected List<String> blockList = new ArrayList<>();
 
+    //time limit for every asset manager update() execution
+    protected int max_Loading_Millis = 10;
+
     @Override
     public void unload (String fileName) {
         //check, if asset file is blocked
@@ -49,6 +52,40 @@ public class GameAssetManager extends AssetManager {
     */
     public void removeBlockingFile (String fileName) {
         this.blockList.remove(fileName);
+    }
+
+    /**
+    * get update time limit
+     *
+     * @return update time limit
+    */
+    public int getUpdateTimeLimit () {
+        return this.max_Loading_Millis;
+    }
+
+    public boolean isUpdateTimeLimited () {
+        return this.max_Loading_Millis == -1;
+    }
+
+    public void disableUpdateTimeLimit () {
+        this.max_Loading_Millis = -1;
+    }
+
+    public void enableUpdateTimeLimit (int millis) {
+        this.max_Loading_Millis = millis;
+    }
+
+    public void setUpdateTimeLimit (int max_Loading_Millis) {
+        this.max_Loading_Millis = max_Loading_Millis;
+    }
+
+    @Override
+    public boolean update () {
+        if (this.max_Loading_Millis != -1) {
+            return super.update(this.max_Loading_Millis);
+        } else {
+            return super.update();
+        }
     }
 
 }

@@ -66,6 +66,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //asset manager
     protected GameAssetManager assetManager = null;
 
+    //last asset manager progress
+    protected float lastAssetManagerProgress = 0f;
+
     public BaseGame (String appName) {
         this.appName = appName.toLowerCase();
     }
@@ -164,6 +167,20 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
                 lastFPSWarning = System.currentTimeMillis();
             }
+        }
+
+        //update asset manager, so asset manager can load assets from queue
+        if(this.assetManager.update()) {
+            // we are done loading, let's move to another screen!
+        }
+
+        //show asset manager progress, if neccessary
+        if (assetManager.getProgress() != this.lastAssetManagerProgress) {
+            //log asset manager progress
+            Gdx.app.debug("AssetManager", "loading progress: " + (assetManager.getProgress() * 100) + "%.");
+
+            //save progress
+            this.lastAssetManagerProgress = assetManager.getProgress();
         }
 
         //execute tasks, which should be executed in OpenGL context thread
