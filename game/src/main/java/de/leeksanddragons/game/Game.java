@@ -11,6 +11,10 @@ import de.leeksanddragons.engine.utils.GameTime;
  */
 public class Game extends BaseGame {
 
+    public Game() {
+        super("leeks-and-dragons");
+    }
+
     @Override
     protected void initGame() {
         //set log level

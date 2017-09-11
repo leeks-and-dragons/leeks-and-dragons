@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.game;
 import com.badlogic.gdx.assets.AssetManager;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
+import de.leeksanddragons.engine.preferences.IPreferences;
 
 /**
  * Created by Justin on 11.09.2017.
@@ -45,5 +46,33 @@ public interface IGame {
     public void runOnUIThread(Runnable runnable);
 
     public AssetManager getAssetManager ();
+
+    /**
+    * get path to app home dir in user.home/.APPNAME/
+     *
+     * @return path to app home dir
+    */
+    public String getAppHomeDir ();
+
+    /**
+    * get name of application
+     *
+     * @return name of application
+    */
+    public String getAppName ();
+
+    /**
+    * get general preferences
+     *
+     * @return instance of general preferences
+    */
+    public IPreferences getGeneralPreferences ();
+
+    /**
+    * get preferences by category
+     *
+     * @return instance of preferences by category
+    */
+    public IPreferences getPreferences (String category);
 
 }

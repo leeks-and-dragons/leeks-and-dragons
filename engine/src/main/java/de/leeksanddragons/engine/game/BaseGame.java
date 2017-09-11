@@ -11,14 +11,15 @@ import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
 import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
+import de.leeksanddragons.engine.preferences.GamePreferences;
+import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -50,6 +51,16 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //sprite batch
     protected SpriteBatch batch = null;
 
+    //preferences map
+    protected Map<String,GamePreferences> prefsMap = new HashMap<>();
+
+    //app name
+    protected String appName = "";
+
+    public BaseGame (String appName) {
+        this.appName = appName.toLowerCase();
+    }
+
     @Override
     public final void create () {
         //create new camera manager and set viewport of current window dimensions
@@ -57,6 +68,18 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new cursor manager
         this.cursorManager = new DefaultCursorManager();
+
+        //log user.home and app home dir
+        Gdx.app.log("Files", "user.home: " + FileUtils.getUserHomeDir());
+
+        //check, if app home dir exists, else create directory
+        if (!new File(getAppHomeDir()).exists()) {
+            //create directory
+            new File(getAppHomeDir()).mkdirs();
+        }
+
+        //log app home dir
+        Gdx.app.log("Files", "app.home: " + getAppHomeDir());
 
         // create sprite batcher
         this.batch = new SpriteBatch();
@@ -185,7 +208,51 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     @Override
     public AssetManager getAssetManager () {
+        Gdx.app.getPreferences("test");
         return null;
+    }
+
+    @Override
+    public String getAppHomeDir () {
+        return FileUtils.getAppHomeDir(this.appName);
+    }
+
+    /**
+     * get general preferences
+     *
+     * @return instance of general preferences
+     */
+    @Override
+    public IPreferences getGeneralPreferences () {
+        return getPreferences("general");
+    }
+
+    /**
+     * get preferences by category
+     *
+     * @return instance of preferences by category
+     */
+    @Override
+    public IPreferences getPreferences (String category) {
+        category = category.toLowerCase();
+
+        //check, if preferences already exists
+        if (!this.prefsMap.containsKey(category) || this.prefsMap.get(category) == null) {
+            //create new instance of preferences
+            this.prefsMap.put(category, new GamePreferences(this.getAppName(), category));
+        }
+
+        //return instance of preferences from map
+        return this.prefsMap.get(category);
+    }
+
+    /**
+     * get name of application
+     *
+     * @return name of application
+     */
+    public String getAppName () {
+        return this.appName;
     }
 
     /**
