@@ -69,4 +69,19 @@ public class GamePreferencesTest {
         assertEquals(true, prefs.contains("i1"));
     }
 
+    @Test
+    public void testRemove () {
+        GamePreferences prefs = new GamePreferences();
+
+        prefs.putInteger("i1", 10);
+
+        assertEquals(true, prefs.contains("i1"));
+
+        //remove key
+        prefs.remove("i1");
+
+        //check, if key exists
+        assertEquals(false, prefs.contains("i1"));
+    }
+
 }
