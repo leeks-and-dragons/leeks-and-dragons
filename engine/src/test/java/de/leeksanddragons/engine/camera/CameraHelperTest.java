@@ -251,6 +251,21 @@ public class CameraHelperTest {
     }
 
     @Test
+    public void testSetTargetMiddlePosition () {
+        int width = 800;
+        int height = 600;
+
+        //create new camera
+        CameraHelper camera = new CameraHelper(width, height);
+
+        //set target middle position
+        camera.setTargetMiddlePos(0, 0);
+
+        assertEquals(-400, camera.getTargetX(), 0);
+        assertEquals(-300, camera.getTargetY(), 0);
+    }
+
+    @Test
     public void testFixedCamera () {
         int width = 800;
         int height = 600;

@@ -299,6 +299,17 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * set target position in middle of viewport
+     *
+     * @param targetX target x position in middle of viewport
+     * @param targetY target y position in middle of viewport
+    */
+    public void setTargetMiddlePos (float targetX, float targetY) {
+        this.targetX = targetX - (this.getViewportWidth() / 2);
+        this.targetY = targetY - (this.getViewportHeight() / 2);
+    }
+
+    /**
     * get camera offset x
      *
      * @return camera offset x
