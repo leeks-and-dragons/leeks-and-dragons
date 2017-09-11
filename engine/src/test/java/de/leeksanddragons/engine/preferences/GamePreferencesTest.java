@@ -49,4 +49,15 @@ public class GamePreferencesTest {
         assertEquals("str4", prefs.getString("s2", "str4"));
     }
 
+    @Test
+    public void testCanSave () {
+        GamePreferences prefs = new GamePreferences();
+
+        //HeadlessApplication (for junit tests) cannot save
+        assertEquals(false, prefs.canSave());
+
+        //test prefs file path
+        assertEquals("none", prefs.getPrefsPath());
+    }
+
 }
