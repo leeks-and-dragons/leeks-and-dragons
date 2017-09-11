@@ -33,6 +33,13 @@ public interface IScreen {
     public void setTouchable (boolean touchable);
 
     /**
+    * check, if screen is touchable and can process input
+     *
+     * @return true, if screen can process input
+    */
+    public boolean isTouchable ();
+
+    /**
      * pause screen and switch to another screen
      */
     public void onPause();
