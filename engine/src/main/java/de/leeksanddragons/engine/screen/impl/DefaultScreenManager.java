@@ -54,7 +54,7 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.screens.remove(screen);
 
         if (screen != null) {
-            screen.destroy();
+            screen.dispose();
 
             this.cachedScreenList.remove(screen);
         }
@@ -107,6 +107,15 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
     @Override
     public Collection<IScreen> listActiveScreens() {
         return this.activeScreens;
+    }
+
+    @Override
+    public void dispose() {
+        //iterate through all screens
+        for (Map.Entry<String,IScreen> entry : this.screens.entrySet()) {
+            //remove screen
+            this.removeScreen(entry.getKey());
+        }
     }
 
 }
