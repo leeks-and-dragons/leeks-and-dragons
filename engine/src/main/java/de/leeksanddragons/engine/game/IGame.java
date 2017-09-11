@@ -46,8 +46,6 @@ public interface IGame {
      */
     public void runOnUIThread(Runnable runnable);
 
-    public GameAssetManager getAssetManager ();
-
     /**
     * get path to app home dir in user.home/.APPNAME/
      *
@@ -82,5 +80,12 @@ public interface IGame {
      * @return instance of shared data
     */
     public SharedData getSharedData ();
+
+    /**
+     * get asset manager
+     *
+     * @return instance of asset manager
+     */
+    public GameAssetManager getAssetManager ();
 
 }
