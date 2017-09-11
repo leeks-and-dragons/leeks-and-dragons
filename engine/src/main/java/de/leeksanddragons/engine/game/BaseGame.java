@@ -46,6 +46,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //window background (clear) color
     protected Color bgColor = Color.BLACK;
 
+    //sprite batch
+    protected SpriteBatch batch = null;
+
     @Override
     public final void create () {
         //create new camera manager and set viewport of current window dimensions
@@ -53,6 +56,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new cursor manager
         this.cursorManager = new DefaultCursorManager();
+
+        // create sprite batcher
+        this.batch = new SpriteBatch();
 
         //try to initialize game, if an exception is thrown log will be written to application directory
         try {
@@ -143,7 +149,17 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //TODO: add code here, begin spritebatch, render game and end spritebatch
+        //beginn rendering process
+        this.batch.begin();
+
+        //set camera projection matrix
+        this.batch.setProjectionMatrix(this.getCameraManager().getMainCamera().getCombined());
+
+        //draw game
+        this.draw(time, this.batch);
+
+        //flush rendering
+        this.batch.end();
     }
 
     /**
