@@ -24,7 +24,7 @@ public abstract class ScreenBasedGame extends BaseGame implements IScreenGame {
 
     @Override
     protected final void initGame() {
-        this.onInit(this.screenManager);
+        this.onInit(this, this.screenManager);
     }
 
     @Override
@@ -68,7 +68,7 @@ public abstract class ScreenBasedGame extends BaseGame implements IScreenGame {
      *
      * @param screenManager instance of screen manager
     */
-    protected abstract void onInit(ScreenManager<IScreen> screenManager);
+    protected abstract void onInit(IScreenGame game, ScreenManager<IScreen> screenManager);
 
     protected abstract void onDispose ();
 

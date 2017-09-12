@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.game.IGame;
+import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.utils.GameTime;
 
 /**
@@ -13,7 +14,7 @@ public interface IScreen {
     /**
      * initialize game screen
      */
-    public void init(IScreenGame game, AssetManager assetManager);
+    public void init(IScreenGame game, GameAssetManager assetManager);
 
     /**
      * update game screen

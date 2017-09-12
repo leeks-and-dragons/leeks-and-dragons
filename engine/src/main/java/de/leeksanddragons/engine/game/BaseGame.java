@@ -72,6 +72,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //list with timer tasks
     protected List<GameTimerTask> timerTasks = new ArrayList<>();
 
+    //temporary list for performance / GC optimization
+    protected List<GameTimerTask> removeTimerTaskList = new ArrayList<>();
+
     public BaseGame (String appName) {
         this.appName = appName.toLowerCase();
     }
@@ -186,6 +189,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             this.lastAssetManagerProgress = assetManager.getProgress();
         }
 
+        //clear temporary list
+        this.removeTimerTaskList.clear();
+
         //execute overdued timer tasks
         for (GameTimerTask timerTask : this.timerTasks) {
             //check, if delay was reached
@@ -194,9 +200,12 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 timerTask.execute();
 
                 //remove task
-                this.timerTasks.remove(timerTask);
+                this.removeTimerTaskList.add(timerTask);
             }
         }
+
+        //remove tasks
+        this.timerTasks.removeAll(this.removeTimerTaskList);
 
         //execute tasks, which should be executed in OpenGL context thread
         Runnable runnable = uiQueue.poll();

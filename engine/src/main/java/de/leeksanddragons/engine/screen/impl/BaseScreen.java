@@ -13,6 +13,9 @@ public abstract class BaseScreen implements IScreen {
     protected IScreenGame game;
     protected GameAssetManager assetManager;
 
+    protected boolean touchable = true;
+
+    @Override
     public final void init(IScreenGame game, GameAssetManager assetManager) {
         this.game = game;
         this.assetManager = assetManager;
@@ -30,6 +33,16 @@ public abstract class BaseScreen implements IScreen {
     @Override
     public void onResume() {
 
+    }
+
+    @Override
+    public void setTouchable(boolean touchable) {
+        this.touchable = touchable;
+    }
+
+    @Override
+    public boolean isTouchable() {
+        return this.touchable;
     }
 
 }
