@@ -34,6 +34,9 @@ public class JuKuSoftIntroScreen extends BaseScreen {
         game.addTimerTask(500l, () -> {
             //switch screen
             game.getScreenManager().leaveAllAndEnter("logo_intro");
+
+            //remove intro screen
+            game.getScreenManager().removeScreen("jukusoft_intro");
         });
     }
 
@@ -53,7 +56,8 @@ public class JuKuSoftIntroScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-
+        //unload logo
+        this.assetManager.unload(LOGO_PATH);
     }
 
 }

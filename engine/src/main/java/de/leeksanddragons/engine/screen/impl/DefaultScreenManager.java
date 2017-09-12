@@ -58,6 +58,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
 
             this.cachedScreenList.remove(screen);
         }
+
+        this.screens.remove(name);
     }
 
     @Override
