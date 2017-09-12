@@ -30,7 +30,7 @@ public class JuKuSoftIntroScreen extends BaseScreen {
         //get image
         this.jukusoftLogo = assetManager.get(LOGO_PATH);
 
-        //go to next screen after 2 seconds
+        //go to next screen after 500ms
         game.addTimerTask(500l, () -> {
             //switch screen
             game.getScreenManager().leaveAllAndEnter("logo_intro");

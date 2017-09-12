@@ -1,5 +1,6 @@
 package de.leeksanddragons.engine.screen.impl;
 
+import com.badlogic.gdx.Gdx;
 import de.leeksanddragons.engine.exception.ScreenNotFoundException;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -45,6 +46,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.screens.put(name, screen);
 
         this.cachedScreenList.add(screen);
+
+        Gdx.app.debug("Screens", "add screen: " + name);
     }
 
     @Override
@@ -60,6 +63,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         }
 
         this.screens.remove(name);
+
+        Gdx.app.debug("Screens", "remove screen: " + name);
     }
 
     @Override
@@ -74,6 +79,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         screen.onResume();
 
         this.activeScreens.push(screen);
+
+        Gdx.app.debug("Screens", "push screen: " + name);
     }
 
     @Override
@@ -97,6 +104,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         if (screen != null) {
             screen.onPause();
         }
+
+        Gdx.app.debug("Screens", "pop screen.");
 
         return screen;
     }
