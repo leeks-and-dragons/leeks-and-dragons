@@ -109,6 +109,8 @@ public class GamePreferences implements IPreferences {
 
         //read file content
         try {
+            Gdx.app.debug("Preferences", "load preferences: " + this.prefPath);
+
             String content = FileUtils.readFile(this.prefPath, StandardCharsets.UTF_8);
             this.json = new JSONObject(content);
         } catch (IOException e) {
@@ -138,6 +140,8 @@ public class GamePreferences implements IPreferences {
 
         //write file
         try {
+            Gdx.app.debug("Preferences", "save preferences: " + this.prefPath);
+
             FileUtils.writeFile(this.prefPath, json.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
