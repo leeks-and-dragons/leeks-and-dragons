@@ -30,7 +30,7 @@ public class LogoIntroScreen extends BaseScreen {
         this.logo = assetManager.get(LOGO_PATH);
 
         //go to next screen after 1 second
-        game.addTimerTask(1000l, () -> {
+        game.addTimerTask(2000l, () -> {
             //switch screen
             game.getScreenManager().leaveAllAndEnter("loading");
 
@@ -41,7 +41,7 @@ public class LogoIntroScreen extends BaseScreen {
 
     @Override
     public void update(IScreenGame game, GameTime time) {
-
+        //we dont need to update this screen
     }
 
     @Override
