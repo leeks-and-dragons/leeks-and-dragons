@@ -32,7 +32,7 @@ public class LoadingScreen extends BaseScreen {
 
     @Override
     public void update(IScreenGame game, GameTime time) {
-
+        //
     }
 
     @Override
@@ -48,6 +48,13 @@ public class LoadingScreen extends BaseScreen {
     public void dispose() {
         //unload image
         assetManager.unload(BG_PATH);
+    }
+
+    protected void gotoMainMenu () {
+        game.getScreenManager().leaveAllAndEnter("mainmenu");
+
+        //remove this screen
+        game.getScreenManager().removeScreen("loading");
     }
 
 }

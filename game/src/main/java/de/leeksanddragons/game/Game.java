@@ -12,6 +12,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.game.screen.JuKuSoftIntroScreen;
 import de.leeksanddragons.game.screen.LoadingScreen;
 import de.leeksanddragons.game.screen.LogoIntroScreen;
+import de.leeksanddragons.game.screen.MainMenuScreen;
 
 /**
  * Created by Justin on 09.09.2017.
@@ -31,6 +32,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());
         screenManager.addScreen("logo_intro", new LogoIntroScreen());
         screenManager.addScreen("loading", new LoadingScreen());
+        screenManager.addScreen("mainmenu", new MainMenuScreen());
 
         //check, if preferences are available
         if (!game.getGeneralPreferences().contains("engine_splash_screen")) {
