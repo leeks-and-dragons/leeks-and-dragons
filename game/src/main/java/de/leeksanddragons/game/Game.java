@@ -32,6 +32,13 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("logo_intro", new LogoIntroScreen());
         screenManager.addScreen("loading", new LoadingScreen());
 
+        //check, if preferences are available
+        if (!game.getGeneralPreferences().contains("engine_splash_screen")) {
+            //set preferences and save
+            game.getGeneralPreferences().putBoolean("engine_splash_screen", true);
+            game.getGeneralPreferences().flush();
+        }
+
         //check, if engine splash screen is enabled
         if (game.getGeneralPreferences().getBoolean("engine_splash_screen", true)) {
             //push screen
