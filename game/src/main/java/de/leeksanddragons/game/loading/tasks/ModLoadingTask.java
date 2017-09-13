@@ -1,5 +1,6 @@
 package de.leeksanddragons.game.loading.tasks;
 
+import com.badlogic.gdx.Gdx;
 import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.FileUtils;
@@ -41,6 +42,8 @@ public class ModLoadingTask extends BaseLoadingTask {
         } else if (percentage == 0.7f) {
             //add all mods from home directory
             modManager.loadMods(FileUtils.getHomeModsDir(appName));
+
+            Gdx.app.log("Loading", "" + modManager.countLoadedMods() + " mods loaded.");
 
             percentage = 1f;
         }
