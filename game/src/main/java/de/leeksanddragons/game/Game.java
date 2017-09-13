@@ -2,18 +2,17 @@ package de.leeksanddragons.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import de.leeksanddragons.engine.game.BaseGame;
+import de.leeksanddragons.engine.mods.impl.DefaultModManager;
 import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
 import de.leeksanddragons.engine.screen.impl.ScreenBasedGame;
-import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.game.screen.JuKuSoftIntroScreen;
 import de.leeksanddragons.game.screen.LoadingScreen;
 import de.leeksanddragons.game.screen.LogoIntroScreen;
 import de.leeksanddragons.game.screen.MainMenuScreen;
+import de.leeksanddragons.game.shared.Shared;
 
 /**
  * Created by Justin on 09.09.2017.
@@ -28,6 +27,9 @@ public class Game extends ScreenBasedGame {
     protected void onInit(IScreenGame game, ScreenManager<IScreen> screenManager) {
         //set log level
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
+        //create mod manager
+        game.getSharedData().put(Shared.MOD_MANAGER, new DefaultModManager());
 
         //add screens
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());

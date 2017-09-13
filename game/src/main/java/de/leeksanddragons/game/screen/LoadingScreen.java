@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.font.BitmapFontFactory;
 import de.leeksanddragons.engine.memory.GameAssetManager;
+import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 import de.leeksanddragons.game.loading.LoadingTask;
 import de.leeksanddragons.game.loading.tasks.ExampleTask;
+import de.leeksanddragons.game.loading.tasks.ModLoadingTask;
+import de.leeksanddragons.game.shared.Shared;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -80,9 +83,16 @@ public class LoadingScreen extends BaseScreen {
         //create font
         this.percentageFont = BitmapFontFactory.createFont(PERCENTAGE_FONT_PATH, PERCENTAGE_FONT_SIZE, this.barColor);
 
-        //add tasks
-        addTask(new ExampleTask(), 0.2f);
-        addTask(new ExampleTask(), 0.2f);
+        //first get mod manager
+        ModManager modManager = game.getSharedData().get(Shared.MOD_MANAGER, ModManager.class);
+
+        if (modManager == null) {
+            throw new NullPointerException("mod manager cannot be null.");
+        }
+
+        //first, load mods
+        addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
+        addTask(new ExampleTask(), 0.25f);
         addTask(new ExampleTask(), 0.2f);
         addTask(new ExampleTask(), 0.2f);
         addTask(new ExampleTask(), 0.2f);
