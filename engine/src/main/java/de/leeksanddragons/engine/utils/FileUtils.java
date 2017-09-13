@@ -93,4 +93,12 @@ public class FileUtils {
         return getUserHomeDir() + "/." + appName + "/";
     }
 
+    public static String getHomeModsDir (String appName) {
+        return getUserHomeDir() + "/." + appName + "/mods/";
+    }
+
+    public static String getModsDir (String appName) {
+        return "./mods/";
+    }
+
 }
