@@ -36,7 +36,7 @@ public class DesktopLauncher {
 
         try {
             // start game
-            new LwjglApplication(new Game(), config);
+            new LwjglApplication(new Game(windowConfig), config);
         } catch (Exception e) {
             e.printStackTrace();
 

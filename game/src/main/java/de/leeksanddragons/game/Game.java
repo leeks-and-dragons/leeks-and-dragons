@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.game.BaseGame;
+import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
@@ -19,8 +20,8 @@ import de.leeksanddragons.game.screen.MainMenuScreen;
  */
 public class Game extends ScreenBasedGame {
 
-    public Game() {
-        super("leeks-and-dragons");
+    public Game(WindowConfig windowConfig) {
+        super(windowConfig, "leeks-and-dragons");
     }
 
     @Override

@@ -2,6 +2,7 @@ package de.leeksanddragons.engine.screen.impl;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.game.BaseGame;
+import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
@@ -15,8 +16,8 @@ public abstract class ScreenBasedGame extends BaseGame implements IScreenGame {
     //instance of screen manager
     protected ScreenManager<IScreen> screenManager = null;
 
-    public ScreenBasedGame(String appName) {
-        super(appName);
+    public ScreenBasedGame(WindowConfig windowConfig, String appName) {
+        super(windowConfig, appName);
 
         //create new screen manager
         this.screenManager = new DefaultScreenManager(this);

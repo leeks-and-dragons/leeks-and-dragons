@@ -2,6 +2,8 @@ package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +17,7 @@ import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
+import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.timer.*;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
@@ -75,7 +78,11 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //temporary list for performance / GC optimization
     protected List<GameTimerTask> removeTimerTaskList = new ArrayList<>();
 
-    public BaseGame (String appName) {
+    //window configuration
+    protected WindowConfig windowConfig = null;
+
+    public BaseGame (WindowConfig windowConfig, String appName) {
+        this.windowConfig = windowConfig;
         this.appName = appName.toLowerCase();
     }
 
@@ -184,6 +191,17 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 Gdx.app.log("FPS", "Warning! FPS is <= 59, FPS: " + fps);
 
                 lastFPSWarning = System.currentTimeMillis();
+            }
+        }
+
+        //switch window mode to fullscreen mode with keys CTRL + F
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.F)) {
+            boolean fullScreen = !Gdx.graphics.isFullscreen();
+
+            if (fullScreen) {
+                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+            } else {
+                Gdx.graphics.setWindowedMode(windowConfig.getWidth(), windowConfig.getHeight());
             }
         }
 
