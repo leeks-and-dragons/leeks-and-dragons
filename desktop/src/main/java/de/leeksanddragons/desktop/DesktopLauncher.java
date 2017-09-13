@@ -28,8 +28,8 @@ public class DesktopLauncher {
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Leeks & Dragons";
-        config.height = windowConfig.getWidth();
-        config.width = windowConfig.getHeight();
+        config.height = windowConfig.getHeight();
+        config.width = windowConfig.getWidth();
         config.addIcon("./data/icon/app_icon.png", Files.FileType.Absolute);
         config.resizable = windowConfig.isResizeable();
         config.fullscreen = windowConfig.isFullscreen();
