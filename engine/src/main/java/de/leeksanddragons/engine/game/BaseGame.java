@@ -21,6 +21,7 @@ import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.timer.*;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.ScreenshotUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -202,6 +203,25 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             } else {
                 Gdx.graphics.setWindowedMode(windowConfig.getWidth(), windowConfig.getHeight());
+            }
+        }
+
+        //take screenshots with keys CTRL + C
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+            //generate screenshot path
+            String screenshotPath = ScreenshotUtils.getScreenshotPath(this.getAppName());
+
+            //take screenshot
+            try {
+                ScreenshotUtils.takeScreenshot(screenshotPath);
+
+                Gdx.app.log("Screenshot", "take an new screenshot, saved to " + screenshotPath + ".");
+            } catch (IOException e) {
+                Gdx.app.error("Screnshot", "Cannot save screenshot (" + screenshotPath + "), because IOException was thrown.", e);
+                e.printStackTrace();
+            } catch (Exception e) {
+                Gdx.app.error("Screnshot", "Cannot save screenshot, because Exception was thrown.", e);
+                e.printStackTrace();
             }
         }
 
