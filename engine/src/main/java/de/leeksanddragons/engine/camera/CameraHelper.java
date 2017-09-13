@@ -416,6 +416,19 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * reset camera position & target position
+    */
+    public void resetPosition () {
+        this.x = 0;
+        this.y = 0;
+        this.zoom = 1;
+
+        //reset target position
+        this.targetX = 0;
+        this.targetY = 0;
+    }
+
+    /**
     * reset camera bounds
     */
     public void resetBounds () {
@@ -423,6 +436,20 @@ public class CameraHelper implements ModificationFinishedListener {
         this.maxX = Float.MAX_VALUE;
         this.minY = -Float.MAX_VALUE;
         this.maxY = Float.MAX_VALUE;
+    }
+
+    /**
+    * reset camera
+    */
+    public void reset () {
+        //reset position
+        this.resetPosition();
+
+        //reset bounds
+        this.resetBounds();
+
+        //reset camera mode
+        this.mode = CameraMode.DIRECT_CAMERA;
     }
 
     /**
