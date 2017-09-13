@@ -1,5 +1,6 @@
 package de.leeksanddragons.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,6 +12,11 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
+import de.leeksanddragons.game.loading.LoadingTask;
+import de.leeksanddragons.game.loading.tasks.ExampleTask;
+
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Justin on 12.09.2017.
@@ -31,10 +37,31 @@ public class LoadingScreen extends BaseScreen {
     protected final float barHeight = 10;
     protected final Color barColor = new Color(0xd8d982ff);//#d8d982
 
+    //percentage of loading bar
     protected float percentage = 0;
+    protected String progressText = "";
 
+    //font
     protected BitmapFont percentageFont = null;
     protected static final int PERCENTAGE_FONT_SIZE = 32;
+
+    //list with all loading tasks
+    //protected List<LoadingTask> loadingTaskList = new ArrayList<>();
+
+    //queue with all loading tasks
+    protected Queue<LoadingTask> taskQueue = new LinkedBlockingQueue<>();
+
+    //current loading task
+    protected LoadingTask currentLoadingTask = null;
+
+    //map with percentage portion
+    protected Map<LoadingTask,Float> percentageMap = new HashMap<>();
+
+    protected float lastTaskPercentage = 0;
+
+    //protected float minPercent = 0;
+
+    protected boolean finished = false;
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
@@ -52,14 +79,51 @@ public class LoadingScreen extends BaseScreen {
 
         //create font
         this.percentageFont = BitmapFontFactory.createFont(PERCENTAGE_FONT_PATH, PERCENTAGE_FONT_SIZE, this.barColor);
+
+        //add tasks
+        addTask(new ExampleTask(), 0.2f);
+        addTask(new ExampleTask(), 0.2f);
+        addTask(new ExampleTask(), 0.2f);
+        addTask(new ExampleTask(), 0.2f);
+        addTask(new ExampleTask(), 0.2f);
     }
 
     @Override
     public void update(IScreenGame game, GameTime time) {
-        percentage += time.getDeltaTime() * 0.5f;
+        if (this.currentLoadingTask == null) {
+            if (!finished) {
+                loadingFinished();
 
-        if (percentage > 1f) {
-            percentage = 0;
+                finished = true;
+            }
+
+            return;
+        }
+
+        //check, if task queue is empty
+        if (this.currentLoadingTask.isFinished()) {
+            LoadingTask nextTask = taskQueue.poll();
+
+            //this.minPercent += (percentageMap.get(currentLoadingTask) / 100f);
+
+            if (nextTask != null) {
+                this.lastTaskPercentage += (percentageMap.get(currentLoadingTask));
+            }
+
+            //goto next task
+            this.currentLoadingTask = nextTask;
+        } else {
+            //update task
+            this.currentLoadingTask.update(game, time);
+
+            //calculate percentage
+            this.percentage = lastTaskPercentage + (percentageMap.get(currentLoadingTask) * currentLoadingTask.getTaskPercentage());
+        }
+
+        if (currentLoadingTask != null && !currentLoadingTask.getText().isEmpty()) {
+            this.progressText = "" + Math.round((percentage * 100)) + "% - " + this.currentLoadingTask.getText();
+        } else {
+            this.progressText = "" + Math.round((percentage * 100)) + "%";
         }
     }
 
@@ -71,8 +135,6 @@ public class LoadingScreen extends BaseScreen {
         //draw background
         batch.draw(this.bgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
 
-        //TODO: draw loading bar
-
         //get maximum width of bar
         float maxWidth = camera.getViewportWidth();
 
@@ -80,7 +142,7 @@ public class LoadingScreen extends BaseScreen {
         SpriteBatcherUtils.fillRectangle(batch, startX, startY, maxWidth * percentage, barHeight, barColor);
 
         //draw percentage text
-        this.percentageFont.draw(batch, "" + Math.round((percentage * 100)) + "%", (camera.getViewportWidth() / 2) - 32, 60);
+        this.percentageFont.draw(batch, this.progressText, (camera.getViewportWidth() / 2) - 32, 60);
 
         //draw foreground graphics
         batch.draw(this.fgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
@@ -97,6 +159,32 @@ public class LoadingScreen extends BaseScreen {
 
         //remove this screen
         game.getScreenManager().removeScreen("loading");
+    }
+
+    protected void loadingFinished () {
+        Gdx.app.log("Loading", "Loading finished.");
+
+        //switch screen
+        game.getScreenManager().leaveAllAndEnter("mainmenu");
+    }
+
+    public void addTask (LoadingTask task, float percentagePortion) {
+        this.taskQueue.add(task);
+
+        //check, if it is first task
+        if (this.currentLoadingTask == null) {
+            this.currentLoadingTask = this.taskQueue.poll();
+        }
+
+        //this.loadingTaskList.add(task);
+        this.percentageMap.put(task, percentagePortion);
+    }
+
+    public void removeTask (LoadingTask task) {
+        this.taskQueue.remove(task);
+
+        //this.loadingTaskList.remove(task);
+        this.percentageMap.remove(task);
     }
 
 }
