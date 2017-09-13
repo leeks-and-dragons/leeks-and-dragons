@@ -44,7 +44,7 @@ public class WindowConfig {
         this.section.put("prefWidth", 800);
         this.section.put("prefHeight", 600);
         this.section.put("resizeable", true);
-        this.section.put("fullscreen", true);
+        this.section.put("fullscreen", false);
 
         //save config
         this.ini.store(new File(cfgFile));
