@@ -12,3 +12,9 @@ Here you can see a list of all contributors and used assets from external author
 ## External Assets
 
 List external assets here.
+
+### Arial Font
+
+**Path**: data/font/arial\
+Arial is an font from microsoft.\
+**License**: https://www.microsoft.com/typography/fonts/font.aspx?FMID=1909
