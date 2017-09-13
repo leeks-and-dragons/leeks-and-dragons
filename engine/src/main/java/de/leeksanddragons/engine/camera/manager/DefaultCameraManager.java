@@ -21,10 +21,10 @@ public class DefaultCameraManager implements CameraManager {
     protected CameraHelper[] customCameras = new CameraHelper[MAX_CUSTOM_CAMERAS];
 
     public DefaultCameraManager (int viewportWidth, int viewportHeight) {
-        //create new main game camera
+        //createDefaultConfig new main game camera
         this.mainCamera = new CameraHelper(viewportWidth, viewportHeight);
 
-        //create new ui camera
+        //createDefaultConfig new ui camera
         this.uiCamera = new CameraHelper(viewportWidth, viewportHeight);
 
         //set fixed camera mode for UI camera, because UI camera isnt moving
@@ -44,7 +44,7 @@ public class DefaultCameraManager implements CameraManager {
     @Override
     public CameraHelper getCustomCamera(int index) {
         if (this.customCameras[index] == null) {
-            //create new custom camera and set viewport of current window dimension
+            //createDefaultConfig new custom camera and set viewport of current window dimension
             this.customCameras[index] = new CameraHelper(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 

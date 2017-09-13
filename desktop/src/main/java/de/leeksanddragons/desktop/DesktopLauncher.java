@@ -2,8 +2,10 @@ package de.leeksanddragons.desktop;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.game.Game;
 
@@ -21,11 +23,16 @@ public class DesktopLauncher {
      * start method for game application
      */
     public static void main(String[] args) {
+        //load window configuration
+        WindowConfig windowConfig = new WindowConfig(FileUtils.getAppHomeDir("leeks-and-dragons") + "prefs/");
+
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Leeks & Dragons";
-        config.height = 600;
-        config.width = 800;
+        config.height = windowConfig.getWidth();
+        config.width = windowConfig.getHeight();
         config.addIcon("./data/icon/app_icon.png", Files.FileType.Absolute);
+        config.resizable = windowConfig.isResizeable();
+        config.fullscreen = windowConfig.isFullscreen();
 
         try {
             // start game

@@ -26,6 +26,13 @@
             <version>${json.version}</version>
         </dependency>
 
+        <!-- ini4j -->
+        <dependency>
+            <groupId>org.ini4j</groupId>
+            <artifactId>ini4j</artifactId>
+            <version>${ini4j.version}</version>
+        </dependency>
+
         <!-- libGDX -->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>

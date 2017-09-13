@@ -102,6 +102,18 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             new File(getAppHomeDir()).mkdirs();
         }
 
+        //check, if prefs dir exists, else create directory
+        if (!new File(getAppHomeDir() + "prefs").exists()) {
+            //create directory
+            new File(getAppHomeDir() + "prefs").mkdirs();
+        }
+
+        //check, if mods dir exists, else create directory
+        if (!new File(getAppHomeDir() + "mods").exists()) {
+            //create directory
+            new File(getAppHomeDir() + "mods").mkdirs();
+        }
+
         //log app home dir
         Gdx.app.log("Files", "app.home: " + getAppHomeDir());
 
