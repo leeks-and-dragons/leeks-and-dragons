@@ -45,7 +45,10 @@ public class Game extends ScreenBasedGame {
         //check, if engine splash screen is enabled
         if (game.getGeneralPreferences().getBoolean("engine_splash_screen", true)) {
             //push screen
-            screenManager.push("jukusoft_intro");
+            //screenManager.push("jukusoft_intro");
+
+            //push screen
+            screenManager.push("logo_intro");
         } else {
             //skip engine splash screen
 
