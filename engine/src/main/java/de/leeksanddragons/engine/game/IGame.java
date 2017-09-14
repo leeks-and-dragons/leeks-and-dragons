@@ -90,6 +90,20 @@ public interface IGame {
     public void addTimerTask (long delay, Runnable runnable);
 
     /**
+    * check, if sound is muted
+     *
+     * @return true, if sound is muted
+    */
+    public boolean isSoundMuted ();
+
+    /**
+     * check, if music is muted
+     *
+     * @return true, if music is muted
+     */
+    public boolean isMusicMuted ();
+
+    /**
     * check, if game is in dev mode
      *
      * @return true, if game is in dev mode

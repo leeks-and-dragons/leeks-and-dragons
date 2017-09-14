@@ -397,6 +397,24 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     }
 
     /**
+     * check, if sound is muted
+     *
+     * @return true, if sound is muted
+     */
+    public boolean isSoundMuted () {
+        return getGeneralPreferences().getBoolean("sound_muted", false);
+    }
+
+    /**
+     * check, if music is muted
+     *
+     * @return true, if music is muted
+     */
+    public boolean isMusicMuted () {
+        return getGeneralPreferences().getBoolean("music_muted", false);
+    }
+
+    /**
      * check, if game is in dev mode
      *
      * @return true, if game is in dev mode
