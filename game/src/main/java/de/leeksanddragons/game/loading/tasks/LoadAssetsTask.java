@@ -26,6 +26,9 @@ public class LoadAssetsTask extends BaseLoadingTask {
     //mod manager
     protected ModManager modManager = null;
 
+    //elapsed time
+    protected float elapsed = 0;
+
     protected enum LOADING_STATE {
             NEW_TASK, INITIALIZED, LOAD_ASSETS
     }
@@ -55,6 +58,8 @@ public class LoadAssetsTask extends BaseLoadingTask {
 
     @Override
     public void update(IScreenGame game, GameTime time) {
+        this.elapsed += time.getDeltaTime() * 1000;
+
         if (state == LOADING_STATE.NEW_TASK) {
             //initialize game
             init();
@@ -123,7 +128,17 @@ public class LoadAssetsTask extends BaseLoadingTask {
     }
 
     protected void loadAssets () {
-        this.percentage = assetManager.getProgress();
+        float progress = assetManager.getProgress();
+
+        if (progress >= 1f) {
+            if (elapsed > 2000) {
+                this.percentage = progress;
+            } else {
+                this.percentage = 0.99f;
+            }
+        } else {
+            this.percentage = progress;
+        }
     }
 
 }
