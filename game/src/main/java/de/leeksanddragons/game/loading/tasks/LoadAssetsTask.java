@@ -127,6 +127,9 @@ public class LoadAssetsTask extends BaseLoadingTask {
                     Gdx.app.error("Loading", "Cannot load unknown asset with unknown type " + asset.getType().name() + ": " + asset.getPath());
                     break;
             }
+
+            //block unloading of asset
+            assetManager.addBlockingFile(asset.getPath());
         }
 
         //set stage
