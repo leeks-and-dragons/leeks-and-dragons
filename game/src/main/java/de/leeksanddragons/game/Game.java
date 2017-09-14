@@ -10,6 +10,7 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
 import de.leeksanddragons.engine.screen.impl.ScreenBasedGame;
 import de.leeksanddragons.game.loading.tasks.ExampleTask;
+import de.leeksanddragons.game.loading.tasks.LoadAssetsTask;
 import de.leeksanddragons.game.loading.tasks.ModLoadingTask;
 import de.leeksanddragons.game.screen.JuKuSoftIntroScreen;
 import de.leeksanddragons.game.screen.LoadingScreen;
@@ -28,8 +29,11 @@ public class Game extends ScreenBasedGame {
 
     @Override
     protected void onInit(IScreenGame game, ScreenManager<IScreen> screenManager) {
-        //set log level
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        //check, if game is in dev mode
+        if (isDevMode()) {
+            //set log level
+            Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        }
 
         //create mod manager
         game.getSharedData().put(Shared.MOD_MANAGER, new DefaultModManager());
@@ -51,11 +55,7 @@ public class Game extends ScreenBasedGame {
         }
 
         //add loading tasks
-        loading.addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
-        loading.addTask(new ExampleTask(), 0.25f);
-        loading.addTask(new ExampleTask(), 0.2f);
-        loading.addTask(new ExampleTask(), 0.2f);
-        loading.addTask(new ExampleTask(), 0.2f);
+        this.addLoadingTasks(this, modManager, loading);
 
         //check, if preferences are available
         if (!game.getGeneralPreferences().contains("engine_splash_screen")) {
@@ -64,13 +64,27 @@ public class Game extends ScreenBasedGame {
             game.getGeneralPreferences().flush();
         }
 
+        //check, if preferences are available
+        if (!game.getGeneralPreferences().contains("logo_splash_screen")) {
+            //set preferences and save
+            game.getGeneralPreferences().putBoolean("logo_splash_screen", true);
+            game.getGeneralPreferences().flush();
+        }
+
+        //check, if preferences are available
+        if (!game.getGeneralPreferences().contains("dev_mode")) {
+            //set preferences and save
+            game.getGeneralPreferences().putBoolean("dev_mode", false);
+            game.getGeneralPreferences().flush();
+        }
+
         //check, if engine splash screen is enabled
         if (game.getGeneralPreferences().getBoolean("engine_splash_screen", true)) {
             //push screen
-            //screenManager.push("jukusoft_intro");
+            screenManager.push("jukusoft_intro");
 
             //push screen
-            screenManager.push("logo_intro");
+            //screenManager.push("logo_intro");
         } else {
             //skip engine splash screen
 
@@ -80,6 +94,7 @@ public class Game extends ScreenBasedGame {
                 screenManager.push("logo_intro");
             } else {
                 //skip logo splash screen
+                Gdx.app.debug("Game", "skip logo intro, caused by preferences.");
 
                 //push screen
                 screenManager.push("loading");
@@ -90,6 +105,18 @@ public class Game extends ScreenBasedGame {
     @Override
     protected void onDispose() {
 
+    }
+
+    protected void addLoadingTasks (IScreenGame game, ModManager modManager, LoadingScreen loading) {
+        //add task to load mods
+        loading.addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
+
+        //load mod assets
+        //loading.addTask(new LoadAssetsTask());
+        loading.addTask(new ExampleTask(), 0.25f);
+        loading.addTask(new ExampleTask(), 0.2f);
+        loading.addTask(new ExampleTask(), 0.2f);
+        loading.addTask(new ExampleTask(), 0.2f);
     }
 
 }
