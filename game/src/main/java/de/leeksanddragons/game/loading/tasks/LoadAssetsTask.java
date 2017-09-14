@@ -14,6 +14,7 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.game.loading.BaseLoadingTask;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -97,7 +98,12 @@ public class LoadAssetsTask extends BaseLoadingTask {
             Gdx.app.debug("Loading", "parse load_assets.json from mod: " + mod.getPath());
 
             //parse load_assets.json
-            this.parser.parseMod(mod.getPath());
+            try {
+                this.parser.parseMod(mod.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+                Gdx.app.error("Loading", "Couldnt load mod assets: " + mod.getPath(), e);
+            }
         }
 
         //add all assets to asset manager

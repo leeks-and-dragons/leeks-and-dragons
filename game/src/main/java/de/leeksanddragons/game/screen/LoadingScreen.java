@@ -85,7 +85,10 @@ public class LoadingScreen extends BaseScreen {
     public void update(IScreenGame game, GameTime time) {
         if (this.currentLoadingTask == null) {
             if (!finished) {
-                loadingFinished();
+                //go to mainmenu after 1 second
+                game.addTimerTask(1000, () -> {
+                    loadingFinished();
+                });
 
                 finished = true;
             }
