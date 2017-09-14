@@ -10,7 +10,7 @@
 	<fileSets>
 		<!-- configuration file -->
 		<fileSet>
-			<directory>cfg</directory>
+			<directory>../cfg</directory>
 			<outputDirectory>cfg</outputDirectory>
 			<excludes>
 				<exclude>*.cfg</exclude>
@@ -19,7 +19,7 @@
 
 		<!-- data directory -->
 		<fileSet>
-			<directory>data</directory>
+			<directory>../data</directory>
 			<outputDirectory>data</outputDirectory>
 			<excludes>
 				<exclude>*.cfg</exclude>
@@ -28,8 +28,17 @@
 
 		<!-- docs directory -->
 		<fileSet>
-			<directory>docs</directory>
+			<directory>../docs</directory>
 			<outputDirectory>docs</outputDirectory>
+			<excludes>
+				<exclude>*.cfg</exclude>
+			</excludes>
+		</fileSet>
+
+		<!-- mods directory -->
+		<fileSet>
+			<directory>../mods</directory>
+			<outputDirectory>mods</outputDirectory>
 			<excludes>
 				<exclude>*.cfg</exclude>
 			</excludes>
