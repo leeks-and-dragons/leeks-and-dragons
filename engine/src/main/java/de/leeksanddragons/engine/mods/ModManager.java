@@ -25,9 +25,9 @@ public interface ModManager {
     public List<ModInfo> listLoadedMods ();
 
     /**
-    * list all mods, which supports asset loading
+    * list all mods, which supports asset pre-loading
      *
-     * @return list with all mods, which supports asset loading
+     * @return list with all mods, which supports asset pre-loading
     */
     public List<ModInfo> listAssetLoadingMods ();
 
