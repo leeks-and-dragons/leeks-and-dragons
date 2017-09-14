@@ -236,7 +236,7 @@ public class ModInfo implements Comparable<ModInfo> {
         ModInfo mod = new ModInfo();
 
         //set mod information
-        mod.modPath = new File(modPath).getAbsolutePath();
+        mod.modPath = new File(modPath).getAbsolutePath() + "/";
         mod.name = json.getString(KEY_MOD_NAME);
         mod.title = json.getString(KEY_MOD_TITLE);
         mod.version = json.getString(KEY_MOD_VERSION);

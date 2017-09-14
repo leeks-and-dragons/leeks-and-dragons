@@ -112,11 +112,7 @@ public class Game extends ScreenBasedGame {
         loading.addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
 
         //load mod assets
-        //loading.addTask(new LoadAssetsTask());
-        loading.addTask(new ExampleTask(), 0.25f);
-        loading.addTask(new ExampleTask(), 0.2f);
-        loading.addTask(new ExampleTask(), 0.2f);
-        loading.addTask(new ExampleTask(), 0.2f);
+        loading.addTask(new LoadAssetsTask(game.getAssetManager(), modManager), 0.85f);
     }
 
 }

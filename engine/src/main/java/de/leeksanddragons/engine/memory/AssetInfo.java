@@ -8,7 +8,7 @@ package de.leeksanddragons.engine.memory;
 public class AssetInfo {
 
     public enum TYPE {
-        TEXTURE, UNKNOWN
+        TEXTURE, MUSIC, SOUND, UNKNOWN
     };
 
     protected String path = "";
