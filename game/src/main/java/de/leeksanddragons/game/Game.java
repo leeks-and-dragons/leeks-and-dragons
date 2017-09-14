@@ -70,7 +70,7 @@ public class Game extends ScreenBasedGame {
         prefs.flush();
 
         //check, if engine splash screen is enabled
-        if (game.getGeneralPreferences().getBoolean("engine_splash_screen", true)) {
+        if (prefs.getBoolean("engine_splash_screen", true)) {
             //push screen
             screenManager.push("jukusoft_intro");
 
@@ -80,7 +80,7 @@ public class Game extends ScreenBasedGame {
             //skip engine splash screen
 
             //check, if logo screen is enabled
-            if (game.getGeneralPreferences().getBoolean("logo_splash_screen", true)) {
+            if (prefs.getBoolean("logo_splash_screen", true)) {
                 //push screen
                 screenManager.push("logo_intro");
             } else {
