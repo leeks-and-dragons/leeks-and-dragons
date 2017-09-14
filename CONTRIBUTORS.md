@@ -18,3 +18,10 @@ List external assets here.
 **Path**: data/font/arial\
 Arial is an font from microsoft.\
 **License**: https://www.microsoft.com/typography/fonts/font.aspx?FMID=1909
+
+### Menu Selection Click (Sound)
+
+**Path**: data/sound/menu_selection_click\
+**Author**: NenadSimic
+**License**: CC-BY 3.0\
+**Source / Link**: https://opengameart.org/content/menu-selection-click
