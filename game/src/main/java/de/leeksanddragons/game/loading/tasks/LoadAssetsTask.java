@@ -93,6 +93,14 @@ public class LoadAssetsTask extends BaseLoadingTask {
     }
 
     protected void parseAssetList () {
+        //parse load_assets.json in data directory
+        try {
+            this.parser.parseMod("./data/");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Gdx.app.error("Loading", "Couldnt load data assets.", e);
+        }
+
         //parse load_assets.json from every mod
         for (ModInfo mod : this.modList) {
             Gdx.app.debug("Loading", "parse load_assets.json from mod: " + mod.getPath());
