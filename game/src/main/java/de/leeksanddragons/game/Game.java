@@ -58,7 +58,7 @@ public class Game extends ScreenBasedGame {
         //add loading tasks
         this.addLoadingTasks(this, modManager, loading);
 
-        //check, if preferences are available
+        //check, if preferences are available, else set default values
         GamePreferences prefs = game.getGeneralPreferences();
         prefs.putBooleanIfAbsent("engine_splash_screen", true);
         prefs.putBooleanIfAbsent("logo_splash_screen", true);
