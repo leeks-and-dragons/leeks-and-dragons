@@ -2,12 +2,15 @@ package de.leeksanddragons.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.mods.impl.DefaultModManager;
 import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
 import de.leeksanddragons.engine.screen.impl.ScreenBasedGame;
+import de.leeksanddragons.game.loading.tasks.ExampleTask;
+import de.leeksanddragons.game.loading.tasks.ModLoadingTask;
 import de.leeksanddragons.game.screen.JuKuSoftIntroScreen;
 import de.leeksanddragons.game.screen.LoadingScreen;
 import de.leeksanddragons.game.screen.LogoIntroScreen;
@@ -36,6 +39,23 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("logo_intro", new LogoIntroScreen());
         screenManager.addScreen("loading", new LoadingScreen());
         screenManager.addScreen("mainmenu", new MainMenuScreen());
+
+        //get instance of loading screen
+        LoadingScreen loading = (LoadingScreen) screenManager.getScreenByName("loading");
+
+        //first get mod manager
+        ModManager modManager = game.getSharedData().get(Shared.MOD_MANAGER, ModManager.class);
+
+        if (modManager == null) {
+            throw new NullPointerException("mod manager cannot be null.");
+        }
+
+        //add loading tasks
+        loading.addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
+        loading.addTask(new ExampleTask(), 0.25f);
+        loading.addTask(new ExampleTask(), 0.2f);
+        loading.addTask(new ExampleTask(), 0.2f);
+        loading.addTask(new ExampleTask(), 0.2f);
 
         //check, if preferences are available
         if (!game.getGeneralPreferences().contains("engine_splash_screen")) {

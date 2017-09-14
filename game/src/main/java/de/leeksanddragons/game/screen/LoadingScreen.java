@@ -40,7 +40,7 @@ public class LoadingScreen extends BaseScreen {
     protected final float barHeight = 10;
     protected final Color barColor = new Color(0xd8d982ff);//#d8d982
 
-    //percentage of loading bar
+    //percentage and progress text of loading bar
     protected float percentage = 0;
     protected String progressText = "";
 
@@ -57,8 +57,10 @@ public class LoadingScreen extends BaseScreen {
     //map with percentage portion
     protected Map<LoadingTask,Float> percentageMap = new HashMap<>();
 
+    //percentage amount of last task
     protected float lastTaskPercentage = 0;
 
+    //flag, if loading was finished and screen should be switched after 1 second
     protected boolean finished = false;
 
     @Override
@@ -77,20 +79,6 @@ public class LoadingScreen extends BaseScreen {
 
         //create font
         this.percentageFont = BitmapFontFactory.createFont(PERCENTAGE_FONT_PATH, PERCENTAGE_FONT_SIZE, this.barColor);
-
-        //first get mod manager
-        ModManager modManager = game.getSharedData().get(Shared.MOD_MANAGER, ModManager.class);
-
-        if (modManager == null) {
-            throw new NullPointerException("mod manager cannot be null.");
-        }
-
-        //first, load mods
-        addTask(new ModLoadingTask(game.getAppName(), modManager), 0.15f);
-        addTask(new ExampleTask(), 0.25f);
-        addTask(new ExampleTask(), 0.2f);
-        addTask(new ExampleTask(), 0.2f);
-        addTask(new ExampleTask(), 0.2f);
     }
 
     @Override

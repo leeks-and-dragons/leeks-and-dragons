@@ -44,6 +44,15 @@ public interface ScreenManager<T extends IScreen> {
     public T pop();
 
     /**
+    * get screen by name
+     *
+     * @param name unique name of screen
+     *
+     * @return instance of screen
+    */
+    public T getScreenByName (final String name);
+
+    /**
      * list all initialized screens
      *
      * @return list with all registered streams
