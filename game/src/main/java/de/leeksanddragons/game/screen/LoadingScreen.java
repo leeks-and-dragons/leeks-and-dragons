@@ -59,8 +59,6 @@ public class LoadingScreen extends BaseScreen {
 
     protected float lastTaskPercentage = 0;
 
-    //protected float minPercent = 0;
-
     protected boolean finished = false;
 
     @Override
