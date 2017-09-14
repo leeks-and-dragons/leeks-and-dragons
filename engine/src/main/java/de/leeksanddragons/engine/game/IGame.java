@@ -90,6 +90,13 @@ public interface IGame {
     public void addTimerTask (long delay, Runnable runnable);
 
     /**
+    * check, if game is in dev mode
+     *
+     * @return true, if game is in dev mode
+    */
+    public boolean isDevMode ();
+
+    /**
      * get asset manager
      *
      * @return instance of asset manager

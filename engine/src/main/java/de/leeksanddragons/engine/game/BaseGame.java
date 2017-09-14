@@ -397,6 +397,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     }
 
     /**
+     * check, if game is in dev mode
+     *
+     * @return true, if game is in dev mode
+     */
+    public boolean isDevMode () {
+        return getGeneralPreferences().getBoolean("dev_mode", false);
+    }
+
+    /**
     * initialize game
     */
     protected abstract void initGame();
