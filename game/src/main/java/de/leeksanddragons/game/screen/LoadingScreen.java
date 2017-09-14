@@ -8,15 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.font.BitmapFontFactory;
 import de.leeksanddragons.engine.memory.GameAssetManager;
-import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 import de.leeksanddragons.game.loading.LoadingTask;
-import de.leeksanddragons.game.loading.tasks.ExampleTask;
-import de.leeksanddragons.game.loading.tasks.ModLoadingTask;
-import de.leeksanddragons.game.shared.Shared;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -146,15 +142,12 @@ public class LoadingScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        //unload image
+        //unload images
         assetManager.unload(BG_PATH);
-    }
+        assetManager.unload(FG_PATH);
 
-    protected void gotoMainMenu () {
-        game.getScreenManager().leaveAllAndEnter("mainmenu");
-
-        //remove this screen
-        game.getScreenManager().removeScreen("loading");
+        //dispose font
+        this.percentageFont.dispose();
     }
 
     protected void loadingFinished () {
@@ -162,6 +155,9 @@ public class LoadingScreen extends BaseScreen {
 
         //switch screen
         game.getScreenManager().leaveAllAndEnter("mainmenu");
+
+        //remove this screen
+        game.getScreenManager().removeScreen("loading");
     }
 
     public void addTask (LoadingTask task, float percentagePortion) {
