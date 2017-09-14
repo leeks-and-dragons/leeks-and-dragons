@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.mods.impl.DefaultModManager;
+import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -58,25 +59,15 @@ public class Game extends ScreenBasedGame {
         this.addLoadingTasks(this, modManager, loading);
 
         //check, if preferences are available
-        if (!game.getGeneralPreferences().contains("engine_splash_screen")) {
-            //set preferences and save
-            game.getGeneralPreferences().putBoolean("engine_splash_screen", true);
-            game.getGeneralPreferences().flush();
-        }
+        GamePreferences prefs = game.getGeneralPreferences();
+        prefs.putBooleanIfAbsent("engine_splash_screen", true);
+        prefs.putBooleanIfAbsent("logo_splash_screen", true);
+        prefs.putBooleanIfAbsent("dev_mode", false);
+        prefs.putBooleanIfAbsent("sound_muted", false);
+        prefs.putBooleanIfAbsent("music_muted", false);
 
-        //check, if preferences are available
-        if (!game.getGeneralPreferences().contains("logo_splash_screen")) {
-            //set preferences and save
-            game.getGeneralPreferences().putBoolean("logo_splash_screen", true);
-            game.getGeneralPreferences().flush();
-        }
-
-        //check, if preferences are available
-        if (!game.getGeneralPreferences().contains("dev_mode")) {
-            //set preferences and save
-            game.getGeneralPreferences().putBoolean("dev_mode", false);
-            game.getGeneralPreferences().flush();
-        }
+        //save changes
+        prefs.flush();
 
         //check, if engine splash screen is enabled
         if (game.getGeneralPreferences().getBoolean("engine_splash_screen", true)) {

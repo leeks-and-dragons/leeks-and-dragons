@@ -296,4 +296,11 @@ public class GamePreferences implements IPreferences {
     public String getPrefsPath() {
         return this.prefPath;
     }
+
+    @Override
+    public void putBooleanIfAbsent(String key, boolean val) {
+        if (!contains(key)) {
+            putBoolean(key, val);
+        }
+    }
 }

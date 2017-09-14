@@ -328,7 +328,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      * @return instance of general preferences
      */
     @Override
-    public IPreferences getGeneralPreferences () {
+    public GamePreferences getGeneralPreferences () {
         return getPreferences("general");
     }
 
@@ -338,7 +338,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      * @return instance of preferences by category
      */
     @Override
-    public IPreferences getPreferences (String category) {
+    public GamePreferences getPreferences (String category) {
         category = category.toLowerCase();
 
         //check, if preferences already exists

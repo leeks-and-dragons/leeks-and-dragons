@@ -19,4 +19,12 @@ public interface IPreferences extends Preferences {
     */
     public String getPrefsPath ();
 
+    /**
+    * put boolean, if key is absent
+     *
+     * @param key key
+     * @param val value which will be set, if key is absent
+    */
+    public void putBooleanIfAbsent (String key, boolean val);
+
 }
