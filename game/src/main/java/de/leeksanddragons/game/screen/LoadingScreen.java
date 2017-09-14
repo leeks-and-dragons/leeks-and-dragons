@@ -48,9 +48,6 @@ public class LoadingScreen extends BaseScreen {
     protected BitmapFont percentageFont = null;
     protected static final int PERCENTAGE_FONT_SIZE = 18;
 
-    //list with all loading tasks
-    //protected List<LoadingTask> loadingTaskList = new ArrayList<>();
-
     //queue with all loading tasks
     protected Queue<LoadingTask> taskQueue = new LinkedBlockingQueue<>();
 
