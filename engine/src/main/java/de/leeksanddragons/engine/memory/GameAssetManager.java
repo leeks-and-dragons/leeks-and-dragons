@@ -1,6 +1,9 @@
 package de.leeksanddragons.engine.memory;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,19 @@ public class GameAssetManager extends AssetManager {
 
     //time limit for every asset manager update() execution
     protected int max_Loading_Millis = 10;
+
+    public GameAssetManager () {
+        super(new AbsoluteFileHandleResolver());
+    }
+
+    /** Creates a new AssetManager with all default loaders. */
+    public GameAssetManager (FileHandleResolver resolver) {
+        super(resolver, true);
+    }
+
+    public GameAssetManager (FileHandleResolver resolver, boolean defaultLoaders) {
+        super(resolver, defaultLoaders);
+    }
 
     @Override
     public void unload (String fileName) {

@@ -16,6 +16,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.game.loading.BaseLoadingTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +47,9 @@ public class LoadAssetsTask extends BaseLoadingTask {
 
     //load_assets.json parser
     protected LoadingAssetParser parser = new LoadingAssetParser();
+
+    //list all required assets (to check, if asset manager has finished)
+    protected List<AssetInfo> assetList = new ArrayList<>();
 
     /**
     * default constructor
@@ -154,6 +158,15 @@ public class LoadAssetsTask extends BaseLoadingTask {
 
         if (progress >= 1f) {
             if (elapsed > 2000) {
+                //check, if all assets were loaded
+                for (AssetInfo asset : this.assetList) {
+                    if (!assetManager.isLoaded(asset.getPath())) {
+                        Gdx.app.debug("LoadAssetsTask", "progress is 100%, but asset wasnt loaded yet: " + asset.getPath());
+
+                        return;
+                    }
+                }
+
                 this.percentage = progress;
             } else {
                 this.percentage = 0.99f;

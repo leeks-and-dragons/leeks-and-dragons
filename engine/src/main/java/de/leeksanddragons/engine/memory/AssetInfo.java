@@ -15,7 +15,9 @@ public class AssetInfo {
     protected TYPE type = TYPE.UNKNOWN;
 
     public AssetInfo (String path, TYPE type) {
-        this.path = path;
+        this.path = path.replace("\\", "/");
+        this.path = this.path.replace("\\.\\", "\\");
+        this.path = this.path.replace("/./", "/");
         this.type = type;
     }
 
