@@ -154,8 +154,8 @@ public class LoadingScreen extends BaseScreen {
         Gdx.app.log("Loading", "Loading finished.");
 
         //switch screen
-        //game.getScreenManager().leaveAllAndEnter("mainmenu");
-        game.getScreenManager().leaveAllAndEnter("water_prototype");
+        game.getScreenManager().leaveAllAndEnter("mainmenu");
+        //game.getScreenManager().leaveAllAndEnter("water_prototype");
 
         //remove this screen
         game.getScreenManager().removeScreen("loading");

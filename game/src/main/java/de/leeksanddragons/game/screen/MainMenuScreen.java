@@ -1,8 +1,14 @@
 package de.leeksanddragons.game.screen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import de.leeksanddragons.engine.camera.CameraHelper;
+import de.leeksanddragons.engine.font.BitmapFontFactory;
+import de.leeksanddragons.engine.gui.HUD;
+import de.leeksanddragons.engine.gui.widgets.MenuButton;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
@@ -21,6 +27,15 @@ public class MainMenuScreen extends BaseScreen {
     protected Texture bgTexture = null;
     protected Texture fgTexture = null;
 
+    //font
+    protected BitmapFont font = null;
+
+    //GUI
+    protected HUD hud = null;
+
+    //buttons
+    protected MenuButton startButton = null;
+
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
         //load background image first
@@ -37,8 +52,40 @@ public class MainMenuScreen extends BaseScreen {
     }
 
     @Override
-    public void update(IScreenGame game, GameTime time) {
+    public void onResume() {
+        if (this.hud == null) {
+            //create new HUD
+            this.hud = new HUD();
 
+            //create new font
+            this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 16, Color.WHITE);
+
+            //create buttons
+            this.createButtons(this.hud);
+        }
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    protected void createButtons (HUD hud) {
+        //first, get texture atlas
+        TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("menu_buttons", TextureAtlas.class);
+
+        //create new start button
+        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
+        this.startButton.setPosition(40, 200);
+
+        //add button to HUD
+        this.hud.addWidget(startButton);
+    }
+
+    @Override
+    public void update(IScreenGame game, GameTime time) {
+        //update HUD
+        this.hud.update(game, time);
     }
 
     @Override
@@ -48,6 +95,9 @@ public class MainMenuScreen extends BaseScreen {
 
         //draw background
         batch.draw(this.bgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
+
+        //draw GUI
+        this.hud.drawLayer0(time, batch);
 
         //TODO: add code here
 

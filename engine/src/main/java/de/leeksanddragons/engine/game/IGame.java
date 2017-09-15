@@ -6,6 +6,7 @@ import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
+import de.leeksanddragons.engine.sound.SoundManager;
 
 /**
  * Created by Justin on 11.09.2017.
@@ -103,6 +104,13 @@ public interface IGame {
      * @return true, if music is muted
      */
     public boolean isMusicMuted ();
+
+    /**
+    * get instance of sound manager
+     *
+     * @return instance of sound manager
+    */
+    public SoundManager getSoundManager ();
 
     /**
     * check, if game is in dev mode
