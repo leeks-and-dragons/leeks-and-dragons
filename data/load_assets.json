@@ -1,3 +1,4 @@
 [
-	{"path": "sound/menu_selection_click/menu_selection_click_16bit.wav", "type": "sound"}
+	{"path": "sound/menu_selection_click/menu_selection_click_16bit.wav", "type": "sound"},
+	{"name": "menu_buttons", "path": "ui/buttons.png", "type": "atlas"}
 ]
