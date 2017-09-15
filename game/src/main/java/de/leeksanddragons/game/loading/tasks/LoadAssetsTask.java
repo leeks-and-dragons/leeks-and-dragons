@@ -141,7 +141,7 @@ public class LoadAssetsTask extends BaseLoadingTask {
         float progress = assetManager.getProgress();
 
         if (progress >= 1f) {
-            if (elapsed > 2000) {
+            if (elapsed > 500) {
                 //check, if all assets were loaded
                 for (AssetInfo asset : this.assetList) {
                     if (!assetManager.isLoaded(asset.getPath())) {

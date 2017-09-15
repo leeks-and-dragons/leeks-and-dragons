@@ -83,8 +83,6 @@ public class WaterRenderer implements IRenderer {
     /**
     * load texture atlas
      *
-     * IMPORTANT: This method doesnt work yet, an issue was commited to libGDX developers
-     *
      * @param atlasFile path to atlas file
      * @param animation animation name
      * @param frameDurationInMillis frame duration in milliseconds
@@ -114,7 +112,7 @@ public class WaterRenderer implements IRenderer {
         }
 
         //finish loading
-        //assetManager.finishLoadingAsset(atlasFile);
+        assetManager.finishLoadingAsset(atlasFile);
 
         Gdx.app.debug("WaterRenderer", "atlas file loaded: " + atlasFile);
 

@@ -4,11 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ExternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Logger;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
@@ -106,6 +109,16 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //set asset logger
         this.assetManager.getLogger().setLevel(Gdx.app.getLogLevel());
+
+        //set error listener
+        this.assetManager.setErrorListener(new AssetErrorListener() {
+            @Override
+            public void error(AssetDescriptor asset, Throwable throwable) {
+                Gdx.app.error("GameAssetManager", "AssetError occurred! asset: " + asset, throwable);
+
+                throw new GdxRuntimeException(throwable);
+            }
+        });
 
         //log user.home and app home dir
         Gdx.app.log("Files", "user.home: " + FileUtils.getUserHomeDir());
