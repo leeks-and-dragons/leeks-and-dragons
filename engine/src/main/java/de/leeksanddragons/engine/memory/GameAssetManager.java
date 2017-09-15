@@ -4,9 +4,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Proxy Design pattern for libGDX Asset Manager to prevent unloading of specific assets
@@ -27,6 +31,9 @@ public class GameAssetManager extends AssetManager {
 
     //time limit for every asset manager update() execution
     protected int max_Loading_Millis = 10;
+
+    //if load_assets.json contains name key, this asset is saved in this map
+    protected Map<String,Object> assetsMap = new ConcurrentHashMap<>();
 
     public GameAssetManager () {
         super(new AbsoluteFileHandleResolver());
@@ -101,6 +108,30 @@ public class GameAssetManager extends AssetManager {
         } else {
             return super.update();
         }
+    }
+
+    /**
+    * store an loaded asset to an specific name
+     *
+     * @param name unique asset name
+     * @param asset loaded instance of asset
+    */
+    public <T> void addAssetByName (String name, T asset) {
+        this.assetsMap.put(name, asset);
+    }
+
+    public void removeAssetName (String name) {
+        this.assetsMap.remove(name);
+    }
+
+    public <T> T getAssetByName (String name, Class<T> cls) {
+        Object asset = this.assetsMap.get(name);
+
+        if (asset == null) {
+            throw new GdxRuntimeException("Couldnt found asset by name: " + name + ", was this asset loaded and saved with addAssetByName() before?");
+        }
+
+        return cls.cast(asset);
     }
 
 }

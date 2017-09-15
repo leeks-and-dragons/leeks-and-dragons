@@ -63,18 +63,25 @@ public class LoadingAssetParser {
             //create new asset info
             AssetInfo asset = null;
 
+            //unique name of asset
+            String assetName = "";
+
+            if (json.has("name")) {
+                assetName = json.getString("name");
+            }
+
             switch (type.toLowerCase()) {
                 case "texture":
-                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE);
+                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE, assetName);
                     break;
                 case "atlas":
-                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE_ATLAS);
+                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE_ATLAS, assetName);
                     break;
                 case "sound":
-                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.SOUND);
+                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.SOUND, assetName);
                     break;
                 case "music":
-                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.MUSIC);
+                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.MUSIC, assetName);
                     break;
                 default:
                     Gdx.app.error("Loading Asset", "Unknown asset type '" + type + "' in load_assets.json in mod directory: " + modPath);

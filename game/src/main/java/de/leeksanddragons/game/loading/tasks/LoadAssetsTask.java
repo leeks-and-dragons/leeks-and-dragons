@@ -123,30 +123,14 @@ public class LoadAssetsTask extends BaseLoadingTask {
         for (AssetInfo asset : this.parser.listAllAssets()) {
             Gdx.app.debug("Loading", "load asset: " + asset.getPath());
 
-            switch (asset.getType()) {
-                case TEXTURE:
-                    //load texture
-                    assetManager.load(asset.getPath(), Texture.class);
-                    break;
-                case TEXTURE_ATLAS:
-                    //load atlas file
-                    assetManager.load(asset.getPath(), TextureAtlas.class);
-                    break;
-                case SOUND:
-                    //load sounds
-                    assetManager.load(asset.getPath(), Sound.class);
-                    break;
-                case MUSIC:
-                    //load music
-                    assetManager.load(asset.getPath(), Music.class);
-                    break;
-                default:
-                    Gdx.app.error("Loading", "Cannot load unknown asset with unknown type " + asset.getType().name() + ": " + asset.getPath());
-                    break;
-            }
+            //load asset
+            assetManager.load(asset.getPath(), asset.getLibGDXAssetClass());
 
             //block unloading of asset
             assetManager.addBlockingFile(asset.getPath());
+
+            //add asset to list
+            this.assetList.add(asset);
         }
 
         //set stage
@@ -161,9 +145,20 @@ public class LoadAssetsTask extends BaseLoadingTask {
                 //check, if all assets were loaded
                 for (AssetInfo asset : this.assetList) {
                     if (!assetManager.isLoaded(asset.getPath())) {
-                        Gdx.app.debug("LoadAssetsTask", "progress is 100%, but asset wasnt loaded yet: " + asset.getPath());
+                        Gdx.app.log("LoadAssetsTask", "progress is 100%, but asset wasnt loaded yet: " + asset.getPath());
 
+                        this.percentage = 0.99f;
                         return;
+                    } else {
+                        Gdx.app.log("LoadAssetsTask", "asset was loaded successfully: " + asset.getPath());
+
+                        //check, if asset has an name
+                        if (asset.hasName()) {
+                            //store asset under name
+                            assetManager.addAssetByName(asset.getName(), assetManager.get(asset.getPath(), asset.getLibGDXAssetClass()));
+
+                            Gdx.app.debug("LoadAssetsTask", "stored asset under name '" + asset.getName() + "': " + asset.getPath());
+                        }
                     }
                 }
 
