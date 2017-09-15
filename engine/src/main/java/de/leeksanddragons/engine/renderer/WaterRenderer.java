@@ -254,9 +254,39 @@ public class WaterRenderer implements IRenderer {
         //batch.draw(frame, 0, 0, 32, 32);
 
         if (this.currentPage != null) {
-            //this.currentPage.draw(game, time, );
-            this.currentPage.draw(game, time, batch, 0, 0);
-            this.currentPage.draw(game, time, batch, 256, 0);
+            //calculate startX and startY
+            float w1 = camera.getX() / this.frame.getRegionWidth() - 1;
+            float h1 = camera.getY() / this.frame.getRegionHeight() - 1;
+
+            //get start position of first page on bottom left viewport
+            float startX = w1 * this.frame.getRegionWidth();
+            float startY = h1 * this.frame.getRegionHeight();
+
+            //get camera position on top right border
+            float cameraXRight = camera.getX() + camera.getViewportWidth();
+            float cameraYTop = camera.getY() + camera.getViewportHeight();
+
+            int requiredPagesX = (int) (camera.getViewportWidth() / this.currentPage.getWidth() + 1);
+            int requiredPagesY = (int) (camera.getViewportHeight() / this.currentPage.getHeight() + 1);
+
+            float offsetX = 0;
+            float offsetY = 0;
+
+            //fill screen with water animation
+            for (int x = 0; x < requiredPagesX; x++) {
+                for (int y = 0; y < requiredPagesY; y++) {
+                    this.currentPage.draw(game, time, batch, startX + offsetX, startY + offsetY);
+
+                    //increment offset y
+                    offsetY += this.currentPage.getHeight();
+                }
+
+                //increment offset x
+                offsetX += this.currentPage.getWidth();
+
+                //reset offset y
+                offsetY = 0;
+            }
         }
     }
 
