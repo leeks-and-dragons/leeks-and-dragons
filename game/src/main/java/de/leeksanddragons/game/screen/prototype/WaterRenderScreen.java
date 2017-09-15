@@ -31,7 +31,7 @@ public class WaterRenderScreen extends BaseScreen {
             this.waterRenderer = new WaterRenderer(this.game);
 
             //get (pre-loaded) texture atlas
-            TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("water_animation", TextureAtlas.class);
+            TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("maingame_water_animation", TextureAtlas.class);
 
             //load water renderer
             this.waterRenderer.load(textureAtlas, "WaterLowestContrast", 200f);
