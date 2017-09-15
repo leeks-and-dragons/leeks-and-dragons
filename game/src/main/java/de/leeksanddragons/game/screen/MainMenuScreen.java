@@ -155,13 +155,15 @@ public class MainMenuScreen extends BaseScreen {
 
         startY -= 60;
 
-        //create editor button
-        this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
-        this.editorButton.setPosition(startX, startY);
-        this.editorButton.setHoverSound(hoverSound, 0.5f);
-        this.hud.addWidget(editorButton);
+        if (this.game.isDevMode()) {
+            //create editor button
+            this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
+            this.editorButton.setPosition(startX, startY);
+            this.editorButton.setHoverSound(hoverSound, 0.5f);
+            this.hud.addWidget(editorButton);
 
-        startY -= 60;
+            startY -= 60;
+        }
 
         //create credits button
         this.creditsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Credits");
