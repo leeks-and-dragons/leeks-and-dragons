@@ -67,7 +67,7 @@ public class MainMenuScreen extends BaseScreen {
             this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 16, Color.WHITE);
 
             //create buttons
-            this.createHorizontalButtons(this.hud);
+            this.createVerticalButtons(this.hud);
         }
     }
 
@@ -117,6 +117,59 @@ public class MainMenuScreen extends BaseScreen {
         this.hud.addWidget(creditsButton);
 
         startX += 110;
+
+        //create close button
+        this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
+        this.closeButton.setPosition(startX, startY);
+        this.closeButton.setHoverSound(hoverSound, 0.5f);
+        this.closeButton.setClickListener(() -> {
+            //close application
+            Gdx.app.exit();
+        });
+        this.hud.addWidget(closeButton);
+    }
+
+    protected void createVerticalButtons (HUD hud) {
+        //first, get texture atlas
+        TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("menu_buttons", TextureAtlas.class);
+
+        //get hover sound
+        Sound hoverSound = game.getAssetManager().getAssetByName("menu_hover_sound", Sound.class);
+
+        float startX = 100;//40;
+        float startY = 400;
+
+        //create start button
+        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
+        this.startButton.setPosition(startX, startY);
+        this.startButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(startButton);
+
+        startY -= 60;
+
+        //create options button
+        this.optionsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Options");
+        this.optionsButton.setPosition(startX, startY);
+        this.optionsButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(optionsButton);
+
+        startY -= 60;
+
+        //create editor button
+        this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
+        this.editorButton.setPosition(startX, startY);
+        this.editorButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(editorButton);
+
+        startY -= 60;
+
+        //create credits button
+        this.creditsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Credits");
+        this.creditsButton.setPosition(startX, startY);
+        this.creditsButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(creditsButton);
+
+        startY -= 60;
 
         //create close button
         this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
