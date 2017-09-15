@@ -30,12 +30,6 @@ public class WaterRenderScreen extends BaseScreen {
             //create new water renderer
             this.waterRenderer = new WaterRenderer(this.game);
 
-            /*File file = new File("mods/maingame/animation/water/WaterAnimation.atlas");
-            Gdx.app.debug("WaterRenderer", "atlas file: " + file.getAbsolutePath());
-
-            //load renderer
-            this.waterRenderer.load(file.getAbsolutePath(), "WaterLowestContrast", 200f);*/
-
             //get (pre-loaded) texture atlas
             TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("water_animation", TextureAtlas.class);
 
