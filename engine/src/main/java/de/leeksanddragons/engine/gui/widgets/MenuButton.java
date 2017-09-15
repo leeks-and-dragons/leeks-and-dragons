@@ -117,4 +117,8 @@ public class MenuButton extends BaseHUDWidget {
         this.volume = soundVolume;
     }
 
+    public void setClickListener(ClickListener listener) {
+        this.clickListener = listener;
+    }
+
 }

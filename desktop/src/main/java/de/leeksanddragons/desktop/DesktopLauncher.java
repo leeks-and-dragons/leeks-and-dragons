@@ -34,6 +34,9 @@ public class DesktopLauncher {
         config.resizable = windowConfig.isResizeable();
         config.fullscreen = windowConfig.isFullscreen();
 
+        //https://gamedev.stackexchange.com/questions/109047/how-to-close-an-app-correctly-on-desktop
+        config.forceExit = false;
+
         try {
             // start game
             new LwjglApplication(new Game(windowConfig), config);

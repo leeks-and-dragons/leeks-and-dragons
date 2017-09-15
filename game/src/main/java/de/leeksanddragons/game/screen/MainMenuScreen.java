@@ -1,5 +1,6 @@
 package de.leeksanddragons.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -120,6 +121,10 @@ public class MainMenuScreen extends BaseScreen {
         this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
         this.closeButton.setPosition(startX, 200);
         this.closeButton.setHoverSound(hoverSound, 0.5f);
+        this.closeButton.setClickListener(() -> {
+            //close application
+            Gdx.app.exit();
+        });
         this.hud.addWidget(closeButton);
     }
 
