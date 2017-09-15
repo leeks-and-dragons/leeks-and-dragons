@@ -1,16 +1,21 @@
 package de.leeksanddragons.engine.renderer;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Justin on 14.09.2017.
@@ -41,6 +46,9 @@ public class WaterRenderer implements IRenderer {
     //current frame
     protected TextureRegion frame = null;
 
+    //last frame
+    protected TextureRegion lastFrame = null;
+
     //position
     protected float x = 0;
     protected float y = 0;
@@ -54,6 +62,16 @@ public class WaterRenderer implements IRenderer {
 
     //elapsed time
     protected float elapsed = 0;
+
+    //map for paging
+    protected Map<TextureRegion,WaterRenderPage> pageMap = new HashMap<>();
+
+    //current page
+    protected IPage currentPage = null;
+
+    //page width & height
+    protected static final int PAGE_WIDTH = 256;
+    protected static final int PAGE_HEIGHT = 256;
 
     public WaterRenderer (IScreenGame game) {
         this.game = game;
@@ -72,6 +90,9 @@ public class WaterRenderer implements IRenderer {
      * @param frameDurationInMillis frame duration in milliseconds
     */
     public void load (String atlasFile, String animation, float frameDurationInMillis) {
+        //dispose all old pages
+        this.disposeAllPages();
+
         //set texture atlas to null
         this.textureAtlas = null;
         this.waterAnimation = null;
@@ -124,6 +145,9 @@ public class WaterRenderer implements IRenderer {
      * @param frameDurationInMillis frame duration in milliseconds
      */
     public void load (TextureAtlas textureAtlas, String animationName, float frameDurationInMillis) {
+        //dispose all old pages
+        this.disposeAllPages();
+
         //set texture atlas to null
         this.textureAtlas = null;
         this.waterAnimation = null;
@@ -181,6 +205,9 @@ public class WaterRenderer implements IRenderer {
         if (this.waterAnimation == null) {
             //get animation
             this.waterAnimation = new Animation<TextureRegion>(this.frameDuration / 1000, this.textureAtlas.findRegions(this.animationName), Animation.PlayMode.LOOP);
+
+            //generate pages
+            this.generatePages(this.waterAnimation);
         }
 
         //increment elapsed time with delta time
@@ -188,6 +215,17 @@ public class WaterRenderer implements IRenderer {
 
         //get current frame
         this.frame = this.waterAnimation.getKeyFrame(this.elapsed);
+
+        //update page, if frame has changed
+        if (this.lastFrame != this.frame) {
+            //get current page
+            this.currentPage = pageMap.get(this.frame);
+
+            this.lastFrame = this.frame;
+        }
+
+        //this.frame.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        //frame.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }
 
     @Override
@@ -205,8 +243,52 @@ public class WaterRenderer implements IRenderer {
         //get main camera
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
+        //Texture texture = this.frame.getTexture();
+
+        //texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
         //draw tile
-        batch.draw(this.frame, this.x, this.y, camera.getViewportWidth(), camera.getViewportHeight());
+        //batch.draw(texture, this.x, this.y, /*camera.getViewportWidth(), camera.getViewportHeight()*/texture.getWidth(), texture.getHeight(), frame.getRegionX(), frame.getRegionY(), frame.getRegionWidth(), frame.getRegionHeight());
+
+        //draw frame
+        //batch.draw(frame, 0, 0, 32, 32);
+
+        if (this.currentPage != null) {
+            //this.currentPage.draw(game, time, );
+            this.currentPage.draw(game, time, batch, 0, 0);
+        }
+    }
+
+    protected void generatePages (Animation<TextureRegion> animation) {
+        Object[] regions = animation.getKeyFrames();
+
+        //generate pages for every frame
+        for (Object region1 : regions) {
+            TextureRegion region = (TextureRegion) region1;
+
+            //create new page
+            WaterRenderPage page = new WaterRenderPage(PAGE_WIDTH, PAGE_HEIGHT, region);
+
+            //add frame to map
+            this.pageMap.put(region, page);
+        }
+    }
+
+    protected void disposeAllPages () {
+        //iterate through all available pages
+        for (Map.Entry<TextureRegion,WaterRenderPage> entry : this.pageMap.entrySet()) {
+            //get page
+            IPage page = entry.getValue();
+
+            //remove page from map
+            this.pageMap.remove(entry.getKey());
+
+            //dispose page
+            page.dispose();
+        }
+
+        //set current page to null
+        this.currentPage = null;
     }
 
 }
