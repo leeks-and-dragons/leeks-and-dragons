@@ -88,6 +88,9 @@ public class WaterRenderer implements IRenderer {
      * @param frameDurationInMillis frame duration in milliseconds
     */
     public void load (String atlasFile, String animation, float frameDurationInMillis) {
+        //replace windows backslashes with slashes to fix app hanging up, see also libGDX issue: https://github.com/libgdx/libgdx/issues/4888
+        atlasFile = atlasFile.replace("\\", "/");
+
         //dispose all old pages
         this.disposeAllPages();
 
