@@ -66,7 +66,7 @@ public class MainMenuScreen extends BaseScreen {
             this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 16, Color.WHITE);
 
             //create buttons
-            this.createButtons(this.hud);
+            this.createHorizontalButtons(this.hud);
         }
     }
 
@@ -75,7 +75,7 @@ public class MainMenuScreen extends BaseScreen {
 
     }
 
-    protected void createButtons (HUD hud) {
+    protected void createHorizontalButtons (HUD hud) {
         //first, get texture atlas
         TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("menu_buttons", TextureAtlas.class);
 
