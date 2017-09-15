@@ -13,6 +13,7 @@ import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 /**
  * Created by Justin on 17.04.2017.
  */
+@Deprecated
 public class ColoredTextButton extends BaseHUDWidget {
 
     protected String text = "";

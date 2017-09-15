@@ -11,6 +11,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 /**
  * Created by Justin on 24.05.2017.
  */
+@Deprecated
 public class ImageButton extends BaseHUDWidget {
 
     protected boolean hovered = false;

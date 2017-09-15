@@ -15,6 +15,7 @@ import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 /**
  * Created by Justin on 22.04.2017.
  */
+@Deprecated
 public class TextButton extends BaseHUDWidget {
 
     protected Color bgColor = Color.FIREBRICK;// Color.CHARTREUSE
