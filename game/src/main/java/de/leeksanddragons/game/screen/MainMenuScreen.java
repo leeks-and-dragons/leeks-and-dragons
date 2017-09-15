@@ -1,5 +1,6 @@
 package de.leeksanddragons.game.screen;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -35,6 +36,10 @@ public class MainMenuScreen extends BaseScreen {
 
     //buttons
     protected MenuButton startButton = null;
+    protected MenuButton optionsButton = null;
+    protected MenuButton editorButton = null;
+    protected MenuButton creditsButton = null;
+    protected MenuButton closeButton = null;
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
@@ -74,12 +79,48 @@ public class MainMenuScreen extends BaseScreen {
         //first, get texture atlas
         TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("menu_buttons", TextureAtlas.class);
 
-        //create new start button
-        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
-        this.startButton.setPosition(40, 200);
+        //get hover sound
+        Sound hoverSound = game.getAssetManager().getAssetByName("menu_hover_sound", Sound.class);
 
-        //add button to HUD
+        float startX = 40;
+
+        //create start button
+        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
+        this.startButton.setPosition(startX, 200);
+        this.startButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(startButton);
+
+        startX += 110;
+
+        //create options button
+        this.optionsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Options");
+        this.optionsButton.setPosition(startX, 200);
+        this.optionsButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(optionsButton);
+
+        startX += 110;
+
+        //create editor button
+        this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
+        this.editorButton.setPosition(startX, 200);
+        this.editorButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(editorButton);
+
+        startX += 110;
+
+        //create credits button
+        this.creditsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Credits");
+        this.creditsButton.setPosition(startX, 200);
+        this.creditsButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(creditsButton);
+
+        startX += 110;
+
+        //create close button
+        this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
+        this.closeButton.setPosition(startX, 200);
+        this.closeButton.setHoverSound(hoverSound, 0.5f);
+        this.hud.addWidget(closeButton);
     }
 
     @Override
@@ -98,8 +139,6 @@ public class MainMenuScreen extends BaseScreen {
 
         //draw GUI
         this.hud.drawLayer0(time, batch);
-
-        //TODO: add code here
 
         //draw foreground graphics
         batch.draw(this.fgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());

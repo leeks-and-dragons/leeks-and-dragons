@@ -42,6 +42,9 @@ public class MenuButton extends BaseHUDWidget {
     //sound, which is playing if player hovers over button
     protected Sound hoverSound = null;
 
+    //sound volume
+    protected float volume = 1f;
+
     public MenuButton(TextureAtlas textureAtlas, String name, String hoveredName, BitmapFont font, String buttonText) {
         //get texture regions
         this.image = textureAtlas.findRegion(name);
@@ -70,7 +73,7 @@ public class MenuButton extends BaseHUDWidget {
 
                 // play sound
                 if (this.hoverSound != null) {
-                    this.hoverSound.play(game.getSoundManager().getSoundVolume());
+                    this.hoverSound.play(game.getSoundManager().getSoundVolume() * this.volume);
                 }
             }
 
@@ -109,8 +112,9 @@ public class MenuButton extends BaseHUDWidget {
         this.font.draw(batch, this.text, getX() + paddingLeft, getY() + getHeight() - paddingTop);
     }
 
-    public void setHoverSound(Sound sound) {
+    public void setHoverSound(Sound sound, float soundVolume) {
         this.hoverSound = sound;
+        this.volume = soundVolume;
     }
 
 }
