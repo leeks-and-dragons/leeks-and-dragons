@@ -183,6 +183,9 @@ public class WaterRenderer implements IRenderer {
             this.waterAnimation = new Animation<TextureRegion>(this.frameDuration / 1000, this.textureAtlas.findRegions(this.animationName), Animation.PlayMode.LOOP);
         }
 
+        //increment elapsed time with delta time
+        this.elapsed += time.getDeltaTime();
+
         //get current frame
         this.frame = this.waterAnimation.getKeyFrame(this.elapsed);
     }
