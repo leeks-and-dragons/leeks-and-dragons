@@ -65,6 +65,8 @@ public class WaterRenderer implements IRenderer {
     /**
     * load texture atlas
      *
+     * IMPORTANT: This method doesnt work yet, an issue was commited to libGDX developers
+     *
      * @param atlasFile path to atlas file
      * @param animation animation name
      * @param frameDurationInMillis frame duration in milliseconds
@@ -79,6 +81,8 @@ public class WaterRenderer implements IRenderer {
         //set frame duration in ms
         this.frameDuration = frameDurationInMillis;
 
+        Gdx.app.debug("WaterRenderer", "try to load atlas file: " + atlasFile);
+
         //load asset asynchronous and get atlas in update() method
         assetManager.load(atlasFile, TextureAtlas.class);
 
@@ -89,7 +93,7 @@ public class WaterRenderer implements IRenderer {
         }
 
         //finish loading
-        assetManager.finishLoadingAsset(atlasFile);
+        //assetManager.finishLoadingAsset(atlasFile);
 
         Gdx.app.debug("WaterRenderer", "atlas file loaded: " + atlasFile);
 
@@ -112,6 +116,46 @@ public class WaterRenderer implements IRenderer {
         this.loaded = true;
     }
 
+    /**
+     * load texture atlas
+     *
+     * @param textureAtlas current texture atlas
+     * @param animationName animation name
+     * @param frameDurationInMillis frame duration in milliseconds
+     */
+    public void load (TextureAtlas textureAtlas, String animationName, float frameDurationInMillis) {
+        //set texture atlas to null
+        this.textureAtlas = null;
+        this.waterAnimation = null;
+        this.frame = null;
+        this.elapsed = 0;
+
+        //set frame duration in ms
+        this.frameDuration = frameDurationInMillis;
+
+        //first, check if texture atlas is not null
+        if (textureAtlas == null) {
+            throw new NullPointerException("texture atlas cannot be null.");
+        }
+
+        if (animationName == null || animationName.isEmpty()) {
+            throw new IllegalArgumentException("animation name cannot be null or empty.");
+        }
+
+        if (frameDurationInMillis <= 0) {
+            throw new IllegalArgumentException("frameDurationInMillis has to be greater than 0.");
+        }
+
+        //save texture atlas
+        this.textureAtlas = textureAtlas;
+
+        //set current animation
+        this.animationName = animationName;
+
+        //set flag
+        this.loaded = true;
+    }
+
     @Override
     public void update(IScreenGame game, GameTime time) {
         //check, if renderer was already loaded
@@ -119,24 +163,24 @@ public class WaterRenderer implements IRenderer {
             throw new GdxRuntimeException("Cannot update water, because renderer wasnt loaded yet. Call load() method first update() call.");
         }
 
-        if (assetManager.isLoaded(this.currentAtlasPath)) {
-            Gdx.app.log("WaterUpdate", "water animation is already loaded.");
-        } else {
-            Gdx.app.log("WaterUpdate", "water animation isnt loaded yet.");
-        }
+        //check, if texture atlas exists
+        if (this.textureAtlas == null) {
+            //check, if texture atlas was loaded by asset manager
+            if (assetManager.isLoaded(this.currentAtlasPath)) {
+                //Gdx.app.log("WaterUpdate", "water animation is already loaded.");
 
-        //if no texture atlas is set, check, if texture atlas is already loaded --> avoids game hanging up while loading asset
-        if (this.textureAtlas == null && this.assetManager.isLoaded(this.currentAtlasPath)) {
-            //get atlas
-            this.textureAtlas = assetManager.get(this.currentAtlasPath);
+                //get atlas
+                this.textureAtlas = assetManager.get(this.currentAtlasPath);
+            } else {
+                //Gdx.app.log("WaterUpdate", "water animation isnt loaded yet.");
+            }
 
-            //get animation
-            this.waterAnimation = new Animation<TextureRegion>(this.frameDuration / 1000, this.textureAtlas.findRegions(this.animationName), Animation.PlayMode.LOOP);
+            return;
         }
 
         if (this.waterAnimation == null) {
-            //wait while loading
-            return;
+            //get animation
+            this.waterAnimation = new Animation<TextureRegion>(this.frameDuration / 1000, this.textureAtlas.findRegions(this.animationName), Animation.PlayMode.LOOP);
         }
 
         //get current frame

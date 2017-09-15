@@ -2,6 +2,7 @@ package de.leeksanddragons.game.screen.prototype;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.renderer.WaterRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -34,6 +35,12 @@ public class WaterRenderScreen extends BaseScreen {
 
             //load renderer
             this.waterRenderer.load(file.getAbsolutePath(), "WaterLowestContrast", 200f);*/
+
+            //get (pre-loaded) texture atlas
+            TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("water_animation", TextureAtlas.class);
+
+            //load water renderer
+            this.waterRenderer.load(textureAtlas, "WaterLowestContrast", 200f);
         }
     }
 
