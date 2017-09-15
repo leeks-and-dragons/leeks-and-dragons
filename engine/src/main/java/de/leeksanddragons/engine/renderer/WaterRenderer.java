@@ -256,6 +256,7 @@ public class WaterRenderer implements IRenderer {
         if (this.currentPage != null) {
             //this.currentPage.draw(game, time, );
             this.currentPage.draw(game, time, batch, 0, 0);
+            this.currentPage.draw(game, time, batch, 256, 0);
         }
     }
 

@@ -65,6 +65,7 @@ public class WaterRenderPage extends BasePage {
         //create new pixmap
         Pixmap pixmap = new Pixmap(this.width, this.height, Pixmap.Format.RGBA8888);
 
+        //calculate, how many tiles on width and height are required
         int requiredTilesX = this.width / this.tileWidth;
         int requiredTilesY = this.height / this.tileHeight;
 
