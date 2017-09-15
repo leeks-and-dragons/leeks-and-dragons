@@ -1,4 +1,5 @@
 [
 	{"path": "asset1.png", "type": "texture"},
-	{"path": "asset2.png", "type": "texture"}
+	{"path": "asset2.png", "type": "texture"},
+	{"path": "animation/water/WaterAnimation.atlas", "type": "atlas"}
 ]

@@ -55,12 +55,20 @@ public class LoadingAssetParser {
 
             String fullPath = modPath + path;
 
+            //first, check, if file exists
+            if (!new File(fullPath).exists()) {
+                throw new FileNotFoundException("asset file not found: " + fullPath);
+            }
+
             //create new asset info
             AssetInfo asset = null;
 
             switch (type.toLowerCase()) {
                 case "texture":
                     asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE);
+                    break;
+                case "atlas":
+                    asset = new AssetInfo(fullPath, AssetInfo.TYPE.TEXTURE_ATLAS);
                     break;
                 case "sound":
                     asset = new AssetInfo(fullPath, AssetInfo.TYPE.SOUND);

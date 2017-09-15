@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import de.leeksanddragons.engine.memory.AssetInfo;
 import de.leeksanddragons.engine.memory.GameAssetManager;
@@ -122,6 +123,10 @@ public class LoadAssetsTask extends BaseLoadingTask {
                 case TEXTURE:
                     //load texture
                     assetManager.load(asset.getPath(), Texture.class);
+                    break;
+                case TEXTURE_ATLAS:
+                    //load atlas file
+                    assetManager.load(asset.getPath(), TextureAtlas.class);
                     break;
                 case SOUND:
                     //load sounds
