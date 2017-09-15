@@ -1,0 +1,89 @@
+
+WaterAnimation.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+WaterLowContrast
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+WaterLowContrast
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+WaterLowContrast
+  rotate: false
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+WaterLowContrast
+  rotate: false
+  xy: 103, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+WaterLowestContrast
+  rotate: false
+  xy: 137, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+WaterLowestContrast
+  rotate: false
+  xy: 171, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+WaterLowestContrast
+  rotate: false
+  xy: 205, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+WaterLowestContrast
+  rotate: false
+  xy: 239, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+WaterNormalContrast
+  rotate: false
+  xy: 273, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+WaterNormalContrast
+  rotate: false
+  xy: 307, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+WaterNormalContrast
+  rotate: false
+  xy: 341, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+WaterNormalContrast
+  rotate: false
+  xy: 375, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
