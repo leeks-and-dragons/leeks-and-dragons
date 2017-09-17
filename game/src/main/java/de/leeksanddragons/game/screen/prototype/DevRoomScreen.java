@@ -1,9 +1,11 @@
 package de.leeksanddragons.game.screen.prototype;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.map.impl.DummyRegion;
@@ -12,8 +14,11 @@ import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.renderer.WaterRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
+import de.leeksanddragons.engine.shader.ShaderFactory;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
+
+import java.io.IOException;
 
 /**
  * Created by Justin on 17.09.2017.
@@ -31,9 +36,18 @@ public class DevRoomScreen extends BaseScreen {
     //wallpaper, which is drawn, if
     protected Texture loadingTexture = null;
 
+    //monochrome-filter shader
+    protected ShaderProgram monochromeShader = null;
+
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
-
+        //create monochrome-filter shader
+        try {
+            this.monochromeShader = ShaderFactory.createShader("./data/shader/monochrome-filter/vertexShader.glsl", "./data/shader/monochrome-filter/pixelShader.glsl");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Gdx.app.exit();
+        }
     }
 
     @Override
