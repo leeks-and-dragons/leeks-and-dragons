@@ -87,7 +87,10 @@ public class DevRoomScreen extends BaseScreen {
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
         //set camera bounds
-        camera.setBounds(region.getX(), region.getY(), region.getX() + region.getWidth(), region.getY() + region.getHeight());
+        camera.setBounds(region.getX(), region.getX() + region.getWidth(), region.getY(), region.getY() + region.getHeight());
+
+        //set target position
+        camera.setTargetMiddlePos(camera.getViewportWidth() / 2, camera.getViewportHeight() / 2);
     }
 
     protected void createWaterRenderer () {
@@ -105,7 +108,7 @@ public class DevRoomScreen extends BaseScreen {
     public void update(IScreenGame game, GameTime time) {
         //check, if region was pre-loaded
         if (!this.region.hasPreLoadingFinished()) {
-            //return;
+            return;
         }
 
         //check, if region contains water
@@ -123,15 +126,10 @@ public class DevRoomScreen extends BaseScreen {
         //get camera
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
-        //draw water
-        this.waterRenderer.draw(game, time, batch);
-
         //check, if region was pre-loaded
         if (!this.region.hasPreLoadingFinished()) {
             //draw pre-loading text
             batch.draw(this.loadingTexture, camera.getX(), camera.getY(), camera.getViewportWidth(), camera.getViewportHeight());
-
-            //SpriteBatcherUtils.fillRectangle(batch, 100, 100, 400, 400, Color.RED);
 
             return;
         }
