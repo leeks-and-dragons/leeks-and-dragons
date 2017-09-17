@@ -43,12 +43,12 @@ public interface IScreen {
     /**
      * pause screen and switch to another screen
      */
-    public void onPause();
+    public void onPause(IScreenGame game);
 
     /**
      * screen was pushed, so we have to resume this game screen
      */
-    public void onResume();
+    public void onResume(IScreenGame game);
 
     /**
      * destroy game screen

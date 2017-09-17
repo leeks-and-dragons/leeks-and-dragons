@@ -76,7 +76,7 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
                     "Couldnt found initialized screen '" + name + "', add screen with method addScreen() first.");
         }
 
-        screen.onResume();
+        screen.onResume(this.game);
 
         this.activeScreens.push(screen);
 
@@ -102,7 +102,7 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         IScreen screen = this.activeScreens.poll();
 
         if (screen != null) {
-            screen.onPause();
+            screen.onPause(this.game);
         }
 
         Gdx.app.debug("Screens", "pop screen.");

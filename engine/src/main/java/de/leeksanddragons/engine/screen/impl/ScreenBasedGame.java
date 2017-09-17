@@ -50,7 +50,7 @@ public abstract class ScreenBasedGame extends BaseGame implements IScreenGame {
     protected final void destroyGame() {
         // pause all active screens
         this.screenManager.listActiveScreens().forEach(screen -> {
-            screen.onPause();
+            screen.onPause(this);
         });
 
         //dispose all screens

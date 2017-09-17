@@ -26,12 +26,12 @@ public abstract class BaseScreen implements IScreen {
     protected abstract void onInit(IScreenGame game, GameAssetManager assetManager);
 
     @Override
-    public void onPause() {
+    public void onPause(IScreenGame game) {
 
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IScreenGame game) {
 
     }
 

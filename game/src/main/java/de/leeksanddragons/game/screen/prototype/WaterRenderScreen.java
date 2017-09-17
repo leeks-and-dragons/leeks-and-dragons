@@ -25,7 +25,7 @@ public class WaterRenderScreen extends BaseScreen {
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IScreenGame game) {
         if (this.waterRenderer == null) {
             //create new water renderer
             this.waterRenderer = new WaterRenderer(this.game);
@@ -39,7 +39,7 @@ public class WaterRenderScreen extends BaseScreen {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(IScreenGame game) {
 
     }
 

@@ -59,7 +59,7 @@ public class MainMenuScreen extends BaseScreen {
     }
 
     @Override
-    public void onResume() {
+    public void onResume(IScreenGame game) {
         if (this.hud == null) {
             //create new HUD
             this.hud = new HUD();
@@ -73,7 +73,7 @@ public class MainMenuScreen extends BaseScreen {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(IScreenGame game) {
 
     }
 
