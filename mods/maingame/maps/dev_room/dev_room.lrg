@@ -1,6 +1,12 @@
 {
     "meta": {
         "widthInMaps": 1,
-        "heightInMaps": 1
-    }
+        "heightInMaps": 1,
+        "tileWidth": 32,
+        "tileHeight": 32,
+        "containsWater": true
+    },
+    "maps": [
+        
+    ]
 }
