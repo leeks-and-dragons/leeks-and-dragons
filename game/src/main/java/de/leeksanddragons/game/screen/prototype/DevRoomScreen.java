@@ -46,6 +46,8 @@ public class DevRoomScreen extends BaseScreen {
             //wait, while texture is loading
             game.getAssetManager().finishLoadingAsset(LOADING_WALLPAPER_PATH);
 
+            System.out.println(game.getAssetManager().getDiagnostics());
+
             //get texture
             this.loadingTexture = game.getAssetManager().get(LOADING_WALLPAPER_PATH);
         }
@@ -103,7 +105,7 @@ public class DevRoomScreen extends BaseScreen {
     public void update(IScreenGame game, GameTime time) {
         //check, if region was pre-loaded
         if (!this.region.hasPreLoadingFinished()) {
-            return;
+            //return;
         }
 
         //check, if region contains water
@@ -119,17 +121,17 @@ public class DevRoomScreen extends BaseScreen {
     @Override
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
         //get camera
-        CameraHelper camera = game.getCameraManager().getUICamera();
+        CameraHelper camera = game.getCameraManager().getMainCamera();
 
         //draw water
-        //this.waterRenderer.draw(game, time, batch);
+        this.waterRenderer.draw(game, time, batch);
 
         //check, if region was pre-loaded
         if (!this.region.hasPreLoadingFinished()) {
             //draw pre-loading text
-            //batch.draw(this.loadingTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
+            batch.draw(this.loadingTexture, camera.getX(), camera.getY(), camera.getViewportWidth(), camera.getViewportHeight());
 
-            SpriteBatcherUtils.fillRectangle(batch, 50, 50, 100, 100, Color.YELLOW);
+            //SpriteBatcherUtils.fillRectangle(batch, 100, 100, 400, 400, Color.RED);
 
             return;
         }

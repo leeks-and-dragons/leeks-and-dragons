@@ -24,4 +24,14 @@ public class DummyRegion extends BaseRegion {
 
     }
 
+    @Override
+    public void preload() {
+
+    }
+
+    @Override
+    public boolean hasPreLoadingFinished() {
+        return true;
+    }
+
 }

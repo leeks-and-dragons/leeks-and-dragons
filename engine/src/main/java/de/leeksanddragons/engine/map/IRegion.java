@@ -62,4 +62,16 @@ public interface IRegion {
      */
     public float getHeight ();
 
+    /**
+    * pre-load region, if possible
+    */
+    public void preload ();
+
+    /**
+    * check, if region has finished pre-loading
+     *
+     * @return true, if region has finished pre-loading
+    */
+    public boolean hasPreLoadingFinished ();
+
 }
