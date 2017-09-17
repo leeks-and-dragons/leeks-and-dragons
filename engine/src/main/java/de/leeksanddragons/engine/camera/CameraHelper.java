@@ -596,7 +596,7 @@ public class CameraHelper implements ModificationFinishedListener {
 
     @Override
     public String toString () {
-        return "CameraHelper (x: " + this.x + ", y: " + this.y + ", width: " + this.width + ", height: " + this.height + ")";
+        return "CameraHelper (x: " + this.x + ", y: " + this.y + ", width: " + this.width + ", height: " + this.height + ", bounds: {minX: " + minX + ", maxX: " + maxX + ", minY: " + minY + ", maxY: " + maxY + "})";
     }
 
 }
