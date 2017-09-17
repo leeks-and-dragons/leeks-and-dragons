@@ -1,25 +1,35 @@
 package de.leeksanddragons.game.screen.prototype;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.map.impl.DummyRegion;
+import de.leeksanddragons.engine.map.impl.LADRegion;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.renderer.WaterRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 
 /**
  * Created by Justin on 17.09.2017.
  */
 public class DevRoomScreen extends BaseScreen {
 
+    //path to loading wallpaper
+    protected static final String LOADING_WALLPAPER_PATH = "./data/wallpaper/Loading_Screen.png";
+
     protected IRegion region = null;
 
     //water renderer
     protected WaterRenderer waterRenderer = null;
+
+    //wallpaper, which is drawn, if
+    protected Texture loadingTexture = null;
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
@@ -28,10 +38,22 @@ public class DevRoomScreen extends BaseScreen {
 
     @Override
     public void onResume(IScreenGame game) {
+        //check, if loading wallpaper is available
+        if (this.loadingTexture == null) {
+            //load loading wallpaper
+            game.getAssetManager().load(LOADING_WALLPAPER_PATH, Texture.class);
+
+            //wait, while texture is loading
+            game.getAssetManager().finishLoadingAsset(LOADING_WALLPAPER_PATH);
+
+            //get texture
+            this.loadingTexture = game.getAssetManager().get(LOADING_WALLPAPER_PATH);
+        }
+
         //initialize region, if neccessary
         if (this.region == null) {
-            //TODO: create and load region
-            this.region = new DummyRegion();
+            //create and load region
+            this.region = new LADRegion("./mods/maingame/maps/dev_room/dev_room.lrg");
 
             //initialize region
             this.initRegion(game, this.region);
@@ -56,6 +78,9 @@ public class DevRoomScreen extends BaseScreen {
         //set region position
         region.setPosition(0, 0);
 
+        //pre-load region
+        region.preload();
+
         //get camera
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
@@ -76,6 +101,11 @@ public class DevRoomScreen extends BaseScreen {
 
     @Override
     public void update(IScreenGame game, GameTime time) {
+        //check, if region was pre-loaded
+        if (!this.region.hasPreLoadingFinished()) {
+            return;
+        }
+
         //check, if region contains water
         if (region.hasWater()) {
             //update water renderer
@@ -88,6 +118,22 @@ public class DevRoomScreen extends BaseScreen {
 
     @Override
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
+        //get camera
+        CameraHelper camera = game.getCameraManager().getUICamera();
+
+        //draw water
+        //this.waterRenderer.draw(game, time, batch);
+
+        //check, if region was pre-loaded
+        if (!this.region.hasPreLoadingFinished()) {
+            //draw pre-loading text
+            //batch.draw(this.loadingTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
+
+            SpriteBatcherUtils.fillRectangle(batch, 50, 50, 100, 100, Color.YELLOW);
+
+            return;
+        }
+
         //check, if region contains water
         if (region.hasWater()) {
             //draw water

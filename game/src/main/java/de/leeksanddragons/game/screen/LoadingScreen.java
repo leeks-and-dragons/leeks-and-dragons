@@ -122,7 +122,7 @@ public class LoadingScreen extends BaseScreen {
     @Override
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
         //get camera
-        CameraHelper camera = game.getCameraManager().getMainCamera();
+        CameraHelper camera = game.getCameraManager().getUICamera();
 
         //draw background
         batch.draw(this.bgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
