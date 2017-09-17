@@ -161,6 +161,10 @@ public class MainMenuScreen extends BaseScreen {
             this.devRoomButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Dev-Room");
             this.devRoomButton.setPosition(startX, startY);
             this.devRoomButton.setHoverSound(hoverSound, 0.5f);
+            this.devRoomButton.setClickListener(() -> {
+                //goto dev room screen
+                game.getScreenManager().leaveAllAndEnter("dev_room");
+            });
             this.hud.addWidget(devRoomButton);
 
             startY -= 60;
