@@ -142,8 +142,17 @@ public class DevRoomScreen extends BaseScreen {
 
         //check, if region was pre-loaded
         if (!this.region.hasPreLoadingFinished()) {
+            //set shader
+            batch.setShader(this.monochromeShader);
+            this.monochromeShader.setUniformf("u_amount", 1.0f);
+
             //draw pre-loading text
             batch.draw(this.loadingTexture, camera.getX(), camera.getY(), camera.getViewportWidth(), camera.getViewportHeight());
+
+            batch.flush();
+
+            //reset shader
+            batch.setShader(null);
 
             return;
         }
