@@ -38,6 +38,7 @@ public class MainMenuScreen extends BaseScreen {
     //buttons
     protected MenuButton startButton = null;
     protected MenuButton optionsButton = null;
+    protected MenuButton devRoomButton = null;
     protected MenuButton editorButton = null;
     protected MenuButton creditsButton = null;
     protected MenuButton closeButton = null;
@@ -156,6 +157,14 @@ public class MainMenuScreen extends BaseScreen {
         startY -= 60;
 
         if (this.game.isDevMode()) {
+            //create dev-room button
+            this.devRoomButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Dev-Room");
+            this.devRoomButton.setPosition(startX, startY);
+            this.devRoomButton.setHoverSound(hoverSound, 0.5f);
+            this.hud.addWidget(devRoomButton);
+
+            startY -= 60;
+
             //create editor button
             this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
             this.editorButton.setPosition(startX, startY);
