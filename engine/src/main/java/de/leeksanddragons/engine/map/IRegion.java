@@ -4,10 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
+import java.io.IOException;
+
 /**
  * Created by Justin on 17.09.2017.
  */
 public interface IRegion {
+
+    /**
+    * load region file
+     *
+     * @param path path to region file
+    */
+    public void load (String path) throws IOException;
 
     /**
     * update maps of region
