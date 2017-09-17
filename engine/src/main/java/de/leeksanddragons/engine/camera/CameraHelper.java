@@ -594,4 +594,9 @@ public class CameraHelper implements ModificationFinishedListener {
         return this.activeModifications.size();
     }
 
+    @Override
+    public String toString () {
+        return "CameraHelper (x: " + this.x + ", y: " + this.y + ", width: " + this.width + ", height: " + this.height + ")";
+    }
+
 }
