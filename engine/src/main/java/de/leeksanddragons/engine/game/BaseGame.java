@@ -25,6 +25,7 @@ import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.sound.SoundManager;
+import de.leeksanddragons.engine.sound.impl.DefaultSoundManager;
 import de.leeksanddragons.engine.sound.impl.DummySoundManager;
 import de.leeksanddragons.engine.timer.*;
 import de.leeksanddragons.engine.utils.FileUtils;
@@ -149,10 +150,8 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
         //log app home dir
         Gdx.app.log("Files", "app.home: " + getAppHomeDir());
 
-        //TODO: create new sound manager
-
         //create new sound manager
-        this.soundManager = new DummySoundManager();
+        this.soundManager = new DefaultSoundManager(this.getGeneralPreferences());
 
         // create sprite batcher
         this.batch = new SpriteBatch();
@@ -431,7 +430,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      * @return true, if sound is muted
      */
     public boolean isSoundMuted () {
-        return getGeneralPreferences().getBoolean("sound_muted", false);
+        return getSoundManager().isSoundMuted();
     }
 
     /**
@@ -440,7 +439,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      * @return true, if music is muted
      */
     public boolean isMusicMuted () {
-        return getGeneralPreferences().getBoolean("music_muted", false);
+        return getSoundManager().isMusicMuted();
     }
 
     /**
