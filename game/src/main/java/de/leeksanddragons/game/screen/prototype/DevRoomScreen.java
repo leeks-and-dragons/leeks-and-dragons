@@ -60,8 +60,6 @@ public class DevRoomScreen extends BaseScreen {
             //wait, while texture is loading
             game.getAssetManager().finishLoadingAsset(LOADING_WALLPAPER_PATH);
 
-            System.out.println(game.getAssetManager().getDiagnostics());
-
             //get texture
             this.loadingTexture = game.getAssetManager().get(LOADING_WALLPAPER_PATH);
         }
