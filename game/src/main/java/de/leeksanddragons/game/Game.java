@@ -72,6 +72,8 @@ public class Game extends ScreenBasedGame {
         prefs.putBooleanIfAbsent("sound_muted", false);
         prefs.putBooleanIfAbsent("music_muted", false);
 
+        //test
+
         //save changes
         prefs.flush();
 
