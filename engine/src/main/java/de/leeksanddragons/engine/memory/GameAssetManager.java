@@ -4,6 +4,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -36,16 +38,19 @@ public class GameAssetManager extends AssetManager {
     protected Map<String,Object> assetsMap = new ConcurrentHashMap<>();
 
     public GameAssetManager () {
-        super(new AbsoluteFileHandleResolver());
+        this(new AbsoluteFileHandleResolver());
     }
 
     /** Creates a new AssetManager with all default loaders. */
     public GameAssetManager (FileHandleResolver resolver) {
-        super(resolver, true);
+        this(resolver, true);
     }
 
     public GameAssetManager (FileHandleResolver resolver, boolean defaultLoaders) {
         super(resolver, defaultLoaders);
+
+        //add loader to load tmx maps
+        setLoader(TiledMap.class, new TmxMapLoader(resolver));
     }
 
     @Override

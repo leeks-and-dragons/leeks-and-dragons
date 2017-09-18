@@ -69,7 +69,7 @@ public class DevRoomScreen extends BaseScreen {
             //create and load region
             this.region = new LADRegion();
             try {
-                this.region.load("./mods/maingame/maps/dev_room/dev_room.lrg");
+                this.region.load(game, "./mods/maingame/maps/dev_room/dev_room.lrg");
             } catch (IOException e) {
                 e.printStackTrace();
                 Gdx.app.exit();

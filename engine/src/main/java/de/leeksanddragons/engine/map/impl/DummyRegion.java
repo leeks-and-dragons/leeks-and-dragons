@@ -12,12 +12,11 @@ import java.io.IOException;
 public class DummyRegion extends BaseRegion {
 
     public DummyRegion () {
-        this.widthInTiles = 30;
-        this.heightInTiles = 30;
+        //
     }
 
     @Override
-    public void load(String path) throws IOException {
+    public void load(IScreenGame game, String path) throws IOException {
         //
     }
 
@@ -32,7 +31,7 @@ public class DummyRegion extends BaseRegion {
     }
 
     @Override
-    public void preload() {
+    public void preloadMaps(float currentX, float currentY) {
 
     }
 

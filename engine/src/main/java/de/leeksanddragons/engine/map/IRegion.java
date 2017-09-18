@@ -1,6 +1,7 @@
 package de.leeksanddragons.engine.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -14,9 +15,10 @@ public interface IRegion {
     /**
     * load region file
      *
+     * @param game instance of game
      * @param path path to region file
     */
-    public void load (String path) throws IOException;
+    public void load (IScreenGame game, String path) throws IOException;
 
     /**
     * update maps of region
@@ -72,9 +74,37 @@ public interface IRegion {
     public float getHeight ();
 
     /**
-    * pre-load region, if possible
+    * get width of a single map
+     *
+     * @return width of a single map
     */
-    public void preload ();
+    public float getMapWidth ();
+
+    /**
+     * get height of a single map
+     *
+     * @return height of a single map
+     */
+    public float getMapHeight ();
+
+    /**
+    * check, if map index is in bounds
+     *
+     * @return true, if map index is in bounds
+    */
+    public boolean isInBounds (int xIndex, int yIndex);
+
+    /**
+    * check, if map is visible
+     *
+     * @return true, if map is visible
+    */
+    public boolean isMapVisible (int xIndex, int yIndex, CameraHelper camera);
+
+    /**
+    * pre-load maps, if possible
+    */
+    public void preloadMaps (float currentX, float currentY);
 
     /**
     * check, if region has finished pre-loading
