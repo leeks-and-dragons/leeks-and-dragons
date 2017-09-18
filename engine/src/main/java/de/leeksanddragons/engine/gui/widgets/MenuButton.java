@@ -60,6 +60,17 @@ public class MenuButton extends BaseHUDWidget {
         this.setDimension(image.getRegionWidth(), image.getRegionHeight());
     }
 
+    /**
+    * set text padding
+     *
+     * @param paddingTop padding top
+     * @param paddingLeft padding left
+    */
+    public void setTextPadding (float paddingTop, float paddingLeft) {
+        this.paddingTop = paddingTop;
+        this.paddingLeft = paddingLeft;
+    }
+
     @Override
     public void update(IScreenGame game, GameTime time) {
         // get mouse coordinates
