@@ -398,6 +398,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     }
 
     /**
+    * get instance of sprite batch
+     *
+     * @return instance of sprite batch
+    */
+    public SpriteBatch getSpriteBatch () {
+        return this.batch;
+    }
+
+    /**
      * add an timer task which will be executed once after an given time in milliseconds
      *
      * @param delay time in millis to wait, before executing task

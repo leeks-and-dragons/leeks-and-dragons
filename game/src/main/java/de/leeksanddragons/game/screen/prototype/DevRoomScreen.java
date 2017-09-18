@@ -98,8 +98,8 @@ public class DevRoomScreen extends BaseScreen {
         //set region position
         region.setPosition(0, 0);
 
-        //pre-load region
-        region.preload();
+        //pre-load maps
+        region.preloadMaps(0, 0);
 
         //get camera
         CameraHelper camera = game.getCameraManager().getMainCamera();

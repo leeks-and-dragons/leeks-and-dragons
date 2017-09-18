@@ -1,5 +1,6 @@
 package de.leeksanddragons.engine.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.data.SharedData;
@@ -82,6 +83,13 @@ public interface IGame {
      * @return instance of shared data
     */
     public SharedData getSharedData ();
+
+    /**
+    * get sprite batch. Only use this method, if it is really neccessarry!
+     *
+     * @return instance of sprite batch
+    */
+    public SpriteBatch getSpriteBatch ();
 
     /**
     * add an timer task which will be executed once after an given time in milliseconds

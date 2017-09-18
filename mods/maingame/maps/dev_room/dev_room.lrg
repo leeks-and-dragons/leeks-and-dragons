@@ -1,12 +1,36 @@
 {
     "meta": {
-        "widthInMaps": 1,
-        "heightInMaps": 1,
+        "engine_version": 1,
+        "minX": -1,
+        "maxX": 1,
+        "minY": -1,
+        "maxY": 1,
         "tileWidth": 32,
         "tileHeight": 32,
+        "xTilesPerMap": 30,
+        "yTilesPerMap": 30,
         "containsWater": true
     },
     "maps": [
-
+        {
+            "x": 0,
+            "y": 0,
+            "tmx_file": "dev_room_0_0.tmx"
+        },
+        {
+            "x": -1,
+            "y": 0,
+            "tmx_file": "dev_room_-1_0.tmx"
+        },
+        {
+            "x": 0,
+            "y": 0,
+            "tmx_file": "dev_room_0_0.tmx"
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "tmx_file": "dev_room_1_0.tmx"
+        }
     ]
 }

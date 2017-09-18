@@ -480,6 +480,24 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * get view matrix
+     *
+     * @return view matrix
+    */
+    public Matrix4 getViewMatrix () {
+        return this.camera.view;
+    }
+
+    /**
+    * get projection matrix
+     *
+     * @return projection matrix
+    */
+    public Matrix4 getProjectionMatrix () {
+        return this.camera.projection;
+    }
+
+    /**
     * get frustum
      *
      * @return frustum
@@ -582,11 +600,11 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
-    * get original camera, only for junit tests!
+    * get original camera, only for junit tests and tiled map renderer
      *
      * @return original camera
     */
-    protected OrthographicCamera getOriginalCamera () {
+    public OrthographicCamera getOriginalCamera () {
         return this.camera;
     }
 
