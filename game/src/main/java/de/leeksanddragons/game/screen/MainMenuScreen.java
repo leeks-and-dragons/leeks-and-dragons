@@ -66,6 +66,7 @@ public class MainMenuScreen extends BaseScreen {
 
             //create new font
             this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 16, Color.WHITE);
+            //this.font = BitmapFontFactory.createFont("./data/font/04b_30/04B_30.ttf", 14, Color.WHITE);
 
             //create buttons
             this.createVerticalButtons(this.hud);
