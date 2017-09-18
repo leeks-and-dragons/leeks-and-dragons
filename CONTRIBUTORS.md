@@ -25,3 +25,25 @@ Arial is an font from microsoft.\
 **Author**: NenadSimic
 **License**: CC-BY 3.0\
 **Source / Link**: https://opengameart.org/content/menu-selection-click
+
+### LPC Terrains (Tileset)
+
+**Path**: mods/maingame/tilesets/LPC_Terrain\
+**Author(s)**:
+
+  - Matthew Nash
+  - Nushio
+  - William.Thompsonj
+  - Adrix89
+  - Casper Nilsson
+  - Daniel Eddeland
+  - Johann CHARLOT
+  - Skyler Robert Colladay
+  - Lanea Zimmerman (AKA Sharm)
+  - Stephen Challener (AKA Redshrike)
+  - Charles Sanchez (AKA CharlesGabriel)
+  - Manuel Riecke (AKA MrBeast)
+  - Daniel Armstrong (AKA HughSpectrum)
+  
+**License**: CC-BY-SA 3.0 / GNU GPL 3.0\
+**Source / Link**: https://opengameart.org/content/tiled-terrains
