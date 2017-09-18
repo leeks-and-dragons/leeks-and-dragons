@@ -103,6 +103,18 @@ public class MainMenuScreen extends BaseScreen {
 
         startX += 110;
 
+        //create dev-room button
+        this.devRoomButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Dev-Room");
+        this.devRoomButton.setPosition(startX, startY);
+        this.devRoomButton.setHoverSound(hoverSound, 0.5f);
+        this.devRoomButton.setClickListener(() -> {
+            //goto dev room screen
+            game.getScreenManager().leaveAllAndEnter("dev_room");
+        });
+        this.hud.addWidget(devRoomButton);
+
+        startX += 110;
+
         //create editor button
         this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
         this.editorButton.setPosition(startX, startY);
@@ -138,27 +150,27 @@ public class MainMenuScreen extends BaseScreen {
         Sound hoverSound = game.getAssetManager().getAssetByName("menu_hover_sound", Sound.class);
 
         float startX = 100;//40;
-        float startY = 400;
+        float startY = 460;//440;//400;
 
         //create start button
-        this.startButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Start Game");
+        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
         this.startButton.setPosition(startX, startY);
         this.startButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(startButton);
 
-        startY -= (60 + 25);
+        startY -= 60;
 
         //create options button
-        this.optionsButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Options");
+        this.optionsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Options");
         this.optionsButton.setPosition(startX, startY);
         this.optionsButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(optionsButton);
 
-        startY -= 85;
+        startY -= 60;
 
         if (this.game.isDevMode()) {
             //create dev-room button
-            this.devRoomButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Dev-Room");
+            this.devRoomButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Dev-Room");
             this.devRoomButton.setPosition(startX, startY);
             this.devRoomButton.setHoverSound(hoverSound, 0.5f);
             this.devRoomButton.setClickListener(() -> {
@@ -167,27 +179,27 @@ public class MainMenuScreen extends BaseScreen {
             });
             this.hud.addWidget(devRoomButton);
 
-            startY -= 85;
+            startY -= 60;
 
             //create editor button
-            this.editorButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Editor");
+            this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
             this.editorButton.setPosition(startX, startY);
             this.editorButton.setHoverSound(hoverSound, 0.5f);
             this.hud.addWidget(editorButton);
 
-            startY -= 85;
+            startY -= 60;
         }
 
         //create credits button
-        this.creditsButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Credits");
+        this.creditsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Credits");
         this.creditsButton.setPosition(startX, startY);
         this.creditsButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(creditsButton);
 
-        startY -= 85;
+        startY -= 60;
 
         //create close button
-        this.closeButton = new MenuButton(textureAtlas, "largeButton", "largeButton_hovered", this.font, "Close");
+        this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
         this.closeButton.setPosition(startX, startY);
         this.closeButton.setHoverSound(hoverSound, 0.5f);
         this.closeButton.setClickListener(() -> {
