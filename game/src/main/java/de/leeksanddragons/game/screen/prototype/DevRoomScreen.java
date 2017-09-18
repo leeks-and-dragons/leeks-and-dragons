@@ -125,7 +125,10 @@ public class DevRoomScreen extends BaseScreen {
     @Override
     public void update(IScreenGame game, GameTime time) {
         //check, if region was pre-loaded
-        if (!this.region.hasPreLoadingFinished()) {
+        if (!this.region.hasPreLoadingFinished(game.getCameraManager().getMainCamera())) {
+            //update region to load map
+            this.region.update(game, time);
+
             return;
         }
 
@@ -145,7 +148,7 @@ public class DevRoomScreen extends BaseScreen {
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
         //check, if region was pre-loaded
-        if (!this.region.hasPreLoadingFinished()) {
+        if (!this.region.hasPreLoadingFinished(game.getCameraManager().getMainCamera())) {
             //set shader
             batch.setShader(this.monochromeShader);
             this.monochromeShader.setUniformf("u_amount", 1.0f);

@@ -267,8 +267,8 @@ public class LADRegion extends BaseRegion {
     }
 
     @Override
-    public boolean hasPreLoadingFinished () {
-        return this.hasPreloaded;
+    public boolean hasPreLoadingFinished (CameraHelper camera) {
+        return getCurrentMap(camera).isLoaded();
     }
 
 }

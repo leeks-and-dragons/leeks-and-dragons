@@ -1,6 +1,8 @@
 package de.leeksanddragons.engine.map.impl;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.leeksanddragons.engine.camera.CameraHelper;
+import de.leeksanddragons.engine.map.IMap;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -36,7 +38,12 @@ public class DummyRegion extends BaseRegion {
     }
 
     @Override
-    public boolean hasPreLoadingFinished() {
+    public IMap getCurrentMap(CameraHelper camera) {
+        return null;
+    }
+
+    @Override
+    public boolean hasPreLoadingFinished(CameraHelper camera) {
         return true;
     }
 

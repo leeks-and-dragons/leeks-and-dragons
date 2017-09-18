@@ -128,6 +128,6 @@ public interface IRegion {
      *
      * @return true, if region has finished pre-loading
     */
-    public boolean hasPreLoadingFinished ();
+    public boolean hasPreLoadingFinished (CameraHelper camera);
 
 }
