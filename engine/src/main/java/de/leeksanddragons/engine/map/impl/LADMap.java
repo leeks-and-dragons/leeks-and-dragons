@@ -182,7 +182,7 @@ public class LADMap implements IMap {
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
         //only draw, if map was already loaded
         if (!isLoaded()) {
-            Gdx.app.error("LADMap", "Cannot draw map, because map isnt loaded yet.");
+            //Gdx.app.error("LADMap", "Cannot draw map, because map isnt loaded yet.");
 
             return;
         }

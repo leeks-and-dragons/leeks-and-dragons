@@ -119,6 +119,9 @@ public class LADRegion extends BaseRegion {
         //get file to tmx map
         String tmxFile = json.getString("tmx_file");
 
+        //get full tmx file
+        tmxFile = this.dir + tmxFile;
+
         //create map
         IMap map = new LADMap(x, y, getMapWidth(), getMapHeight(), game, tmxFile);
 
