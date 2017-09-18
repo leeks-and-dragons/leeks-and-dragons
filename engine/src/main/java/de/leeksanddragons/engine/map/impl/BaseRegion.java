@@ -165,7 +165,8 @@ public abstract class BaseRegion implements IRegion {
         return this.heightInMaps;
     }
 
-    protected IMap getMap (int x, int y) {
+    @Override
+    public IMap getMap (int x, int y) {
         //check array length
         return this.maps[getXIndex(x)][getYIndex(y)];
     }

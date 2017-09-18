@@ -107,6 +107,23 @@ public interface IRegion {
     public void preloadMaps (float currentX, float currentY);
 
     /**
+    * get instance of map
+     *
+     * @param x x index of map
+     * @param y y index of map
+     *
+     * @return instance of map
+    */
+    public IMap getMap (int x, int y);
+
+    /**
+    * get current map
+     *
+     * @return instance of current map
+    */
+    public IMap getCurrentMap (CameraHelper camera);
+
+    /**
     * check, if region has finished pre-loading
      *
      * @return true, if region has finished pre-loading

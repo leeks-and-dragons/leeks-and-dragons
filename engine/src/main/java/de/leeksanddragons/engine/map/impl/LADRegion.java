@@ -249,6 +249,24 @@ public class LADRegion extends BaseRegion {
     }
 
     @Override
+    public IMap getCurrentMap(CameraHelper camera) {
+        //get mittle coordinates of camera
+        float middleX = camera.getX() + (camera.getViewportWidth() / 2) - this.offsetX;
+        float middleY = camera.getY() + (camera.getViewportHeight() / 2) - this.offsetY;
+
+        //get map in middle
+        int mapX = (int) (middleX / getMapWidth());
+        int mapY = (int) (middleY / getMapHeight());
+
+        //check, if map is in bounds
+        if (!isInBounds(mapX, mapY)) {
+            return null;
+        }
+
+        return getMap(mapX, mapY);
+    }
+
+    @Override
     public boolean hasPreLoadingFinished () {
         return this.hasPreloaded;
     }
