@@ -47,3 +47,10 @@ Arial is an font from microsoft.\
   
 **License**: CC-BY-SA 3.0 / GNU GPL 3.0\
 **Source / Link**: https://opengameart.org/content/tiled-terrains
+
+### Remove Icon
+
+**Path**: data/icon/remove\
+**Author**: ibrandify\
+**License**: free for commercial use\
+**Source / Link**: https://www.iconfinder.com/icons/436171/close_cross_handrawn_logout_remove_trash_icon

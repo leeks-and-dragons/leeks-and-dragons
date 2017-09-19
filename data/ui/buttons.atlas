@@ -5,56 +5,70 @@ filter: Nearest,Nearest
 repeat: none
 slot
   rotate: false
-  xy: 1, 1
+  xy: 1, 235
   size: 304, 232
   orig: 304, 232
   offset: 0, 0
   index: -1
 slot_selected
   rotate: false
-  xy: 307, 1
+  xy: 1, 1
   size: 304, 232
   orig: 304, 232
   offset: 0, 0
   index: -1
+slotSmall
+  rotate: false
+  xy: 307, 307
+  size: 210, 160
+  orig: 210, 160
+  offset: 0, 0
+  index: -1
+slotSmall_selected
+  rotate: false
+  xy: 307, 145
+  size: 210, 160
+  orig: 210, 160
+  offset: 0, 0
+  index: -1
 button2
   rotate: false
-  xy: 613, 190
+  xy: 519, 424
   size: 182, 43
   orig: 182, 43
   offset: 0, 0
   index: -1
 button2_hovered
   rotate: false
-  xy: 613, 145
+  xy: 307, 100
   size: 182, 43
   orig: 182, 43
   offset: 0, 0
   index: -1
 largeButton
   rotate: false
-  xy: 797, 158
+  xy: 519, 347
   size: 150, 75
   orig: 150, 75
   offset: 0, 0
   index: -1
 largeButton_hovered
   rotate: false
-  xy: 613, 68
+  xy: 307, 23
   size: 150, 75
   orig: 150, 75
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 613, 16
+  xy: 519, 295
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 button_hovered
   rotate: false
-  xy: 797, 106
+  xy: 519, 243
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
