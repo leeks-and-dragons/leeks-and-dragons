@@ -41,7 +41,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());
         screenManager.addScreen("logo_intro", new LogoIntroScreen());
         screenManager.addScreen("loading", new LoadingScreen());
-        screenManager.addScreen("mainmenu", new MenuScreen());
+        screenManager.addScreen("mainmenu", new MainMenuScreen());
         screenManager.addScreen("slot_selection", new SlotSelectionScreen());
 
         //prototype screens

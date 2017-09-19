@@ -19,7 +19,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 /**
  * Created by Justin on 12.09.2017.
  */
-public class MenuScreen extends BaseScreen {
+public class MainMenuScreen extends BaseScreen {
 
     //image paths
     protected static final String BG_PATH = "./data/wallpaper/Loading_Screen.png";
@@ -78,6 +78,7 @@ public class MenuScreen extends BaseScreen {
 
     }
 
+    @Deprecated
     protected void createHorizontalButtons (HUD hud) {
         //first, get texture atlas
         TextureAtlas textureAtlas = game.getAssetManager().getAssetByName("menu_buttons", TextureAtlas.class);
@@ -154,7 +155,7 @@ public class MenuScreen extends BaseScreen {
         float startY = 460;//440;//400;
 
         //create start button
-        this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
+        this.startButton = new MenuButton(textureAtlas, "Start_normal", "Start_hovered", this.font, "");
         this.startButton.setPosition(startX, startY);
         this.startButton.setHoverSound(hoverSound, 0.5f);
         this.startButton.setClickListener(() -> {
@@ -165,7 +166,7 @@ public class MenuScreen extends BaseScreen {
         startY -= 60;
 
         //create options button
-        this.optionsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Options");
+        this.optionsButton = new MenuButton(textureAtlas, "Options_normal", "Options_hovered", this.font, "");
         this.optionsButton.setPosition(startX, startY);
         this.optionsButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(optionsButton);
@@ -174,7 +175,7 @@ public class MenuScreen extends BaseScreen {
 
         if (this.game.isDevMode()) {
             //create dev-room button
-            this.devRoomButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Dev-Room");
+            this.devRoomButton = new MenuButton(textureAtlas, "DevRoom_normal", "DevRoom_hovered", this.font, "");
             this.devRoomButton.setPosition(startX, startY);
             this.devRoomButton.setHoverSound(hoverSound, 0.5f);
             this.devRoomButton.setClickListener(() -> {
@@ -186,7 +187,7 @@ public class MenuScreen extends BaseScreen {
             startY -= 60;
 
             //create editor button
-            this.editorButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Editor");
+            this.editorButton = new MenuButton(textureAtlas, "Editor_normal", "Editor_hovered", this.font, "");
             this.editorButton.setPosition(startX, startY);
             this.editorButton.setHoverSound(hoverSound, 0.5f);
             this.hud.addWidget(editorButton);
@@ -195,7 +196,7 @@ public class MenuScreen extends BaseScreen {
         }
 
         //create credits button
-        this.creditsButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Credits");
+        this.creditsButton = new MenuButton(textureAtlas, "Credits_normal", "Credits_hovered", this.font, "");
         this.creditsButton.setPosition(startX, startY);
         this.creditsButton.setHoverSound(hoverSound, 0.5f);
         this.hud.addWidget(creditsButton);
@@ -203,7 +204,7 @@ public class MenuScreen extends BaseScreen {
         startY -= 60;
 
         //create close button
-        this.closeButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Close");
+        this.closeButton = new MenuButton(textureAtlas, "Close_normal", "Close_hovered", this.font, "");
         this.closeButton.setPosition(startX, startY);
         this.closeButton.setHoverSound(hoverSound, 0.5f);
         this.closeButton.setClickListener(() -> {
