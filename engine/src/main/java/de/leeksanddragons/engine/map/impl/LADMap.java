@@ -193,7 +193,7 @@ public class LADMap implements IMap {
         //draw map
         if (this.renderMethod == RENDER_METHOD.LIBGDX_RENDERER) {
             //set camera
-            this.mapRenderer.setView(camera.getCombined(), this.x - camera.getX(), this.y - camera.getY(), camera.getViewportWidth(), camera.getViewportHeight());
+            this.mapRenderer.setView(camera.getCombined(), /*this.x - */camera.getX(), /*this.y - */camera.getY() , camera.getViewportWidth(), camera.getViewportHeight());
 
             //end batch
             batch.flush();

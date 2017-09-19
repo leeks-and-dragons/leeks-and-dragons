@@ -149,6 +149,14 @@ public class DevRoomScreen extends BaseScreen {
             game.getCameraManager().getMainCamera().translate(2, 0, 0);
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            game.getCameraManager().getMainCamera().translate(0, 2, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            game.getCameraManager().getMainCamera().translate(0, -2, 0);
+        }
+
         //check, if region contains water
         if (region.hasWater()) {
             //update water renderer
