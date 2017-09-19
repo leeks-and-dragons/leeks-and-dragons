@@ -46,24 +46,24 @@ public class SlotSelectionScreen extends BaseScreen {
 
     @Override
     public void onResume(IScreenGame game) {
+        //load background image first
+        assetManager.load(BG_PATH, Texture.class);
+        assetManager.load(FG_PATH, Texture.class);
+
+        //force finish asset loading
+        assetManager.finishLoadingAsset(BG_PATH);
+        assetManager.finishLoadingAsset(FG_PATH);
+
+        //get texture
+        this.bgTexture = assetManager.get(BG_PATH);
+        this.fgTexture = assetManager.get(FG_PATH);
+
         if (this.hud == null) {
             //create new HUD
             this.hud = new HUD();
 
-            //load background image first
-            assetManager.load(BG_PATH, Texture.class);
-            assetManager.load(FG_PATH, Texture.class);
-
-            //force finish asset loading
-            assetManager.finishLoadingAsset(BG_PATH);
-            assetManager.finishLoadingAsset(FG_PATH);
-
-            //get texture
-            this.bgTexture = assetManager.get(BG_PATH);
-            this.fgTexture = assetManager.get(FG_PATH);
-
             //create new font
-            this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 16, Color.WHITE);
+            this.font = BitmapFontFactory.createFont("./data/font/leekling/Leekling.ttf", 32, Color.WHITE);
 
             //add buttons
             this.addButtons();
@@ -72,7 +72,10 @@ public class SlotSelectionScreen extends BaseScreen {
 
     @Override
     public void onPause(IScreenGame game) {
-
+        this.assetManager.unload(BG_PATH);
+        this.assetManager.unload(FG_PATH);
+        this.bgTexture = null;
+        this.fgTexture = null;
     }
 
     /**
@@ -86,8 +89,9 @@ public class SlotSelectionScreen extends BaseScreen {
         Sound hoverSound = game.getAssetManager().getAssetByName("menu_hover_sound", Sound.class);
 
         //create start button
-        this.backToMenuButton = new MenuButton(textureAtlas, "button2", "button2_hovered", this.font, "Menu");
-        this.backToMenuButton.setPosition(50, 50);
+        this.backToMenuButton = new MenuButton(textureAtlas, "button2", "button2_hovered", this.font, "MENU");
+        this.backToMenuButton.setTextPadding(10, 50);
+        this.backToMenuButton.setPosition(30, 30);
         this.backToMenuButton.setHoverSound(hoverSound, 0.5f);
         this.backToMenuButton.setClickListener(() -> {
             game.getScreenManager().leaveAllAndEnter("mainmenu");
@@ -109,11 +113,11 @@ public class SlotSelectionScreen extends BaseScreen {
         //draw background
         batch.draw(this.bgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
 
-        //draw GUI
-        this.hud.drawLayer0(time, batch);
-
         //draw foreground graphics
         batch.draw(this.fgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
+
+        //draw GUI
+        this.hud.drawLayer0(time, batch);
     }
 
     @Override

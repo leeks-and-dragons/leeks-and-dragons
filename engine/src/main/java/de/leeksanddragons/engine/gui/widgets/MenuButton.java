@@ -16,7 +16,7 @@ import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 /**
  * Created by Justin on 15.09.2017.
  */
-public class MenuButton extends BaseHUDWidget {
+public class MenuButton extends BaseHUDWidget<MenuButton> {
 
     //flags
     protected boolean hovered = false;
@@ -108,6 +108,11 @@ public class MenuButton extends BaseHUDWidget {
                 }
             }
         }
+
+        //execute custom renderer, if available
+        if (this.customRenderer != null) {
+            this.customRenderer.update(game, this, time);
+        }
     }
 
     @Override
@@ -121,6 +126,11 @@ public class MenuButton extends BaseHUDWidget {
 
         //draw text
         this.font.draw(batch, this.text, getX() + paddingLeft, getY() + getHeight() - paddingTop);
+
+        //execute custom renderer, if available
+        if (this.customRenderer != null) {
+            this.customRenderer.drawLayer0(time, this, batch);
+        }
     }
 
     public void setHoverSound(Sound sound, float soundVolume) {

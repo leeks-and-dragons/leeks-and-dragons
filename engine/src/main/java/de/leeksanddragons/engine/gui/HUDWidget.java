@@ -8,7 +8,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 /**
  * Created by Justin on 08.02.2017.
  */
-public interface HUDWidget {
+public interface HUDWidget<T extends HUDWidget> {
 
     public void update(IScreenGame game, GameTime time);
 
@@ -25,6 +25,8 @@ public interface HUDWidget {
     public void setPosition(float x, float y);
 
     public void onMoveGroup(float groupX, float groupY);
+
+    public void setCustomRenderer (CustomRenderer<T> renderer);
 
     public void dispose();
 

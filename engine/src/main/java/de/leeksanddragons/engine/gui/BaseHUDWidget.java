@@ -9,7 +9,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 /**
  * Created by Justin on 08.02.2017.
  */
-public abstract class BaseHUDWidget implements HUDWidget {
+public abstract class BaseHUDWidget<T extends HUDWidget> implements HUDWidget<T> {
 
     protected float x = 0;
     protected float y = 0;
@@ -18,6 +18,8 @@ public abstract class BaseHUDWidget implements HUDWidget {
 
     protected float groupX = 0;
     protected float groupY = 0;
+
+    protected CustomRenderer<T> customRenderer = null;
 
     @Override
     public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
@@ -80,6 +82,10 @@ public abstract class BaseHUDWidget implements HUDWidget {
         float mouseY = game.getCameraManager().getUICamera().getViewportHeight() - (Gdx.input.getY() / b);
 
         return isInner(mouseX, mouseY);
+    }
+
+    public void setCustomRenderer (CustomRenderer<T> renderer) {
+        this.customRenderer = renderer;
     }
 
     @Override
