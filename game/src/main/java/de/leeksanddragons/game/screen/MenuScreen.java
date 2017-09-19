@@ -157,6 +157,9 @@ public class MenuScreen extends BaseScreen {
         this.startButton = new MenuButton(textureAtlas, "button", "button_hovered", this.font, "Start Game");
         this.startButton.setPosition(startX, startY);
         this.startButton.setHoverSound(hoverSound, 0.5f);
+        this.startButton.setClickListener(() -> {
+            game.getScreenManager().leaveAllAndEnter("slot_selection");
+        });
         this.hud.addWidget(startButton);
 
         startY -= 60;
