@@ -142,7 +142,7 @@ public abstract class BaseRegion implements IRegion {
         IMap map = getMap(xIndex, yIndex);
 
         if (map == null) {
-            throw new NullPointerException("map cannot be null.");
+            return false;
         }
 
         //check if map is in frustum
@@ -167,8 +167,16 @@ public abstract class BaseRegion implements IRegion {
 
     @Override
     public IMap getMap (int x, int y) {
-        //check array length
-        return this.maps[getXIndex(x)][getYIndex(y)];
+        if (!isInBounds(x, y)) {
+            return null;
+        }
+
+        try {
+            //check array length
+            return this.maps[getXIndex(x)][getYIndex(y)];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
 }

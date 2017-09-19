@@ -228,7 +228,7 @@ public class CameraHelper implements ModificationFinishedListener {
             //check, if camera can scroll on x axis and is in bounds
             if (!this.canScrollX(deltaX)) {
                 if (this.x + deltaX < this.minX) {
-                    System.err.println("set minX, lastX: " + lastX + ", x: " + this.x + ", deltaX: " + deltaX + ", minX: " + minX + ", maxX: " + maxX);
+                    //System.err.println("set minX, lastX: " + lastX + ", x: " + this.x + ", deltaX: " + deltaX + ", minX: " + minX + ", maxX: " + maxX);
                     this.targetX = this.minX;
                     this.x = this.minX;
                 } else if (this.x + deltaX > this.maxX) {

@@ -1,12 +1,14 @@
 package de.leeksanddragons.game.screen.prototype;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import de.leeksanddragons.engine.camera.CameraHelper;
+import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.map.impl.DummyRegion;
 import de.leeksanddragons.engine.map.impl.LADRegion;
@@ -52,6 +54,13 @@ public class DevRoomScreen extends BaseScreen {
 
     @Override
     public void onResume(IScreenGame game) {
+        game.addResizeListener(new ResizeListener() {
+            @Override
+            public void onResize(int width, int height) {
+                game.getCameraManager().getMainCamera().resize(width, height);
+            }
+        });
+
         //check, if loading wallpaper is available
         if (this.loadingTexture == null) {
             //load loading wallpaper
@@ -130,6 +139,14 @@ public class DevRoomScreen extends BaseScreen {
             this.region.update(game, time);
 
             return;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            game.getCameraManager().getMainCamera().translate(-2, 0, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            game.getCameraManager().getMainCamera().translate(2, 0, 0);
         }
 
         //check, if region contains water
