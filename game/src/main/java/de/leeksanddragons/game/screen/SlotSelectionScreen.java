@@ -1,5 +1,6 @@
 package de.leeksanddragons.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +14,10 @@ import de.leeksanddragons.engine.gui.widgets.MenuButton;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
+import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
+
+import java.io.File;
 
 /**
  * Created by Justin on 18.09.2017.
@@ -36,12 +40,12 @@ public class SlotSelectionScreen extends BaseScreen {
 
     //buttons
     protected MenuButton backToMenuButton = null;
-    protected MenuButton deleteButton = null;
-    protected MenuButton startButton = null;
+    protected MenuButton slotButtons[] = new MenuButton[3];
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
-
+        //create directory structure for saves, if neccessary
+        this.checkSavesDirectory();
     }
 
     @Override
@@ -78,6 +82,23 @@ public class SlotSelectionScreen extends BaseScreen {
         this.fgTexture = null;
     }
 
+    protected void checkSavesDirectory () {
+        String savesPath = FileUtils.getAppHomeDir(game.getAppName()) + "saves/";
+
+        File saveDir = new File(savesPath);
+
+        //create directory, if not exists
+        if (!saveDir.exists()) {
+            saveDir.mkdirs();
+        }
+
+        for (int i = 1; i <= 3; i++) {
+            if (!new File(savesPath + "slot_" + i).exists()) {
+                new File(savesPath + "slot_" + i).mkdirs();
+            }
+        }
+    }
+
     /**
     * add buttons to HUD
     */
@@ -97,6 +118,42 @@ public class SlotSelectionScreen extends BaseScreen {
             game.getScreenManager().leaveAllAndEnter("mainmenu");
         });
         this.hud.addWidget(backToMenuButton);
+
+        float startX = 100;
+        float startY = 340;
+
+        float paddingTop = 260;
+
+        //add slot buttons
+        for (int i = 0; i < 3; i++) {
+            this.slotButtons[i] = new MenuButton(textureAtlas, "slot", "slot_selected", this.font, "");
+            this.slotButtons[i].setPosition(startX, startY);
+            this.slotButtons[i].setHoverSound(hoverSound, 0.5f);
+
+            //variable has to be final
+            final int index = i;
+
+            this.slotButtons[i].setClickListener(() -> {
+                startGame(index);
+            });
+            this.hud.addWidget(slotButtons[i]);
+
+            startY -= paddingTop;
+        }
+    }
+
+    /**
+    * start game
+     *
+     * @param slotIndex index of slot, begins with 0
+    */
+    protected void startGame (int slotIndex) {
+        //increment index, so it starts with 1
+        slotIndex = slotIndex + 1;
+
+        Gdx.app.debug("Slots", "try to start game in slot " + slotIndex + ".");
+
+        //TODO: add code here
     }
 
     @Override
