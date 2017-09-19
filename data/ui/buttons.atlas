@@ -73,14 +73,14 @@ Reset_normal
   orig: 182, 43
   offset: 0, 0
   index: -1
-Start_hovered
+Start2_hovered
   rotate: false
   xy: 703, 422
   size: 182, 43
   orig: 182, 43
   offset: 0, 0
   index: -1
-Start_normal
+Start2_normal
   rotate: false
   xy: 307, 53
   size: 182, 43
@@ -167,6 +167,20 @@ Options_hovered
 Options_normal
   rotate: false
   xy: 593, 117
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+Start_hovered
+  rotate: false
+  xy: 593, 65
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+Start_normal
+  rotate: false
+  xy: 593, 13
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
