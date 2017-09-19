@@ -142,8 +142,6 @@ public class SlotSelectionScreen extends BaseScreen {
         float startX = 200;
         float startY = 325;
 
-        float paddingTop = 260;
-
         //add slot buttons
         for (int i = 0; i < 3; i++) {
             this.slotButtons[i] = new MenuButton(textureAtlas, "slotSmall", "slotSmall_selected", this.font, "");
