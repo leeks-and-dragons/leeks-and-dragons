@@ -130,7 +130,7 @@ public class SlotSelectionScreen extends BaseScreen {
         Sound hoverSound = game.getAssetManager().getAssetByName("menu_hover_sound", Sound.class);
 
         //create start button
-        this.backToMenuButton = new MenuButton(textureAtlas, "button2", "button2_hovered", this.font, "MENU");
+        this.backToMenuButton = new MenuButton(textureAtlas, "Menu_normal", "Menu_hovered", this.font, "");
         this.backToMenuButton.setTextPadding(10, 50);
         this.backToMenuButton.setPosition(30, 30);
         this.backToMenuButton.setHoverSound(hoverSound, 0.5f);
