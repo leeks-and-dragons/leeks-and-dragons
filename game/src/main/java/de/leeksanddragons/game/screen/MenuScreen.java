@@ -19,7 +19,7 @@ import de.leeksanddragons.engine.utils.GameTime;
 /**
  * Created by Justin on 12.09.2017.
  */
-public class MainMenuScreen extends BaseScreen {
+public class MenuScreen extends BaseScreen {
 
     //image paths
     protected static final String BG_PATH = "./data/wallpaper/Loading_Screen.png";

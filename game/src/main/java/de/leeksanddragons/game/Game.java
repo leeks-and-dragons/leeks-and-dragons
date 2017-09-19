@@ -10,13 +10,12 @@ import de.leeksanddragons.engine.screen.IScreen;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.ScreenManager;
 import de.leeksanddragons.engine.screen.impl.ScreenBasedGame;
-import de.leeksanddragons.game.loading.tasks.ExampleTask;
 import de.leeksanddragons.game.loading.tasks.LoadAssetsTask;
 import de.leeksanddragons.game.loading.tasks.ModLoadingTask;
 import de.leeksanddragons.game.screen.JuKuSoftIntroScreen;
 import de.leeksanddragons.game.screen.LoadingScreen;
 import de.leeksanddragons.game.screen.LogoIntroScreen;
-import de.leeksanddragons.game.screen.MainMenuScreen;
+import de.leeksanddragons.game.screen.MenuScreen;
 import de.leeksanddragons.game.screen.prototype.DevRoomScreen;
 import de.leeksanddragons.game.screen.prototype.WaterRenderScreen;
 import de.leeksanddragons.game.shared.Shared;
@@ -45,7 +44,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());
         screenManager.addScreen("logo_intro", new LogoIntroScreen());
         screenManager.addScreen("loading", new LoadingScreen());
-        screenManager.addScreen("mainmenu", new MainMenuScreen());
+        screenManager.addScreen("mainmenu", new MenuScreen());
 
         //prototype screens
         screenManager.addScreen("water_prototype", new WaterRenderScreen());
