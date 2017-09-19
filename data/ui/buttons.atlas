@@ -3,30 +3,58 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-largeButton
+slot
   rotate: false
   xy: 1, 1
+  size: 304, 232
+  orig: 304, 232
+  offset: 0, 0
+  index: -1
+slot_selected
+  rotate: false
+  xy: 307, 1
+  size: 304, 232
+  orig: 304, 232
+  offset: 0, 0
+  index: -1
+button2
+  rotate: false
+  xy: 613, 190
+  size: 182, 43
+  orig: 182, 43
+  offset: 0, 0
+  index: -1
+button2_hovered
+  rotate: false
+  xy: 613, 145
+  size: 182, 43
+  orig: 182, 43
+  offset: 0, 0
+  index: -1
+largeButton
+  rotate: false
+  xy: 797, 158
   size: 150, 75
   orig: 150, 75
   offset: 0, 0
   index: -1
 largeButton_hovered
   rotate: false
-  xy: 153, 1
+  xy: 613, 68
   size: 150, 75
   orig: 150, 75
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 305, 26
+  xy: 613, 16
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 button_hovered
   rotate: false
-  xy: 407, 26
+  xy: 797, 106
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
