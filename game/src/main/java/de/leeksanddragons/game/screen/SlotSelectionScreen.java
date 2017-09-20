@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.font.BitmapFontFactory;
 import de.leeksanddragons.engine.gui.HUD;
@@ -16,8 +17,10 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.game.saves.SlotInfo;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Justin on 18.09.2017.
@@ -51,10 +54,25 @@ public class SlotSelectionScreen extends BaseScreen {
     protected MenuButton slotButtons[] = new MenuButton[3];
     protected MenuButton removeSlotButtons[] = new MenuButton[3];
 
+    //slots
+    protected SlotInfo slotInfo[] = new SlotInfo[3];
+
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
         //create directory structure for saves, if neccessary
         this.checkSavesDirectory();
+
+        //load slots
+        for (int i = 1; i <= 3; i++) {
+            //create and load slot
+            slotInfo[i] = new SlotInfo(game, (i + 1));
+            try {
+                slotInfo[i].load();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new GdxRuntimeException("IOException while loading slot: " + e.getLocalizedMessage(), e);
+            }
+        }
     }
 
     @Override
@@ -110,12 +128,6 @@ public class SlotSelectionScreen extends BaseScreen {
         //create directory, if not exists
         if (!saveDir.exists()) {
             saveDir.mkdirs();
-        }
-
-        for (int i = 1; i <= 3; i++) {
-            if (!new File(savesPath + "slot_" + i).exists()) {
-                new File(savesPath + "slot_" + i).mkdirs();
-            }
         }
     }
 
