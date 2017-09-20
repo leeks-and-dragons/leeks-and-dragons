@@ -185,3 +185,17 @@ Start_normal
   orig: 100, 50
   offset: 0, 0
   index: -1
+remove
+  rotate: false
+  xy: 989, 478
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+remove_hovered
+  rotate: false
+  xy: 805, 388
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
