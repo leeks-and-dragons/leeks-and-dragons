@@ -78,7 +78,7 @@ public class DefaultControllerManager implements ControllerManager {
 
     @Override
     public List<Controller> listConnectedControllers() {
-        return null;
+        return this.connectedControllers;
     }
 
 }
