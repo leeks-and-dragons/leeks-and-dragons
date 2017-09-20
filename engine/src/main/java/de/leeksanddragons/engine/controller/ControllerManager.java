@@ -1,6 +1,8 @@
 package de.leeksanddragons.engine.controller;
 
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -52,5 +54,10 @@ public interface ControllerManager {
      * @return value of y axis
      */
     public float getRightYAxis ();
+
+    /**
+    * get direction of right axis
+    */
+    public Vector2 getRightAxisDirection ();
 
 }

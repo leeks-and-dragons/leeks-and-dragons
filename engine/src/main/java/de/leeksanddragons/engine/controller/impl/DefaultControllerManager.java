@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.controllers.mappings.Xbox;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import de.leeksanddragons.engine.controller.ControllerManager;
 
@@ -25,6 +26,9 @@ public class DefaultControllerManager implements ControllerManager {
     //active controller (game only supports one active controller)
     protected Controller activeController = null;
     protected CONTROLLER_TYPE activeControllerType = null;
+
+    //temporary vector (to avoid GC pressure)
+    protected Vector2 tmpVector = new Vector2(0, 0);
 
     public DefaultControllerManager () {
         //detect connected controllers
@@ -189,6 +193,17 @@ public class DefaultControllerManager implements ControllerManager {
             default:
                 throw new UnsupportedOperationException("Controller isnt supported: " + activeController.getName() + ", type: " + activeControllerType.name());
         }
+    }
+
+    @Override
+    public Vector2 getRightAxisDirection() {
+        //set values
+        tmpVector.set(getRightXAxis(), getRightYAxis());
+
+        //normalize vector
+        tmpVector.nor();
+
+        return tmpVector;
     }
 
 }
