@@ -86,8 +86,10 @@ public class CameraHelper implements ModificationFinishedListener {
         this.camera.update();
 
         //set offset
-        this.cameraOffsetX = this.camera.position.x;
-        this.cameraOffsetY = this.camera.position.y;
+        //this.cameraOffsetX = this.camera.position.x;
+        //this.cameraOffsetY = this.camera.position.y;
+
+        calculateOffset();
 
         //create new temp camera params
         this.tempCameraParams = new TempCameraParams(this.x, this.y, 1);
@@ -96,6 +98,14 @@ public class CameraHelper implements ModificationFinishedListener {
         this.registerMod(new Shake1CameraModification(), Shake1CameraModification.class);
         this.registerMod(new Shake2CameraModification(), Shake2CameraModification.class);
         this.registerMod(new Shake3CameraModification(), Shake3CameraModification.class);
+    }
+
+    /**
+    * calculate offset position, so that (0, 0) is on left bottom corner
+    */
+    public void calculateOffset () {
+        this.cameraOffsetX = getViewportWidth() / 2;
+        this.cameraOffsetY = getViewportHeight() / 2;
     }
 
     /**
@@ -157,6 +167,9 @@ public class CameraHelper implements ModificationFinishedListener {
         //set new width and height
         this.width = width;
         this.height = height;
+
+        //calculate offset
+        this.calculateOffset();
 
         //call resize listeners
         this.resizeListeners.stream().forEach(consumer -> {
