@@ -39,6 +39,7 @@ public class LabelWidget extends BaseHUDWidget<LabelWidget> {
 
     @Override
     public void drawLayer0(GameTime time, SpriteBatch batch) {
-
+        //draw text
+        this.font.draw(batch, this.text, getX(), getY());
     }
 }

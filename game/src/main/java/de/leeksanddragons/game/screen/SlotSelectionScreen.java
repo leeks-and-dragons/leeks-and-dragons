@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.font.BitmapFontFactory;
 import de.leeksanddragons.engine.gui.HUD;
+import de.leeksanddragons.engine.gui.widgets.LabelWidget;
 import de.leeksanddragons.engine.gui.widgets.MenuButton;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -41,6 +42,7 @@ public class SlotSelectionScreen extends BaseScreen {
 
     //font
     protected BitmapFont font = null;
+    protected BitmapFont labelFont = null;
 
     //GUI
     protected HUD hud = null;
@@ -101,6 +103,7 @@ public class SlotSelectionScreen extends BaseScreen {
 
             //create new font
             this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 26, Color.WHITE);
+            this.labelFont = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 26, Color.WHITE, Color.BLACK, 2);
 
             //add buttons
             this.addButtons();
@@ -118,6 +121,15 @@ public class SlotSelectionScreen extends BaseScreen {
         this.assetManager.unload(REMOVE_ICON_HOVERED);
         this.removeIcon = null;
         this.removeHoveredIcon = null;
+
+        this.font.dispose();
+        this.labelFont.dispose();
+        this.font = null;
+        this.labelFont = null;
+
+        //dispose HUD
+        this.hud.dispose();
+        this.hud = null;
     }
 
     protected void checkSavesDirectory () {
@@ -171,6 +183,16 @@ public class SlotSelectionScreen extends BaseScreen {
                 startGame(index);
             });
             this.hud.addWidget(slotButtons[i]);
+
+            //add label for location description
+            LabelWidget locLabel = new LabelWidget(this.labelFont, slot.getLocationDescription());
+            locLabel.setPosition(startX + 250, startY + 120);
+            this.hud.addWidget(locLabel);
+
+            //add label for location description
+            LabelWidget timeLabel = new LabelWidget(this.labelFont, slot.getPlayedTimeString());
+            timeLabel.setPosition(startX + 250, startY + 70);
+            this.hud.addWidget(timeLabel);
 
             startY -= slotButtons[i].getHeight();//paddingTop;
         }

@@ -131,4 +131,25 @@ public class SlotInfo {
         return this.name;
     }
 
+    /**
+    * get location description where player's character stands, e.q. "Marios Shop - Insel 5"
+     *
+     * @return location descprition
+    */
+    public String getLocationDescription () {
+        if (isNewGame()) {
+            return "Tutorial";
+        }
+
+        return this.locDesc;
+    }
+
+    public String getPlayedTimeString () {
+        if (isNewGame()) {
+            return "Not played yet.";
+        }
+
+        return this.playedTime + " minutes";
+    }
+
 }

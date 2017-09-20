@@ -55,7 +55,18 @@ public class HUD {
     }
 
     public void removeAllWidgets() {
+        //iterate through all widgets
+        for (HUDWidget widget : this.widgetList) {
+            //dispose widget
+            widget.dispose();
+        }
+
         this.widgetList.clear();
+    }
+
+    public void dispose () {
+        //dispose all widgets
+        this.removeAllWidgets();
     }
 
 }
