@@ -33,8 +33,8 @@ public class SlotSelectionScreen extends BaseScreen {
     protected static final String FG_PATH = "./data/wallpaper/Loading_Screen_layer_2.png";
 
     //icon paths
-    protected static final String REMOVE_ICON = "./data/icon/remove/remove_64.png";
-    protected static final String REMOVE_ICON_HOVERED = "./data/icon/remove/remove_64_hovered.png";
+    protected static final String REMOVE_ICON = "./data/icon/remove/remove.png";
+    protected static final String REMOVE_ICON_HOVERED = "./data/icon/remove/remove_hovered.png";
 
     //background image
     protected Texture bgTexture = null;
