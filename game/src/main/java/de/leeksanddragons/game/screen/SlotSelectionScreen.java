@@ -189,7 +189,7 @@ public class SlotSelectionScreen extends BaseScreen {
             locLabel.setPosition(startX + 250, startY + 120);
             this.hud.addWidget(locLabel);
 
-            //add label for location description
+            //add label for played time
             LabelWidget timeLabel = new LabelWidget(this.labelFont, slot.getPlayedTimeString());
             timeLabel.setPosition(startX + 250, startY + 70);
             this.hud.addWidget(timeLabel);
