@@ -63,7 +63,7 @@ public class SlotSelectionScreen extends BaseScreen {
         this.checkSavesDirectory();
 
         //load slots
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 0; i < 3; i++) {
             //create and load slot
             slotInfo[i] = new SlotInfo(game, (i + 1));
             try {
@@ -100,7 +100,7 @@ public class SlotSelectionScreen extends BaseScreen {
             this.hud = new HUD();
 
             //create new font
-            this.font = BitmapFontFactory.createFont("./data/font/leekling/Leekling.ttf", 32, Color.WHITE);
+            this.font = BitmapFontFactory.createFont("./data/font/arial/arial.ttf", 26, Color.WHITE);
 
             //add buttons
             this.addButtons();
@@ -156,8 +156,12 @@ public class SlotSelectionScreen extends BaseScreen {
 
         //add slot buttons
         for (int i = 0; i < 3; i++) {
-            this.slotButtons[i] = new MenuButton(textureAtlas, "slotSmall", "slotSmall_selected", this.font, "");
+            //get slot info
+            SlotInfo slot = this.slotInfo[i];
+
+            this.slotButtons[i] = new MenuButton(textureAtlas, "slotSmall", "slotSmall_selected", this.font, slot.getName());
             this.slotButtons[i].setPosition(startX, startY);
+            this.slotButtons[i].setTextPadding(70, 40);
             this.slotButtons[i].setHoverSound(hoverSound, 0.5f);
 
             //variable has to be final
