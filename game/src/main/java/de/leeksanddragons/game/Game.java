@@ -2,6 +2,8 @@ package de.leeksanddragons.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import de.leeksanddragons.engine.mods.ModManager;
 import de.leeksanddragons.engine.mods.impl.DefaultModManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
@@ -32,6 +34,11 @@ public class Game extends ScreenBasedGame {
         if (isDevMode()) {
             //set log level
             Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        }
+
+        //detect connected controllers
+        for (Controller controller : Controllers.getControllers()) {
+            Gdx.app.log("Controller detected", controller.getName());
         }
 
         //create mod manager

@@ -40,6 +40,13 @@
             <version>${libgdx.version}</version>
         </dependency>
 
+        <!-- libGDX controller support -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-controllers</artifactId>
+            <version>${libgdx.version}</version>
+        </dependency>
+
         <!-- libGDX fonts -->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>

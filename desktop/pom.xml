@@ -52,6 +52,21 @@
             <version>${libgdx.version}</version>
         </dependency>
 
+        <!-- libGDX controller support -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-controllers-desktop</artifactId>
+            <version>${libgdx.version}</version>
+        </dependency>
+
+        <!-- libGDX controller support -->
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-controllers-platform</artifactId>
+            <version>${libgdx.version}</version>
+            <classifier>natives-desktop</classifier>
+        </dependency>
+
         <!-- libGDX fonts -->
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
