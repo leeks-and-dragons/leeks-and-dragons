@@ -16,6 +16,9 @@ public class DefaultControllerManager implements ControllerManager {
     //list with all connected controllers
     protected List<Controller> connectedControllers = new ArrayList<>();
 
+    //active controller (game only supports one active controller)
+    protected Controller activeController = null;
+
     public DefaultControllerManager () {
         //detect connected controllers
         for (Controller controller : Controllers.getControllers()) {
@@ -26,6 +29,9 @@ public class DefaultControllerManager implements ControllerManager {
         }
 
         Gdx.app.log("Controller Manager", "" + connectedControllers.size() + " connected controllers found.");
+
+        //choose active controller
+        this.chooseControllerIfNeccessary();
 
         //add listeners to receive events, if controllers connect or disconnect
         Controllers.addListener(new ControllerAdapter() {
@@ -47,6 +53,19 @@ public class DefaultControllerManager implements ControllerManager {
                 connectedControllers.remove(controller);
             }
         });
+    }
+
+    protected void chooseControllerIfNeccessary () {
+        if (this.activeController == null) {
+            if (this.connectedControllers.size() > 0) {
+                //set first controller in list active
+                this.activeController = connectedControllers.get(0);
+
+                Gdx.app.log("Controller Manager", "choose active controller: " + this.activeController.getName());
+            }
+
+            Gdx.app.debug("Controller Manager", "Couldn't choose active controller, because no controller is detected.");
+        }
     }
 
     @Override
