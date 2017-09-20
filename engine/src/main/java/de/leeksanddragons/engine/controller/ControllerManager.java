@@ -1,5 +1,9 @@
 package de.leeksanddragons.engine.controller;
 
+import com.badlogic.gdx.controllers.Controller;
+import de.leeksanddragons.engine.screen.IScreenGame;
+import de.leeksanddragons.engine.utils.GameTime;
+
 import java.util.List;
 
 /**
@@ -33,6 +37,6 @@ public interface ControllerManager {
      *
      * @return list with all connected controllers
     */
-    public List<IController> listConnectedControllers ();
+    public List<Controller> listConnectedControllers ();
 
 }

@@ -36,11 +36,6 @@ public class Game extends ScreenBasedGame {
             Gdx.app.setLogLevel(Application.LOG_DEBUG);
         }
 
-        //detect connected controllers
-        for (Controller controller : Controllers.getControllers()) {
-            Gdx.app.log("Controller detected", controller.getName());
-        }
-
         //create mod manager
         game.getSharedData().put(Shared.MOD_MANAGER, new DefaultModManager());
 
