@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.controllers.mappings.Xbox;
+import com.badlogic.gdx.math.Vector3;
 import de.leeksanddragons.engine.controller.ControllerManager;
 
 import java.util.ArrayList;
@@ -29,6 +30,43 @@ public class DefaultControllerManager implements ControllerManager {
         //detect connected controllers
         for (Controller controller : Controllers.getControllers()) {
             Gdx.app.log("Controller detected", controller.getName());
+
+            //add listener for debug options
+            controller.addListener(new ControllerAdapter() {
+                @Override
+                public boolean buttonDown(Controller controller, int buttonCode) {
+                    Gdx.app.log("Controller", "button down: " + buttonCode);
+
+                    return false;
+                }
+
+                @Override
+                public boolean buttonUp(Controller controller, int buttonCode) {
+                    return false;
+                }
+
+                @Override
+                public boolean axisMoved(Controller controller, int axisCode, float value) {
+                    Gdx.app.debug("Controller", "axis moved: " + axisCode + ", value: " + value);
+
+                    return false;
+                }
+
+                @Override
+                public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+                    return false;
+                }
+
+                @Override
+                public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+                    return false;
+                }
+
+                @Override
+                public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+                    return false;
+                }
+            });
 
             //add controller to list
             this.connectedControllers.add(controller);
