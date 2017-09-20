@@ -32,10 +32,6 @@ public class SlotSelectionScreen extends BaseScreen {
     protected static final String BG_PATH = "./data/wallpaper/Loading_Screen.png";
     protected static final String FG_PATH = "./data/wallpaper/Loading_Screen_layer_2.png";
 
-    //icon paths
-    protected static final String REMOVE_ICON = "./data/icon/remove/remove.png";
-    protected static final String REMOVE_ICON_HOVERED = "./data/icon/remove/remove_hovered.png";
-
     //background image
     protected Texture bgTexture = null;
     protected Texture fgTexture = null;
@@ -46,10 +42,6 @@ public class SlotSelectionScreen extends BaseScreen {
 
     //GUI
     protected HUD hud = null;
-
-    //icon textures
-    protected Texture removeIcon = null;
-    protected Texture removeHoveredIcon = null;
 
     //buttons
     protected MenuButton backToMenuButton = null;
@@ -82,20 +74,13 @@ public class SlotSelectionScreen extends BaseScreen {
         //load background image first
         assetManager.load(BG_PATH, Texture.class);
         assetManager.load(FG_PATH, Texture.class);
-        assetManager.load(REMOVE_ICON, Texture.class);
-        assetManager.load(REMOVE_ICON_HOVERED, Texture.class);
-
         //force finish asset loading
         assetManager.finishLoadingAsset(BG_PATH);
         assetManager.finishLoadingAsset(FG_PATH);
-        assetManager.finishLoadingAsset(REMOVE_ICON);
-        assetManager.finishLoadingAsset(REMOVE_ICON_HOVERED);
 
         //get texture
         this.bgTexture = assetManager.get(BG_PATH);
         this.fgTexture = assetManager.get(FG_PATH);
-        this.removeIcon = assetManager.get(REMOVE_ICON);
-        this.removeIcon = assetManager.get(REMOVE_ICON_HOVERED);
 
         if (this.hud == null) {
             //create new HUD
@@ -116,11 +101,6 @@ public class SlotSelectionScreen extends BaseScreen {
         this.assetManager.unload(FG_PATH);
         this.bgTexture = null;
         this.fgTexture = null;
-
-        this.assetManager.unload(REMOVE_ICON);
-        this.assetManager.unload(REMOVE_ICON_HOVERED);
-        this.removeIcon = null;
-        this.removeHoveredIcon = null;
 
         this.font.dispose();
         this.labelFont.dispose();
@@ -194,6 +174,14 @@ public class SlotSelectionScreen extends BaseScreen {
             timeLabel.setPosition(startX + 250, startY + 70);
             this.hud.addWidget(timeLabel);
 
+            //create delete button to delete slots
+            MenuButton deleteButton = new MenuButton(textureAtlas, "remove", "remove_hovered", this.font, "");
+            deleteButton.setPosition(startX + 300, startY + 120);
+            deleteButton.setClickListener(() -> {
+                deleteGame(index);
+            });
+            this.hud.addWidget(deleteButton);
+
             startY -= slotButtons[i].getHeight();//paddingTop;
         }
     }
@@ -210,6 +198,13 @@ public class SlotSelectionScreen extends BaseScreen {
         Gdx.app.debug("Slots", "try to start game in slot " + slotIndex + ".");
 
         //TODO: add code here
+    }
+
+    protected void deleteGame (int slotIndex) {
+        //increment index, so it starts with 1
+        slotIndex = slotIndex + 1;
+
+        Gdx.app.log("Slots", "delete slot: " + slotIndex);
     }
 
     @Override

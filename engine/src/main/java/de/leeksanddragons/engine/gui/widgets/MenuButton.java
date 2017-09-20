@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.gui.widgets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -44,6 +45,21 @@ public class MenuButton extends BaseHUDWidget<MenuButton> {
 
     //sound volume
     protected float volume = 1f;
+
+    public MenuButton(Texture texture, Texture hoveredTexture, BitmapFont font, String buttonText) {
+        //get texture regions
+        this.image = new TextureRegion(texture);
+        this.hoveredImage = new TextureRegion(hoveredTexture);
+
+        //save font
+        this.font = font;
+
+        //save text
+        this.text = buttonText;
+
+        //set dimension of texture region
+        this.setDimension(image.getRegionWidth(), image.getRegionHeight());
+    }
 
     public MenuButton(TextureAtlas textureAtlas, String name, String hoveredName, BitmapFont font, String buttonText) {
         //get texture regions
