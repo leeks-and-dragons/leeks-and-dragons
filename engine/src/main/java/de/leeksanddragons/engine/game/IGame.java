@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
+import de.leeksanddragons.engine.controller.ControllerManager;
 import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
@@ -83,6 +84,13 @@ public interface IGame {
      * @return instance of shared data
     */
     public SharedData getSharedData ();
+
+    /**
+    * get controller manager
+     *
+     * @return instance of controller manager
+    */
+    public ControllerManager getControllerManager ();
 
     /**
     * get sprite batch. Only use this method, if it is really neccessarry!

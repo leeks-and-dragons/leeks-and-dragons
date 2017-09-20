@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.Logger;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
+import de.leeksanddragons.engine.controller.ControllerManager;
+import de.leeksanddragons.engine.controller.impl.DefaultControllerManager;
 import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
 import de.leeksanddragons.engine.data.DefaultSharedData;
@@ -76,6 +78,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //shared data
     protected SharedData sharedData = null;
 
+    //controller manager
+    protected ControllerManager controllerManager = null;
+
     //asset manager
     protected GameAssetManager assetManager = null;
 
@@ -109,6 +114,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new shared data
         this.sharedData = new DefaultSharedData();
+
+        //create new controller manager
+        this.controllerManager = new DefaultControllerManager();
 
         //create new asset manager
         this.assetManager = new GameAssetManager();
@@ -395,6 +403,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      */
     public SharedData getSharedData () {
         return this.sharedData;
+    }
+
+    /**
+     * get controller manager
+     *
+     * @return instance of controller manager
+     */
+    public ControllerManager getControllerManager () {
+        return this.controllerManager;
     }
 
     /**
