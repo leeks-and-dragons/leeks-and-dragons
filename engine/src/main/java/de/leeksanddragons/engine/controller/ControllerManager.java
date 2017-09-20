@@ -39,4 +39,18 @@ public interface ControllerManager {
     */
     public List<Controller> listConnectedControllers ();
 
+    /**
+    * get value of right x axis between -1 and 1
+     *
+     * @return value of x axis
+    */
+    public float getRightXAxis ();
+
+    /**
+     * get value of right y axis between -1 and 1
+     *
+     * @return value of y axis
+     */
+    public float getRightYAxis ();
+
 }

@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.controller.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.controllers.mappings.Ouya;
+import com.badlogic.gdx.controllers.mappings.Xbox;
 import de.leeksanddragons.engine.controller.ControllerManager;
 
 import java.util.ArrayList;
@@ -16,8 +17,13 @@ public class DefaultControllerManager implements ControllerManager {
     //list with all connected controllers
     protected List<Controller> connectedControllers = new ArrayList<>();
 
+    public enum CONTROLLER_TYPE {
+        XBOX, OUYA, PS4, UNKNOWN
+    }
+
     //active controller (game only supports one active controller)
     protected Controller activeController = null;
+    protected CONTROLLER_TYPE activeControllerType = null;
 
     public DefaultControllerManager () {
         //detect connected controllers
@@ -61,7 +67,18 @@ public class DefaultControllerManager implements ControllerManager {
                 //set first controller in list active
                 this.activeController = connectedControllers.get(0);
 
-                Gdx.app.log("Controller Manager", "choose active controller: " + this.activeController.getName());
+                //get controller type
+                if (activeController.getName().equals(Ouya.ID)) {
+                    this.activeControllerType = CONTROLLER_TYPE.OUYA;
+                } else if (activeController.getName().contains("XBox")) {
+                    this.activeControllerType = CONTROLLER_TYPE.XBOX;
+                } else if (activeController.getName().contains("PS") || activeController.getName().contains("Play")) {
+                    this.activeControllerType = CONTROLLER_TYPE.PS4;
+                } else {
+                    this.activeControllerType = CONTROLLER_TYPE.UNKNOWN;
+                }
+
+                Gdx.app.log("Controller Manager", "choose active controller: " + this.activeController.getName() + ", type: " + activeControllerType.name());
             }
 
             Gdx.app.debug("Controller Manager", "Couldn't choose active controller, because no controller is detected.");
@@ -98,6 +115,42 @@ public class DefaultControllerManager implements ControllerManager {
     @Override
     public List<Controller> listConnectedControllers() {
         return this.connectedControllers;
+    }
+
+    @Override
+    public float getRightXAxis() {
+        if (!isConnected()) {
+            return 0;
+        }
+
+        switch (this.activeControllerType) {
+            case XBOX:
+                return activeController.getAxis(Xbox.R_STICK_HORIZONTAL_AXIS);
+            case OUYA:
+                return activeController.getAxis(Ouya.AXIS_RIGHT_X);
+            case PS4:
+                throw new UnsupportedOperationException("PS4 controller isnt supported yet. Please contact developers.");
+            default:
+                throw new UnsupportedOperationException("Controller isnt supported: " + activeController.getName() + ", type: " + activeControllerType.name());
+        }
+    }
+
+    @Override
+    public float getRightYAxis() {
+        if (!isConnected()) {
+            return 0;
+        }
+
+        switch (this.activeControllerType) {
+            case XBOX:
+                return activeController.getAxis(Xbox.R_STICK_VERTICAL_AXIS);
+            case OUYA:
+                return activeController.getAxis(Ouya.AXIS_RIGHT_Y);
+            case PS4:
+                throw new UnsupportedOperationException("PS4 controller isnt supported yet. Please contact developers.");
+            default:
+                throw new UnsupportedOperationException("Controller isnt supported: " + activeController.getName() + ", type: " + activeControllerType.name());
+        }
     }
 
 }
