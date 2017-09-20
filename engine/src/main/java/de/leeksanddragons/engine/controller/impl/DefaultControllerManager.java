@@ -25,6 +25,8 @@ public class DefaultControllerManager implements ControllerManager {
             this.connectedControllers.add(controller);
         }
 
+        Gdx.app.log("Controller Manager", "" + connectedControllers.size() + " connected controllers found.");
+
         //add listeners to receive events, if controllers connect or disconnect
         Controllers.addListener(new ControllerAdapter() {
             @Override
