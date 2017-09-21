@@ -1,10 +1,12 @@
 package de.leeksanddragons.engine.map.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.map.IMap;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.screen.IScreenGame;
+import de.leeksanddragons.engine.utils.ColliderUtils;
 import de.leeksanddragons.engine.utils.GameTime;
 
 /**
@@ -99,7 +101,7 @@ public abstract class BaseRegion implements IRegion {
      * @return true, if map index is in bounds
      */
     public boolean isInBounds (int xIndex, int yIndex) {
-        return (xIndex >= minX && yIndex <= maxX) && (yIndex >= minY && yIndex <= maxY);
+        return (xIndex >= minX && xIndex <= maxX) && (yIndex >= minY && yIndex <= maxY);
     }
 
     protected void setBounds (int minX, int maxX, int minY, int maxY) {
@@ -121,9 +123,16 @@ public abstract class BaseRegion implements IRegion {
             throw new IllegalArgumentException("minY has to be <= 0 and maxY has to be >= 0.");
         }
 
-        //calculate offset
-        this.offsetX = Math.abs(minX);
-        this.offsetY = Math.abs(minY);
+        if (minX < 0) {
+            //calculate offset
+            this.offsetX = Math.abs(minX);
+        }
+
+        if (minY < 0) {
+            this.offsetY = Math.abs(minY);
+        }
+
+        Gdx.app.debug("BaseRegion", "set bounds minX: " + minX + ", minY: " + minY + ", maxX: " + maxX + ", maxY: " + maxY);
 
         //create new map array
         this.maps = new IMap[widthInMaps][heightInMaps];
@@ -145,8 +154,24 @@ public abstract class BaseRegion implements IRegion {
             return false;
         }
 
+        //left bottom corner
+        float cameraX1 = camera.getX();
+        float cameraY1 = camera.getY();
+
+        //right top corner
+        float cameraX2 = camera.getX() + camera.getViewportWidth();
+        float cameraY2 = camera.getY() + camera.getViewportHeight();
+
         //check if map is in frustum
-        return camera.getFrustum().boundsInFrustum(map.getBoundingBox());
+        boolean overlaps = ColliderUtils.overlaping(map.getX(), map.getX() + map.getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(map.getY(), map.getY() + map.getHeight(), cameraY1, cameraY2);
+
+        if (!overlaps) {
+            Gdx.app.log("BaseRegion", "map isnt overlaping, mapX: " + map.getX() + ", mapY: " + map.getY());
+        }
+
+        return overlaps;
+
+        //camera.getFrustum().boundsInFrustum(map.getBoundingBox());
     }
 
     protected int getXIndex (int x) {
