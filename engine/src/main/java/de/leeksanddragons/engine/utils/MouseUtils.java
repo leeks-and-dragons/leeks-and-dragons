@@ -70,4 +70,20 @@ public class MouseUtils {
         return tmpVector2;
     }
 
+    /*public static float getCorrectWindowY () {
+        //first, check if fullscreen mode
+        if (Gdx.graphics.isFullscreen()) {
+            return Gdx.input.getY();
+        } else {
+            //TODO: check, if it is an decorated window
+
+            return Gdx.input.getY() + 31;
+        }
+    }*/
+
+    public static float correctDecoredMousePositionY (float y) {
+        float a = (((float) Gdx.graphics.getHeight() - 31f) / (float) Gdx.graphics.getHeight());
+        return y * a;
+    }
+
 }

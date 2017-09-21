@@ -1,14 +1,18 @@
 package de.leeksanddragons.engine.camera;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.leeksanddragons.engine.camera.impl.Shake1CameraModification;
 import de.leeksanddragons.engine.camera.impl.Shake2CameraModification;
 import de.leeksanddragons.engine.camera.impl.Shake3CameraModification;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.MouseUtils;
+import de.leeksanddragons.engine.utils.PlatformUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +72,9 @@ public class CameraHelper implements ModificationFinishedListener {
     //speed of mouse scrolling
     protected float mouseScrollSpeed = 5;
 
+    //viewport
+    protected Viewport viewport = null;
+
     /**
     * default constructor
      *
@@ -76,7 +83,7 @@ public class CameraHelper implements ModificationFinishedListener {
     */
     public CameraHelper (int width, int height) {
         this.width = width;
-        this.height = height;
+        this.height = height/* - 30*/;
 
         //create new libGDX 2D orthographic camera
         this.camera = new OrthographicCamera(width, height);
@@ -90,6 +97,10 @@ public class CameraHelper implements ModificationFinishedListener {
         //this.cameraOffsetY = this.camera.position.y;
 
         calculateOffset();
+
+        //create new viewport
+        //this.viewport = new FitViewport(width, height/*, this.camera*/);
+        //this.viewport.update(width, height, true);
 
         //create new temp camera params
         this.tempCameraParams = new TempCameraParams(this.x, this.y, 1);
@@ -140,6 +151,15 @@ public class CameraHelper implements ModificationFinishedListener {
     }
 
     /**
+    * get viewport
+     *
+     * @return instance of viewport
+    */
+    public Viewport getViewport () {
+        return this.viewport;
+    }
+
+    /**
     * get viewport width
      *
      * @return viewport width
@@ -164,9 +184,14 @@ public class CameraHelper implements ModificationFinishedListener {
      * @param height viewport height
     */
     public void resize (int width, int height) {
+        Gdx.app.debug("CameraHelper", "resize, new width: " + width + ", new height: " + height);
+
         //set new width and height
         this.width = width;
         this.height = height;
+
+        //resize viewport
+        //this.viewport.update(width, height, true);
 
         //calculate offset
         this.calculateOffset();
@@ -531,7 +556,13 @@ public class CameraHelper implements ModificationFinishedListener {
     public Vector3 getMousePosition() {
         this.tmpScreenVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-        return camera.unproject(this.tmpScreenVector);
+        this.tmpScreenVector = camera.unproject(this.tmpScreenVector/*, viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight()*/);//viewport.unproject(this.tmpScreenVector);
+
+        if (!Gdx.graphics.isFullscreen() && Gdx.app.getType() == Application.ApplicationType.Desktop && PlatformUtils.isWindows()) {
+            this.tmpScreenVector.y = MouseUtils.correctDecoredMousePositionY(this.tmpScreenVector.y);
+        }
+
+        return this.tmpScreenVector;
     }
 
     @Override

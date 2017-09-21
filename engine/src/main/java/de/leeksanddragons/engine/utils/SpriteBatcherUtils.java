@@ -48,6 +48,18 @@ public class SpriteBatcherUtils {
         fillRectangle(batch, x, y + height - thickness, width, thickness, color);
     }
 
+    public static void drawRectangle(SpriteBatch batch, float x, float y, float width, float height, Color color) {
+        initTextureIfAbsent();
+
+        float thickness = 1;
+
+        // draw border of rectangle
+        fillRectangle(batch, x, y, width, thickness, color);
+        fillRectangle(batch, x, y, thickness, height, color);
+        fillRectangle(batch, x + width - thickness, y, thickness, height, color);
+        fillRectangle(batch, x, y + height - thickness, width, thickness, color);
+    }
+
     public static void fillRectangle(SpriteBatch batch, float x, float y, float width, float height, Color color) {
         initTextureIfAbsent();
 
