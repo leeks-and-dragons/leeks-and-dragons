@@ -18,7 +18,9 @@ public interface IMapPage extends IPage {
      * @param tileWidth width of a tile in pixels
      * @param tileHeight height of a tile in pixels
     */
-    public void setTileSize (float tileWidth, float tileHeight);
+    public void setTileSize (int tileWidth, int tileHeight);
+
+    public void setPageSizeInTiles (int tilesX, int tilesY);
 
     public void generatePage (TiledMap map, int startTileX, int startTileY);
 
@@ -30,6 +32,8 @@ public interface IMapPage extends IPage {
      * @param batch instance of sprite batch
     */
     public void draw (IScreenGame game, GameTime time, SpriteBatch batch);
+
+    public boolean isPageLoading ();
 
     public boolean isPageLoaded ();
 
