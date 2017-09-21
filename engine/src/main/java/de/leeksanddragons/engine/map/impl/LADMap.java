@@ -35,7 +35,7 @@ public class LADMap implements IMap {
     protected LOADING_STATE loading_state = LOADING_STATE.NOT_LOADED;
 
     //renderer
-    protected RENDER_METHOD renderMethod = RENDER_METHOD.LAD_RENDERER;
+    protected RENDER_METHOD renderMethod = RENDER_METHOD.LIBGDX_RENDERER;
 
     //map renderer
     protected MapRenderer mapRenderer = null;
