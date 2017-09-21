@@ -25,12 +25,12 @@ public abstract class BasePage implements IPage {
     }
 
     @Override
-    public float getWidth() {
+    public int getWidth() {
         return this.width;
     }
 
     @Override
-    public float getHeight() {
+    public int getHeight() {
         return this.height;
     }
 

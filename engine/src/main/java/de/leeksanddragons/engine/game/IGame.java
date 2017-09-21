@@ -10,6 +10,8 @@ import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.sound.SoundManager;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * Created by Justin on 11.09.2017.
  */
@@ -49,6 +51,13 @@ public interface IGame {
      * @param runnable runnable to execute in UI thread
      */
     public void runOnUIThread(Runnable runnable);
+
+    /**
+    * get executor service
+     *
+     * @return instance of executor service
+    */
+    public ExecutorService getExecutorService ();
 
     /**
     * get path to app home dir in user.home/.APPNAME/

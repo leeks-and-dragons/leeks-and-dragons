@@ -1,10 +1,13 @@
 package de.leeksanddragons.engine.renderer.map.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by Justin on 21.09.2017.
@@ -33,17 +37,16 @@ public class MapPage implements IMapPage {
     protected int tileHeight = 32;
 
     //page size
-    protected int tilesX = 10;
-    protected int tilesY = 10;
+    protected int tilesX = 20;
+    protected int tilesY = 20;
 
     //page texture to draw
     protected Texture texture = null;
 
     //flag, if page was loaded
     protected volatile boolean loading = false;
+    protected boolean asyncTask = false;
     protected boolean loaded = false;
-
-    protected List<String> excludedLayers = new ArrayList<>();
 
     //only for caching purposes while preparing page
     protected List<Texture> preparedTextures = new ArrayList<>();
@@ -64,12 +67,12 @@ public class MapPage implements IMapPage {
     }
 
     @Override
-    public float getWidth() {
+    public int getWidth() {
         return this.tileWidth * this.tilesX;
     }
 
     @Override
-    public float getHeight() {
+    public int getHeight() {
         return this.tileHeight * this.tilesY;
     }
 
@@ -126,8 +129,10 @@ public class MapPage implements IMapPage {
     }
 
     @Override
-    public void generatePage(TiledMap map, int startTileX, int startTileY) {
-        if (isPageLoading()) {
+    public void generatePage(IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY) {
+        Gdx.app.debug("MapPage", "generatePage.");
+
+        if (isPageLoading() && !asyncTask) {
             throw new IllegalStateException("Cannot generate page, because page is already loading.");
         }
 
@@ -139,13 +144,50 @@ public class MapPage implements IMapPage {
         //set flag
         this.loading = true;
 
+        Gdx.app.debug("MapPage", "start generating map page, startTileX: " + startTileX + ", startTileY: " + startTileY);
+
+        //get map render camera
+        CameraHelper camera = game.getCameraManager().getCustomCamera(9);
+
+        //first reset camera
+        camera.reset();
+
+        //set camera dimension
+        camera.resize(getWidth(), getHeight());
+
+        //move camera
+        //camera.translate(-(tileWidth * startTileX), -(tileHeight * startTileY), 0);
+        camera.translate((tileWidth * startTileX), (tileHeight * startTileY), 0);
+        camera.update(GameTime.getInstance());
+
+        Gdx.app.debug("ManPage", "cameraX: " + camera.getX() + ", cameraY: " + camera.getY());
+
+        //create new framebuffer
+        FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, getWidth(), getHeight(), true);
+
+        fbo.begin();
+
+        MapRenderer mapRenderer = new OrthogonalTiledMapRenderer(map);
+
+        mapRenderer.setView(camera.getOriginalCamera());
+
+        //render
+        mapRenderer.render();
+
+        //dispose map renderer
+        mapRenderer = null;
+
+        fbo.end();
+
+        this.texture = fbo.getColorBufferTexture();
+
         //create new pixmap
-        Pixmap pixmap = new Pixmap((int) getWidth(), (int) getHeight(), Pixmap.Format.RGBA8888);
+        /*Pixmap pixmap = new Pixmap((int) getWidth(), (int) getHeight(), Pixmap.Format.RGBA8888);
 
         //iterate through all layers
         for (MapLayer layer : map.getLayers()) {
             //check, if layer name is excluded
-            if (this.excludedLayers.contains(layer.getName())) {
+            if (excludedLayers.contains(layer.getName())) {
                 //dont draw this layer
                 continue;
             }
@@ -162,13 +204,13 @@ public class MapPage implements IMapPage {
                     //renderObjects(layer);
                 }
             }
-        }
+        }*/
 
         //create texture from pixmap
-        this.texture = new Texture(pixmap);
+        //this.texture = new Texture(pixmap);
 
         //dispose generated pixmap
-        pixmap.dispose();
+        //pixmap.dispose();
 
         //dispose tile texture pixmap of tilesets
         for (Texture texture : this.preparedTextures) {
@@ -180,8 +222,6 @@ public class MapPage implements IMapPage {
 
             //dispose pixmap
             texture.getTextureData().disposePixmap();
-
-            pixmap1.dispose();
         }
 
         //clear list
@@ -190,13 +230,48 @@ public class MapPage implements IMapPage {
         //set flag
         this.loaded = true;
         this.loading = false;
+
+        Gdx.app.debug("MapPage", "map page generated finished.");
     }
 
+    @Override
+    @Deprecated
+    public void generatePageAsync(ExecutorService executorService, IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY) {
+        if (isPageLoading()) {
+            return;
+        }
+
+        this.loading = true;
+        this.asyncTask = true;
+
+        Gdx.app.debug("MapPage", "submit page generation task to executor service.");
+
+        //add task in another thread
+        executorService.submit(() -> {
+            try {
+                Gdx.app.debug("MapPage", "start execute async map page generation.");
+
+                generatePage(game, map, excludedLayers, startTileX, startTileY);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                asyncTask = false;
+            }
+        });
+    }
+
+    @Deprecated
     protected void renderTileLayer (TiledMapTileLayer layer, Pixmap pixmap, int startTileX, int startTileY) {
         for (int x = startTileX; x < startTileX + tilesX; x++) {
             for (int y = startTileY; y < startTileY + tilesY; y++) {
                 //get cell
                 TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+
+                if (cell == null) {
+                    continue;
+                }
+
+                Gdx.app.debug("MapPage", "get cell: " + x + ", y: " + y);
 
                 //get tile
                 TiledMapTile tile = cell.getTile();
@@ -212,16 +287,22 @@ public class MapPage implements IMapPage {
                 //get texture
                 Texture tileSetTexture = region.getTexture();
 
+                Pixmap tilePixmap = null;
+
                 //check, if texture is already prepared
                 if (!tileSetTexture.getTextureData().isPrepared()) {
                     //prepare texture
                     tileSetTexture.getTextureData().prepare();
 
                     this.preparedTextures.add(tileSetTexture);
-                }
 
-                //get pixmap from tile texture
-                Pixmap tilePixmap = tileSetTexture.getTextureData().consumePixmap();
+                    //get pixmap from tile texture
+                    tilePixmap = tileSetTexture.getTextureData().consumePixmap();
+
+                    this.pixmapMap.put(tileSetTexture, tilePixmap);
+                } else {
+                    tilePixmap = pixmapMap.get(tileSetTexture);
+                }
 
                 //calculate start position
                 int startX = (x - startTileX) * tileWidth;
@@ -244,24 +325,24 @@ public class MapPage implements IMapPage {
     }
 
     @Override
-    public void recreate(TiledMap map, int startTileX, int startTileY) {
+    public void recreate(IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY) {
+        Gdx.app.debug("MapPage", "recreate page, startTileX: " + startTileX + ", startTileY: " + startTileY);
+
         //unload page
         this.unloadPage();
 
         //generate page
-        generatePage(map, startTileX, startTileY);
+        generatePage(game, map, excludedLayers, startTileX, startTileY);
     }
 
     @Override
-    public void addExcludedLayer(String layerName) {
-        //add layer to list
-        this.excludedLayers.add(layerName);
+    public float getMiddleX() {
+        return this.x + (getWidth() / 2);
     }
 
     @Override
-    public void removeExcludedLayer(String layerName) {
-        //remove layer from list
-        this.excludedLayers.add(layerName);
+    public float getMiddleY() {
+        return this.y + (getHeight() / 2);
     }
 
     @Override

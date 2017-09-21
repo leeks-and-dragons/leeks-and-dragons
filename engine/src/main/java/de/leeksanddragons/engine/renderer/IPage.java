@@ -9,9 +9,9 @@ import de.leeksanddragons.engine.utils.GameTime;
  */
 public interface IPage {
 
-    public float getWidth ();
+    public int getWidth ();
 
-    public float getHeight ();
+    public int getHeight ();
 
     public void draw (IScreenGame game, GameTime time, SpriteBatch batch, float x, float y);
 

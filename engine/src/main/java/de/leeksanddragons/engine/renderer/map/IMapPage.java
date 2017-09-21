@@ -7,6 +7,9 @@ import de.leeksanddragons.engine.renderer.IPage;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
 /**
  * Created by Justin on 21.09.2017.
  */
@@ -22,7 +25,10 @@ public interface IMapPage extends IPage {
 
     public void setPageSizeInTiles (int tilesX, int tilesY);
 
-    public void generatePage (TiledMap map, int startTileX, int startTileY);
+    public void generatePage (IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY);
+
+    @Deprecated
+    public void generatePageAsync (ExecutorService executorService, IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY);
 
     /**
     * draw page on given position
@@ -39,21 +45,11 @@ public interface IMapPage extends IPage {
 
     public void unloadPage ();
 
-    public void recreate (TiledMap map, int startTileX, int startTileY);
+    public void recreate (IScreenGame game, TiledMap map, List<String> excludedLayers, int startTileX, int startTileY);
 
-    /**
-    * exclude layer from rendering
-     *
-     * @param layerName name of layer to exclude
-    */
-    public void addExcludedLayer (String layerName);
+    public float getMiddleX ();
 
-    /**
-     * remove excluded layer from rendering, so layer will be rendered now
-     *
-     * @param layerName name of layer to exclude
-     */
-    public void removeExcludedLayer (String layerName);
+    public float getMiddleY ();
 
     /**
     * check, if page is visible

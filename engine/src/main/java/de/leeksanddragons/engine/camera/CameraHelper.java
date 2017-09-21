@@ -119,6 +119,17 @@ public class CameraHelper implements ModificationFinishedListener {
         this.cameraOffsetY = getViewportHeight() / 2;
     }
 
+    /*public void setSize (int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        //move camera, so (0, 0) is on left bottom
+        this.camera.translate(width / 2, height / 2, 0);
+        this.camera.update();
+
+        calculateOffset();
+    }*/
+
     /**
     * translate camera
      *
@@ -365,6 +376,21 @@ public class CameraHelper implements ModificationFinishedListener {
     public void setTargetPos (float targetX, float targetY) {
         this.targetX = targetX;
         this.targetY = targetY;
+    }
+
+    public void forcePos (float x, float y) {
+        this.targetX = x;
+        this.targetY = y;
+        this.x = x;
+        this.y = y;
+
+        //this.update(GameTime.getInstance());
+
+        //sync camera helper position to libGDX camera
+        this.syncPosToCamera();
+
+        //update libGDX camera
+        this.camera.update();
     }
 
     /**

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.map.IMap;
+import de.leeksanddragons.engine.renderer.map.impl.LADMapRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -34,10 +35,12 @@ public class LADMap implements IMap {
     protected LOADING_STATE loading_state = LOADING_STATE.NOT_LOADED;
 
     //renderer
-    protected RENDER_METHOD renderMethod = RENDER_METHOD.LIBGDX_RENDERER;
+    protected RENDER_METHOD renderMethod = RENDER_METHOD.LAD_RENDERER;
 
     //map renderer
     protected MapRenderer mapRenderer = null;
+
+    protected LADMapRenderer ladMapRenderer = null;
 
     //instance of game
     protected IScreenGame game = null;
@@ -92,6 +95,16 @@ public class LADMap implements IMap {
     }
 
     @Override
+    public float getWidth() {
+        return this.mapWidth;
+    }
+
+    @Override
+    public float getHeight() {
+        return this.mapHeight;
+    }
+
+    @Override
     public String getMapPath() {
         return this.tmxPath;
     }
@@ -130,6 +143,11 @@ public class LADMap implements IMap {
         if (this.renderMethod == RENDER_METHOD.LIBGDX_RENDERER) {
             //create new libgdx map renderer
             this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, batch);
+        } else if (this.renderMethod == RENDER_METHOD.LAD_RENDERER) {
+            //create new LAD map renderer
+            this.ladMapRenderer = new LADMapRenderer(this.game, this.map, getX(), getY());
+        } else {
+            throw new UnsupportedOperationException("render method isnt supported yet: " + this.renderMethod.name());
         }
 
         Gdx.app.debug("LADMap", "map loading finished: " + this.tmxPath);
@@ -205,6 +223,9 @@ public class LADMap implements IMap {
 
             //begin batch
             batch.begin();
+        } else if (this.renderMethod == RENDER_METHOD.LAD_RENDERER) {
+            //draw map
+            this.ladMapRenderer.draw(game, time, batch);
         } else {
             throw new UnsupportedOperationException("other renderer methods arent supported yet.");
         }

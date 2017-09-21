@@ -123,7 +123,7 @@ public class LADRegion extends BaseRegion {
         tmxFile = this.dir + tmxFile;
 
         //create map
-        IMap map = new LADMap(x, y, getMapWidth(), getMapHeight(), game, tmxFile);
+        IMap map = new LADMap(x * getMapWidth(), y * getMapHeight(), getMapWidth(), getMapHeight(), game, tmxFile);
 
         //add map to array
         this.maps[getXIndex(x)][getYIndex(y)] = map;
@@ -238,6 +238,8 @@ public class LADRegion extends BaseRegion {
             list.add(getMap(x, y));
 
             this.preloadMapIfNeccessary(x, y);
+        } else {
+            Gdx.app.debug("LADRegion", "map isnt visible, x: " + x + ", y: " + y);
         }
     }
 

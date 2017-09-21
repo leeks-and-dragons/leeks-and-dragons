@@ -27,6 +27,10 @@ public interface IMap {
      */
     public float getY ();
 
+    public float getWidth ();
+
+    public float getHeight ();
+
     /**
     * get path to tmx file
      *

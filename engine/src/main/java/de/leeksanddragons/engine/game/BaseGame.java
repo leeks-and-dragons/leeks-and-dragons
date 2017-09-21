@@ -39,6 +39,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Justin on 09.09.2017.
@@ -99,6 +101,11 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //sound manager
     protected SoundManager soundManager = null;
 
+    protected static final int EXECUTOR_SERVICE_THREADS = 2;
+
+    //executor service
+    protected ExecutorService executorService = null;
+
     public BaseGame (WindowConfig windowConfig, String appName) {
         this.windowConfig = windowConfig;
         this.appName = appName.toLowerCase();
@@ -133,6 +140,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 throw new GdxRuntimeException(throwable);
             }
         });
+
+        //create new executor service
+        this.executorService = Executors.newFixedThreadPool(EXECUTOR_SERVICE_THREADS);
 
         //log user.home and app home dir
         Gdx.app.log("Files", "user.home: " + FileUtils.getUserHomeDir());
@@ -448,6 +458,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     @Override
     public void runOnUIThread(Runnable runnable) {
         this.uiQueue.offer(runnable);
+    }
+
+    /**
+     * get executor service
+     *
+     * @return instance of executor service
+     */
+    public ExecutorService getExecutorService () {
+        return this.executorService;
     }
 
     /**
