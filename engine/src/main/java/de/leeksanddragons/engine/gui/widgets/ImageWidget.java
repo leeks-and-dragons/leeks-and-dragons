@@ -23,7 +23,7 @@ public class ImageWidget extends BaseHUDWidget<ImageWidget> {
     }
 
     @Override
-    public void drawLayer0(GameTime time, SpriteBatch batch) {
+    public void drawLayer0(IScreenGame game, GameTime time, SpriteBatch batch) {
         batch.draw(this.texture, getX(), getY());
     }
 }

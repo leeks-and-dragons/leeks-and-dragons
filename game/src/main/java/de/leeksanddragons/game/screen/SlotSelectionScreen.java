@@ -225,7 +225,7 @@ public class SlotSelectionScreen extends BaseScreen {
         batch.draw(this.fgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
 
         //draw GUI
-        this.hud.drawLayer0(time, batch);
+        this.hud.drawLayer0(game, time, batch);
     }
 
     @Override

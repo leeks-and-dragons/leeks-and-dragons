@@ -12,11 +12,11 @@ public interface HUDWidget<T extends HUDWidget> {
 
     public void update(IScreenGame game, GameTime time);
 
-    public void drawLayer0(GameTime time, SpriteBatch batch);
+    public void drawLayer0(IScreenGame game, GameTime time, SpriteBatch batch);
 
-    public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer);
+    public void drawLayer1(IScreenGame game, GameTime time, ShapeRenderer shapeRenderer);
 
-    public void drawLayer2(GameTime time, SpriteBatch batch);
+    public void drawLayer2(IScreenGame game, GameTime time, SpriteBatch batch);
 
     public float getX();
 

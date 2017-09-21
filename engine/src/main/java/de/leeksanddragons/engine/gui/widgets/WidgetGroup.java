@@ -28,23 +28,23 @@ public class WidgetGroup extends BaseHUDWidget<WidgetGroup> {
     }
 
     @Override
-    public void drawLayer0(GameTime time, SpriteBatch batch) {
+    public void drawLayer0(IScreenGame game, GameTime time, SpriteBatch batch) {
         this.widgetList.forEach(widget -> {
-            widget.drawLayer0(time, batch);
+            widget.drawLayer0(game, time, batch);
         });
     }
 
     @Override
-    public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
+    public void drawLayer1(IScreenGame game, GameTime time, ShapeRenderer shapeRenderer) {
         this.widgetList.forEach(widget -> {
-            widget.drawLayer1(time, shapeRenderer);
+            widget.drawLayer1(game, time, shapeRenderer);
         });
     }
 
     @Override
-    public void drawLayer2(GameTime time, SpriteBatch batch) {
+    public void drawLayer2(IScreenGame game, GameTime time, SpriteBatch batch) {
         this.widgetList.forEach(widget -> {
-            widget.drawLayer2(time, batch);
+            widget.drawLayer2(game, time, batch);
         });
     }
 

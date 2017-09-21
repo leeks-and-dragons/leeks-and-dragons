@@ -8,10 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import de.leeksanddragons.engine.gui.BaseHUDWidget;
 import de.leeksanddragons.engine.gui.ClickListener;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.MouseUtils;
 import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 
 /**
@@ -90,8 +94,8 @@ public class MenuButton extends BaseHUDWidget<MenuButton> {
     @Override
     public void update(IScreenGame game, GameTime time) {
         // get mouse coordinates
-        float mouseX = Gdx.input.getX();
-        float mouseY = game.getCameraManager().getUICamera().getViewportHeight() - Gdx.input.getY();
+        //float mouseX = Gdx.input.getX();
+        //float mouseY = game.getCameraManager().getUICamera().getViewportHeight() - Gdx.input.getY();
 
         // check if mouse is inner button
         if (isMouseInner(game)) {
@@ -132,7 +136,7 @@ public class MenuButton extends BaseHUDWidget<MenuButton> {
     }
 
     @Override
-    public void drawLayer0(GameTime time, SpriteBatch batch) {
+    public void drawLayer0(IScreenGame game, GameTime time, SpriteBatch batch) {
         // draw background texture
         if (hovered) {
             batch.draw(this.hoveredImage, getX(), getY(), getWidth(), getHeight());
@@ -147,6 +151,22 @@ public class MenuButton extends BaseHUDWidget<MenuButton> {
         if (this.customRenderer != null) {
             this.customRenderer.drawLayer0(time, this, batch);
         }
+
+        /*if (hovered) {
+            SpriteBatcherUtils.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), Color.YELLOW);
+        } else {
+            SpriteBatcherUtils.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), Color.RED);
+        }*/
+
+        //Vector3 vec = MouseUtils.get
+
+        /*Vector2 vec = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+        vec = game.getCameraManager().getUICamera().getViewport().unproject(vec);*/
+
+        float mouseX = game.getCameraManager().getUICamera().getMousePosition().x;//Gdx.input.getX();
+        float mouseY = game.getCameraManager().getUICamera().getMousePosition().y;//Gdx.graphics.getHeight() - Gdx.input.getY();
+
+        //SpriteBatcherUtils.fillRectangle(batch, mouseX - 2, mouseY - 2, 5, 5, Color.BLUE);
     }
 
     public void setHoverSound(Sound sound, float soundVolume) {

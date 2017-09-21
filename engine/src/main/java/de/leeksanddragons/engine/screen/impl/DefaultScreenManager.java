@@ -102,7 +102,10 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         IScreen screen = this.activeScreens.poll();
 
         if (screen != null) {
-            screen.onPause(this.game);
+            game.runOnUIThread(() -> {
+                //pause screen
+                screen.onPause(this.game);
+            });
         }
 
         Gdx.app.debug("Screens", "pop screen.");

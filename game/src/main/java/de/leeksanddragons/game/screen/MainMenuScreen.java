@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import de.leeksanddragons.engine.camera.CameraHelper;
+import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.font.BitmapFontFactory;
 import de.leeksanddragons.engine.gui.HUD;
 import de.leeksanddragons.engine.gui.widgets.MenuButton;
@@ -15,6 +16,7 @@ import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 
 /**
  * Created by Justin on 12.09.2017.
@@ -42,6 +44,8 @@ public class MainMenuScreen extends BaseScreen {
     protected MenuButton editorButton = null;
     protected MenuButton creditsButton = null;
     protected MenuButton closeButton = null;
+
+    protected ResizeListener resizeListener = null;
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
@@ -71,11 +75,21 @@ public class MainMenuScreen extends BaseScreen {
             //create buttons
             this.createVerticalButtons(this.hud);
         }
+
+        //set resize listener
+        this.resizeListener = new ResizeListener() {
+            @Override
+            public void onResize(int width, int height) {
+                game.getCameraManager().getMainCamera().resize(width, height);
+            }
+        };
+        this.game.addResizeListener(this.resizeListener);
     }
 
     @Override
     public void onPause(IScreenGame game) {
-
+        //remove resize listener
+        this.game.removeResizeListener(this.resizeListener);
     }
 
     @Deprecated
@@ -223,16 +237,21 @@ public class MainMenuScreen extends BaseScreen {
     @Override
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
         //get camera
-        CameraHelper camera = game.getCameraManager().getMainCamera();
+        CameraHelper camera = game.getCameraManager().getUICamera();
+
+        //set projection matrix
+        batch.setProjectionMatrix(camera.getCombined());
 
         //draw background
         batch.draw(this.bgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
 
         //draw GUI
-        this.hud.drawLayer0(time, batch);
+        this.hud.drawLayer0(game, time, batch);
 
         //draw foreground graphics
         batch.draw(this.fgTexture, 0, 0, camera.getViewportWidth(), camera.getViewportHeight());
+
+        SpriteBatcherUtils.fillRectangle(batch, 50, 50, 5, 5, Color.CORAL);
     }
 
     @Override
