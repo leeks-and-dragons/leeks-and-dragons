@@ -1,15 +1,12 @@
 package de.leeksanddragons.game.screen.prototype;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import de.leeksanddragons.engine.memory.GameAssetManager;
-import de.leeksanddragons.engine.renderer.WaterRenderer;
+import de.leeksanddragons.engine.renderer.water.WaterRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.utils.GameTime;
-
-import java.io.File;
 
 /**
  * Created by Justin on 15.09.2017.

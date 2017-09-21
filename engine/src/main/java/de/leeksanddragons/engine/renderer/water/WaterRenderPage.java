@@ -1,9 +1,10 @@
-package de.leeksanddragons.engine.renderer;
+package de.leeksanddragons.engine.renderer.water;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import de.leeksanddragons.engine.renderer.BasePage;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 

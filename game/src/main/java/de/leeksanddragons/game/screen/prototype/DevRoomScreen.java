@@ -2,7 +2,6 @@ package de.leeksanddragons.game.screen.prototype;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,15 +9,13 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.map.IRegion;
-import de.leeksanddragons.engine.map.impl.DummyRegion;
 import de.leeksanddragons.engine.map.impl.LADRegion;
 import de.leeksanddragons.engine.memory.GameAssetManager;
-import de.leeksanddragons.engine.renderer.WaterRenderer;
+import de.leeksanddragons.engine.renderer.water.WaterRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.shader.ShaderFactory;
 import de.leeksanddragons.engine.utils.GameTime;
-import de.leeksanddragons.engine.utils.SpriteBatcherUtils;
 
 import java.io.IOException;
 

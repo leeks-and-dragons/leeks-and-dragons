@@ -1,16 +1,15 @@
-package de.leeksanddragons.engine.renderer;
+package de.leeksanddragons.engine.renderer.water;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.memory.GameAssetManager;
-import de.leeksanddragons.engine.screen.IScreen;
+import de.leeksanddragons.engine.renderer.IPage;
+import de.leeksanddragons.engine.renderer.IRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
