@@ -281,8 +281,14 @@ public class CameraHelper implements ModificationFinishedListener {
                     this.targetX = this.minX;
                     this.x = this.minX;
                 } else if (this.x + deltaX + width > this.maxX) {
-                    this.targetX = this.maxX - width;
-                    this.x = this.maxX - width;
+                    if ((maxX - minX) < width) {
+                        //set min position, because bounds width is smaller than window width
+                        this.x = minX;
+                        this.targetX = minX;
+                    } else {
+                        this.targetX = this.maxX - width;
+                        this.x = this.maxX - width;
+                    }
                 }
             }
 
@@ -292,8 +298,14 @@ public class CameraHelper implements ModificationFinishedListener {
                     this.targetY = this.minY;
                     this.y = this.minY;
                 } else if (this.y + deltaY + height > this.maxY) {
-                    this.targetY = this.maxY - height;
-                    this.y = this.maxY - height;
+                    if ((maxY - minY) < height) {
+                        //set min position, because bounds height is smaller than window height
+                        this.y = minY;
+                        this.targetY = minY;
+                    } else {
+                        this.targetY = this.maxY - height;
+                        this.y = this.maxY - height;
+                    }
                 }
             }
         }
