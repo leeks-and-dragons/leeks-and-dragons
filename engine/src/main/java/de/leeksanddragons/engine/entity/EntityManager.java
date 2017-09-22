@@ -1,10 +1,9 @@
 package de.leeksanddragons.engine.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.leeksanddragons.engine.entity.listener.ComponentListener;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
-
-import java.awt.event.ComponentListener;
 
 /**
  * Created by Justin on 10.02.2017.
