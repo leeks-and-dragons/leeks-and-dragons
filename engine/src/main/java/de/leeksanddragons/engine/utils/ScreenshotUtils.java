@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -17,7 +18,7 @@ import java.util.Date;
  */
 public class ScreenshotUtils {
 
-    public static void takeScreenshot (String saveFileName) throws IOException {
+    public static void takeScreenshot (String saveFileName, int width, int height, boolean flipY) throws IOException {
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             Gdx.app.log("Screenshot", "Cannot take screenshot, because this feature is only available for desktop backend.");
 
@@ -31,12 +32,32 @@ public class ScreenshotUtils {
         new File(saveFileName).createNewFile();
 
         //take all pixels from framebuffer and save into byte array
-        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, width, height, flipY);
 
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
         PixmapIO.writePNG(Gdx.files.absolute(saveFileName), pixmap);
         pixmap.dispose();
+    }
+
+    public static void takeScreenshot (String saveFileName) throws IOException {
+        takeScreenshot(saveFileName, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+    }
+
+    public static void saveTexture (String saveFileName, Texture texture) {
+        if (!texture.getTextureData().isPrepared()) {
+            texture.getTextureData().prepare();
+        }
+
+        Pixmap pixmap = texture.getTextureData().consumePixmap();
+
+        //save pixmap
+        PixmapIO.writePNG(Gdx.files.absolute(saveFileName), pixmap);
+
+        Gdx.app.debug("ScreenshotUtils", "saved texture: " + saveFileName);
+
+        //dispose pixmap
+        texture.getTextureData().disposePixmap();
     }
 
     public static String getScreenshotsHomeDir (String appName) {
