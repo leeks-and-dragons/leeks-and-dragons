@@ -201,21 +201,23 @@ public class LADRegion extends BaseRegion {
         int mapX = (int) (middleX / getMapWidth());
         int mapY = (int) (middleY / getMapHeight());
 
+        System.out.println("mapX: " + mapX + ", mapY: " + mapY + ", map width: " + getMapWidth() + ", map height: " + getMapHeight());
+
         //add current map, if exists
         addMapToListIfExists(mapX, mapY, camera, this.tmpList);
 
         //add maps near current maps
-        for (int i = 0; i < this.visibleMapDistance; i++) {
+        for (int i = 1; i <= this.visibleMapDistance; i++) {
             //add neighbour maps
-            addMapToListIfExists(mapX - i, mapY, camera, this.tmpList);
-            addMapToListIfExists(mapX + i, mapY, camera, this.tmpList);
+            addMapToListIfExists((mapX - i), mapY, camera, this.tmpList);
+            addMapToListIfExists((mapX + i), mapY, camera, this.tmpList);
             addMapToListIfExists(mapX, mapY - i, camera, this.tmpList);
             addMapToListIfExists(mapX, mapY + i, camera, this.tmpList);
 
             addMapToListIfExists(mapX - i, mapY - i, camera, this.tmpList);
             addMapToListIfExists(mapX - i, mapY + i, camera, this.tmpList);
             addMapToListIfExists(mapX + i, mapY - i, camera, this.tmpList);
-            addMapToListIfExists(mapX + i, mapY - i, camera, this.tmpList);
+            addMapToListIfExists(mapX + i, mapY + i, camera, this.tmpList);
         }
 
         //clear visible maps list

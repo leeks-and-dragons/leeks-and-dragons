@@ -19,6 +19,7 @@ import de.leeksanddragons.engine.utils.ColliderUtils;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.engine.utils.ScreenshotUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +97,8 @@ public class MapPage implements IMapPage {
 
     @Override
     public void draw(IScreenGame game, GameTime time, SpriteBatch batch) {
+        //System.out.println("draw page.");
+
         this.draw(game, time, batch, this.x, this.y);
     }
 
@@ -187,13 +190,28 @@ public class MapPage implements IMapPage {
         //dispose map renderer
         mapRenderer = null;
 
-        System.out.println("screenshot path: " + ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png");
+        //take screenshot in debug mode
+        if (game.isDevMode()) {
+            //check, if screenshot directory exists
+            if (!new File(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/pages/").exists()) {
+                new File(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/pages/").mkdirs();
+            }
 
-        try {
-            ScreenshotUtils.takeScreenshot(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png", getWidth(), getHeight());
-        } catch (IOException e) {
-            e.printStackTrace();
-        };
+            String pagePath = ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/pages/page_" + x + "_" + y + ".png";
+
+            System.out.println("page screenshot path: " + pagePath);
+
+            //delete file, if exists
+            if (new File(pagePath).exists()) {
+                new File(pagePath).delete();
+            }
+
+            try {
+                ScreenshotUtils.takeScreenshot(pagePath, getWidth(), getHeight());
+            } catch (IOException e) {
+                e.printStackTrace();
+            };
+        }
 
         //end framebuffer, so everything will no drawn to backbuffer again
         fbo.end();

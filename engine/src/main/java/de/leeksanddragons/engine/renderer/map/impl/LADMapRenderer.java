@@ -31,6 +31,10 @@ public class LADMapRenderer implements IMapRenderer {
     protected int tileWidth = 32;
     protected int tileHeight = 32;
 
+    //width and height of map in pixels
+    protected int mapWidth = 0;
+    protected int mapHeigth = 0;
+
     //tiled map
     protected TiledMap map = null;
 
@@ -60,12 +64,12 @@ public class LADMapRenderer implements IMapRenderer {
         this.tileHeight = props.get("tileheight", Integer.class);
 
         //calculate width and height of map in pixels
-        float widthInPixels = width * tileWidth;
-        float heightInPixels = height * tileHeight;
+        this.mapWidth = width * tileWidth;
+        this.mapHeigth = height * tileHeight;
 
         //calculate required pages count
-        this.pagesX = (int) (widthInPixels / (pageTilesWidth * tileWidth)) + 1;
-        this.pagesY = (int) (heightInPixels / (pageTilesHeight * tileHeight)) + 1;
+        this.pagesX = (int) (mapWidth / (pageTilesWidth * tileWidth)) + 1;
+        this.pagesY = (int) (mapHeigth / (pageTilesHeight * tileHeight)) + 1;
 
         System.out.println("required pages X: " + pagesX + ", required pages Y: " + pagesY);
 
@@ -108,20 +112,28 @@ public class LADMapRenderer implements IMapRenderer {
         float cameraX2 = camera.getX() + camera.getViewportWidth();
         float cameraY2 = camera.getY() + camera.getViewportHeight();
 
+        float mapX2 = this.mapX + getWidth();
+        float mapY2 = this.mapY + getHeight();
+
         //check, if camera and page is overlaping
-        boolean val = ColliderUtils.overlaping(this.mapX, this.mapX + getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(this.mapY, this.mapY + getHeight(), cameraY1, cameraY2);
+        boolean val = ColliderUtils.overlaping(this.mapX, mapX2, cameraX1, cameraX2) && ColliderUtils.overlaping(this.mapY, mapY2, cameraY1, cameraY2);
+
+        /*if (!val) {
+            System.out.println("not visible, mapX: " + mapX + ", mapY: " + mapY + ", mapX2: " + mapX2 + ", mapY2: " + mapY2);
+            System.out.println("camera x: " + cameraX1 + ", y: " + cameraY1 + "");
+        }*/
 
         return val;
     }
 
     @Override
     public int getWidth() {
-        return this.pageTilesWidth * tileWidth;
+        return this.mapWidth;
     }
 
     @Override
     public int getHeight() {
-        return this.pageTilesHeight * tileHeight;
+        return this.mapHeigth;
     }
 
     @Override
@@ -186,7 +198,7 @@ public class LADMapRenderer implements IMapRenderer {
         float x2 = camera.getX() - this.mapX;
         float y2 = camera.getY() - this.mapY;
 
-        System.out.println("x2: " + x2 + ", y2: " + y2);
+        //System.out.println("x2: " + x2 + ", y2: " + y2);
 
         int requiredTilesToRenderX = (int) ((float) camera.getViewportWidth() / (float) (pageTilesWidth * tileWidth)) + 1;
         int requiredTilesToRenderY = (int) ((float) camera.getViewportHeight() / (float) (pageTilesHeight * tileHeight)) + 2;
@@ -195,7 +207,7 @@ public class LADMapRenderer implements IMapRenderer {
         int startPageX = (int) (x2 / (float) (pageTilesWidth * tileWidth));
         int startPageY = (int) (y2 / (float) (pageTilesHeight * tileHeight));
 
-        Gdx.app.debug("LADMapRenderer", "startPageX: " + startPageX + ", startPageY: " + startPageY + ", required width: " + requiredTilesToRenderX + ", required height: " + requiredTilesToRenderY);
+        //Gdx.app.debug("LADMapRenderer", "startPageX: " + startPageX + ", startPageY: " + startPageY + ", required width: " + requiredTilesToRenderX + ", required height: " + requiredTilesToRenderY);
 
         //draw pages
         for (int x = startPageX; x < startPageX + requiredTilesToRenderX; x++) {
