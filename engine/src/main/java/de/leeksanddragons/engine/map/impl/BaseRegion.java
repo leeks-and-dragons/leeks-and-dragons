@@ -163,13 +163,7 @@ public abstract class BaseRegion implements IRegion {
         float cameraY2 = camera.getY() + camera.getViewportHeight();
 
         //check if map is in frustum
-        boolean overlaps = ColliderUtils.overlaping(map.getX(), map.getX() + map.getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(map.getY(), map.getY() + map.getHeight(), cameraY1, cameraY2);
-
-        if (!overlaps) {
-            Gdx.app.log("BaseRegion", "map isnt overlaping, mapX: " + map.getX() + ", mapY: " + map.getY());
-        }
-
-        return overlaps;
+        return ColliderUtils.overlaping(map.getX(), map.getX() + map.getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(map.getY(), map.getY() + map.getHeight(), cameraY1, cameraY2);
 
         //camera.getFrustum().boundsInFrustum(map.getBoundingBox());
     }

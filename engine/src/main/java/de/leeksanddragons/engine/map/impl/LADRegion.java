@@ -201,7 +201,7 @@ public class LADRegion extends BaseRegion {
         int mapX = (int) (middleX / getMapWidth());
         int mapY = (int) (middleY / getMapHeight());
 
-        System.out.println("mapX: " + mapX + ", mapY: " + mapY + ", map width: " + getMapWidth() + ", map height: " + getMapHeight());
+        //System.out.println("mapX: " + mapX + ", mapY: " + mapY + ", map width: " + getMapWidth() + ", map height: " + getMapHeight());
 
         //add current map, if exists
         addMapToListIfExists(mapX, mapY, camera, this.tmpList);
