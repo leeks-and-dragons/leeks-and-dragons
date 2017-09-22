@@ -191,7 +191,7 @@ public class MapPage implements IMapPage {
         mapRenderer = null;
 
         //take screenshot in debug mode
-        if (game.isDevMode()) {
+        /*if (game.isDevMode()) {
             //check, if screenshot directory exists
             if (!new File(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/pages/").exists()) {
                 new File(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/pages/").mkdirs();
@@ -211,7 +211,7 @@ public class MapPage implements IMapPage {
             } catch (IOException e) {
                 e.printStackTrace();
             };
-        }
+        }*/
 
         //end framebuffer, so everything will no drawn to backbuffer again
         fbo.end();
