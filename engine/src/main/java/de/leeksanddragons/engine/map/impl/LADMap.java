@@ -242,6 +242,13 @@ public class LADMap implements IMap {
             //reset loading state
             this.loading_state = LOADING_STATE.NOT_LOADED;
         }
+
+        if (this.ladMapRenderer != null) {
+            //dispose map renderer with all pages
+            this.ladMapRenderer.dispose();
+
+            this.ladMapRenderer = null;
+        }
     }
 
 }

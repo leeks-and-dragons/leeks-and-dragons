@@ -90,8 +90,6 @@ public class MapPage implements IMapPage {
             return;
         }
 
-        System.out.println("map x: " + x + ", map y: " + y);
-
         //draw texture
         batch.draw(this.texture, x, y, getWidth(), getHeight(), 0, 0, getWidth(), getHeight(), false, true);
     }
@@ -192,7 +190,7 @@ public class MapPage implements IMapPage {
         System.out.println("screenshot path: " + ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png");
 
         try {
-            ScreenshotUtils.takeScreenshot(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png", getWidth(), getHeight(), false);
+            ScreenshotUtils.takeScreenshot(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png", getWidth(), getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         };

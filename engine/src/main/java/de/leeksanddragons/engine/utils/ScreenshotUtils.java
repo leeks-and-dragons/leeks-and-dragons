@@ -40,8 +40,16 @@ public class ScreenshotUtils {
         pixmap.dispose();
     }
 
+    public static void takeScreenshot (String saveFileName, int width, int height) throws IOException {
+        takeScreenshot(saveFileName, width, height, true);
+    }
+
+    public static void takeScreenshot (String saveFileName, boolean flipY) throws IOException {
+        takeScreenshot(saveFileName, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), flipY);
+    }
+
     public static void takeScreenshot (String saveFileName) throws IOException {
-        takeScreenshot(saveFileName, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+        takeScreenshot(saveFileName, true);
     }
 
     public static void saveTexture (String saveFileName, Texture texture) {

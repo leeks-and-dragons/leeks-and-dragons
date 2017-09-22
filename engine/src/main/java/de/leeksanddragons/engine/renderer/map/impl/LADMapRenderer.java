@@ -67,6 +67,8 @@ public class LADMapRenderer implements IMapRenderer {
         this.pagesX = (int) (widthInPixels / (pageTilesWidth * tileWidth)) + 1;
         this.pagesY = (int) (heightInPixels / (pageTilesHeight * tileHeight)) + 1;
 
+        System.out.println("required pages X: " + pagesX + ", required pages Y: " + pagesY);
+
         //System.out.println("pagesX: " + pagesX + ", pagesY: " + pagesY);
 
         this.pages = new MapPage[pagesX][pagesY];
@@ -107,7 +109,9 @@ public class LADMapRenderer implements IMapRenderer {
         float cameraY2 = camera.getY() + camera.getViewportHeight();
 
         //check, if camera and page is overlaping
-        return ColliderUtils.overlaping(this.mapX, this.mapX + getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(this.mapY, this.mapY + getHeight(), cameraY1, cameraY2);
+        boolean val = ColliderUtils.overlaping(this.mapX, this.mapX + getWidth(), cameraX1, cameraX2) && ColliderUtils.overlaping(this.mapY, this.mapY + getHeight(), cameraY1, cameraY2);
+
+        return val;
     }
 
     @Override
@@ -182,14 +186,16 @@ public class LADMapRenderer implements IMapRenderer {
         float x2 = camera.getX() - this.mapX;
         float y2 = camera.getY() - this.mapY;
 
+        System.out.println("x2: " + x2 + ", y2: " + y2);
+
         int requiredTilesToRenderX = (int) ((float) camera.getViewportWidth() / (float) (pageTilesWidth * tileWidth)) + 1;
-        int requiredTilesToRenderY = (int) ((float) camera.getViewportHeight() / (float) (pageTilesHeight * tileHeight)) + 1;
+        int requiredTilesToRenderY = (int) ((float) camera.getViewportHeight() / (float) (pageTilesHeight * tileHeight)) + 2;
 
         //calculate start page
         int startPageX = (int) (x2 / (float) (pageTilesWidth * tileWidth));
         int startPageY = (int) (y2 / (float) (pageTilesHeight * tileHeight));
 
-        //Gdx.app.debug("LADMapRenderer", "startPageX: " + startPageX + ", startPageY: " + startPageY + ", required width: " + requiredTilesToRenderX + ", required height: " + requiredTilesToRenderY);
+        Gdx.app.debug("LADMapRenderer", "startPageX: " + startPageX + ", startPageY: " + startPageY + ", required width: " + requiredTilesToRenderX + ", required height: " + requiredTilesToRenderY);
 
         //draw pages
         for (int x = startPageX; x < startPageX + requiredTilesToRenderX; x++) {
