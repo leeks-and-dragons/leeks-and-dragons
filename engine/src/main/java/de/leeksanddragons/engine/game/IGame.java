@@ -1,6 +1,7 @@
 package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.controller.ControllerManager;
@@ -58,6 +59,20 @@ public interface IGame {
      * @return instance of executor service
     */
     public ExecutorService getExecutorService ();
+
+    /**
+    * get instance of main camera
+     *
+     * @return instance of main camera
+    */
+    public CameraHelper getMainCamera ();
+
+    /**
+     * get instance of UI camera
+     *
+     * @return instance of UI camera
+     */
+    public CameraHelper getUICamera ();
 
     /**
     * get path to app home dir in user.home/.APPNAME/

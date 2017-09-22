@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Logger;
+import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.camera.manager.DefaultCameraManager;
@@ -467,6 +468,24 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      */
     public ExecutorService getExecutorService () {
         return this.executorService;
+    }
+
+    /**
+     * get instance of main camera
+     *
+     * @return instance of main camera
+     */
+    public CameraHelper getMainCamera () {
+        return this.getCameraManager().getMainCamera();
+    }
+
+    /**
+     * get instance of UI camera
+     *
+     * @return instance of UI camera
+     */
+    public CameraHelper getUICamera () {
+        return this.getCameraManager().getUICamera();
     }
 
     /**
