@@ -1,6 +1,7 @@
 package de.leeksanddragons.engine.renderer.map.impl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +17,9 @@ import de.leeksanddragons.engine.renderer.map.IMapPage;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.ColliderUtils;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.ScreenshotUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,8 +90,10 @@ public class MapPage implements IMapPage {
             return;
         }
 
+        System.out.println("map x: " + x + ", map y: " + y);
+
         //draw texture
-        batch.draw(this.texture, x, y);
+        batch.draw(this.texture, x, y, getWidth(), getHeight(), 0, 0, getWidth(), getHeight(), false, true);
     }
 
     @Override
@@ -165,7 +170,13 @@ public class MapPage implements IMapPage {
         //create new framebuffer
         FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, getWidth(), getHeight(), true);
 
+        Gdx.app.debug("FBO", "width: " + getWidth() + ", height: " + getHeight());
+
         fbo.begin();
+
+        //clear all color buffer bits and clear screen
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         MapRenderer mapRenderer = new OrthogonalTiledMapRenderer(map);
 
@@ -177,9 +188,23 @@ public class MapPage implements IMapPage {
         //dispose map renderer
         mapRenderer = null;
 
+        System.out.println("screenshot path: " + ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png");
+
+        try {
+            ScreenshotUtils.takeScreenshot(ScreenshotUtils.getScreenshotsHomeDir(game.getAppName()) + "/page_" + x + "_" + y + ".png", getWidth(), getHeight(), false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+
         fbo.end();
 
+        //we have to clear buffer, else it will also drawn to actual buffer instad only to framebuffer
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         this.texture = fbo.getColorBufferTexture();
+
+        //save screenshot
+        //ScreenshotUtils.saveTexture(ScreenshotUtils.getScreenshotPath(game.getAppName()) + "/page_" + x + "_" + y + ".png", this.texture);
 
         //create new pixmap
         /*Pixmap pixmap = new Pixmap((int) getWidth(), (int) getHeight(), Pixmap.Format.RGBA8888);
