@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
+import de.leeksanddragons.engine.entity.Entity;
+import de.leeksanddragons.engine.entity.EntityManager;
+import de.leeksanddragons.engine.entity.impl.ECS;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.map.impl.LADRegion;
 import de.leeksanddragons.engine.memory.GameAssetManager;
@@ -16,13 +19,14 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.shader.ShaderFactory;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.game.entity.factory.PlayerFactory;
 
 import java.io.IOException;
 
 /**
  * Created by Justin on 17.09.2017.
  */
-public class DevRoomScreen extends BaseScreen {
+public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
     //path to loading wallpaper
     protected static final String LOADING_WALLPAPER_PATH = "./data/wallpaper/Loading_Screen.png";
@@ -38,6 +42,12 @@ public class DevRoomScreen extends BaseScreen {
     //monochrome-filter shader
     protected ShaderProgram monochromeShader = null;
 
+    //entity-component-system
+    protected EntityManager ecs = null;
+
+    //player entity
+    protected Entity player = null;
+
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
         //create monochrome-filter shader
@@ -51,12 +61,8 @@ public class DevRoomScreen extends BaseScreen {
 
     @Override
     public void onResume(IScreenGame game) {
-        game.addResizeListener(new ResizeListener() {
-            @Override
-            public void onResize(int width, int height) {
-                game.getCameraManager().getMainCamera().resize(width, height);
-            }
-        });
+        //add resize listener
+        game.addResizeListener(this);
 
         //check, if loading wallpaper is available
         if (this.loadingTexture == null) {
@@ -90,11 +96,28 @@ public class DevRoomScreen extends BaseScreen {
             //create new water renderer
             this.createWaterRenderer();
         }
+
+        if (this.ecs == null) {
+            //create new entity-component-system
+            this.ecs = new ECS(game);
+
+            //create new player entity
+            this.player = PlayerFactory.createPlayer(this.ecs, 100, 100);
+            this.ecs.addEntity("player", this.player);
+        }
     }
 
     @Override
     public void onPause(IScreenGame game) {
+        //remove resize listener
+        game.removeResizeListener(this);
 
+        assetManager.unload(LOADING_WALLPAPER_PATH);
+        this.loadingTexture = null;
+
+        //dispose ecs
+        this.ecs.dispose();
+        this.ecs = null;
     }
 
     /**
@@ -194,6 +217,11 @@ public class DevRoomScreen extends BaseScreen {
 
         //draw region
         this.region.draw(game, time, batch);
+    }
+
+    @Override
+    public void onResize(int width, int height) {
+        game.getCameraManager().getMainCamera().resize(width, height);
     }
 
     @Override
