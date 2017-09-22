@@ -213,11 +213,11 @@ public class LADMapRenderer implements IMapRenderer {
         for (int x = startPageX; x < startPageX + requiredTilesToRenderX; x++) {
             for (int y = startPageY; y < startPageY + requiredTilesToRenderY; y++) {
                 //check, if page exists
-                if (x >= this.pagesX) {
+                if (x < 0 || x >= this.pagesX) {
                     continue;
                 }
 
-                if (y >= this.pagesY) {
+                if (y < 0 || y >= this.pagesY) {
                     continue;
                 }
 

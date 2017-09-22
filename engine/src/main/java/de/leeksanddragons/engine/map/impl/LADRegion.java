@@ -241,7 +241,7 @@ public class LADRegion extends BaseRegion {
 
             this.preloadMapIfNeccessary(x, y);
         } else {
-            Gdx.app.debug("LADRegion", "map isnt visible, x: " + x + ", y: " + y);
+            //Gdx.app.debug("LADRegion", "map isnt visible, x: " + x + ", y: " + y);
         }
     }
 
