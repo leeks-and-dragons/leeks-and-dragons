@@ -172,6 +172,7 @@ public class MapPage implements IMapPage {
 
         Gdx.app.debug("FBO", "width: " + getWidth() + ", height: " + getHeight());
 
+        //begin framebuffer, so everything will be drawn to framebuffer
         fbo.begin();
 
         //clear all color buffer bits and clear screen
@@ -182,7 +183,7 @@ public class MapPage implements IMapPage {
 
         mapRenderer.setView(camera.getOriginalCamera());
 
-        //render
+        //render map to framebuffer
         mapRenderer.render();
 
         //dispose map renderer
@@ -196,6 +197,7 @@ public class MapPage implements IMapPage {
             e.printStackTrace();
         };
 
+        //end framebuffer, so everything will no drawn to backbuffer again
         fbo.end();
 
         //we have to clear buffer, else it will also drawn to actual buffer instad only to framebuffer
