@@ -280,9 +280,9 @@ public class CameraHelper implements ModificationFinishedListener {
                     //System.err.println("set minX, lastX: " + lastX + ", x: " + this.x + ", deltaX: " + deltaX + ", minX: " + minX + ", maxX: " + maxX);
                     this.targetX = this.minX;
                     this.x = this.minX;
-                } else if (this.x + deltaX > this.maxX) {
-                    this.targetX = this.maxX;
-                    this.x = this.maxX;
+                } else if (this.x + deltaX + width > this.maxX) {
+                    this.targetX = this.maxX - width;
+                    this.x = this.maxX - width;
                 }
             }
 
@@ -291,9 +291,9 @@ public class CameraHelper implements ModificationFinishedListener {
                 if (this.y + deltaY < this.minY) {
                     this.targetY = this.minY;
                     this.y = this.minY;
-                } else if (this.y + deltaY > this.maxY) {
-                    this.targetY = this.maxY;
-                    this.y = this.maxY;
+                } else if (this.y + deltaY + height > this.maxY) {
+                    this.targetY = this.maxY - height;
+                    this.y = this.maxY - height;
                 }
             }
         }
@@ -432,7 +432,9 @@ public class CameraHelper implements ModificationFinishedListener {
     public boolean canScrollX (float deltaX) {
         float newX = this.x + deltaX;
 
-        return newX >= this.minX && newX <= this.maxX;
+        float x2 = newX + getViewportWidth();
+
+        return newX >= this.minX && x2 <= this.maxX;
     }
 
     /**
@@ -445,7 +447,9 @@ public class CameraHelper implements ModificationFinishedListener {
     public boolean canScrollY (float deltaY) {
         float newY = this.y + deltaY;
 
-        return newY >= this.minY && newY <= this.maxY;
+        float y2 = newY + getViewportHeight();
+
+        return newY >= this.minY && y2 <= this.maxY;
     }
 
     /**
