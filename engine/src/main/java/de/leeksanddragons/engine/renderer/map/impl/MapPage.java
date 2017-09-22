@@ -166,12 +166,12 @@ public class MapPage implements IMapPage {
         camera.translate((tileWidth * startTileX), (tileHeight * startTileY), 0);
         camera.update(GameTime.getInstance());
 
-        Gdx.app.debug("ManPage", "cameraX: " + camera.getX() + ", cameraY: " + camera.getY());
+        //Gdx.app.debug("ManPage", "cameraX: " + camera.getX() + ", cameraY: " + camera.getY());
 
         //create new framebuffer
         FrameBuffer fbo = new FrameBuffer(Pixmap.Format.RGBA8888, getWidth(), getHeight(), true);
 
-        Gdx.app.debug("FBO", "width: " + getWidth() + ", height: " + getHeight());
+        //Gdx.app.debug("FBO", "width: " + getWidth() + ", height: " + getHeight());
 
         //begin framebuffer, so everything will be drawn to framebuffer
         fbo.begin();
