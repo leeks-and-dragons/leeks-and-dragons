@@ -217,7 +217,7 @@ public class MapPage implements IMapPage {
         fbo.end();
 
         //we have to clear buffer, else it will also drawn to actual buffer instad only to framebuffer
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.texture = fbo.getColorBufferTexture();
 
