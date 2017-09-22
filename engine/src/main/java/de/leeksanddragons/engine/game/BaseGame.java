@@ -62,6 +62,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
     //last second of FPS warning
     protected long lastFPSWarning = 0;
+    protected int lastFPS = 0;
 
     //cursor manager
     protected CursorManager cursorManager = null;
@@ -229,7 +230,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //check for FPS warning
         int fps = getFPS();
-        if (fps <= 59 && fps != 0) {
+        if ((fps <= 59 && fps != 0) || this.lastFPS <= 59) {
             // check if warning was already logged this second
             long now = System.currentTimeMillis();
             long nowWarnSecond = now / 1000;
@@ -239,6 +240,8 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 Gdx.app.log("FPS", "Warning! FPS is <= 59, FPS: " + fps);
 
                 lastFPSWarning = System.currentTimeMillis();
+
+                lastFPS = fps;
             }
         }
 
