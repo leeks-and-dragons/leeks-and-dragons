@@ -78,6 +78,13 @@
             <artifactId>gdx-freetype</artifactId>
             <version>${libgdx.version}</version>
         </dependency>
+
+        <!-- Apache commons-lang library for custom hashcode -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.lang.version}</version>
+        </dependency>
     </dependencies>
 
 
