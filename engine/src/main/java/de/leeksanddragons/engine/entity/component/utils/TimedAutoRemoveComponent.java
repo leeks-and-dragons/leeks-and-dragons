@@ -12,7 +12,7 @@ import de.leeksanddragons.engine.utils.GameTime;
  *
  * Created by Justin on 09.03.2017.
  */
-public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateComponent {
+public abstract class TimedAutoRemoveComponent extends BaseComponent implements IUpdateComponent {
 
     protected long startTime = 0;
     protected long ttl = 0;

@@ -328,4 +328,9 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(this.x).append(this.y).toHashCode();
     }
+
+    @Override
+    public void dispose() {
+        this.changedListenerList.clear();
+    }
 }

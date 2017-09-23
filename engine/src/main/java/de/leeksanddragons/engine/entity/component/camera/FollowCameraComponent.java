@@ -37,4 +37,8 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         return ECSUpdatePriority.VERY_LOW;
     }
 
+    @Override
+    public void dispose() {
+
+    }
 }

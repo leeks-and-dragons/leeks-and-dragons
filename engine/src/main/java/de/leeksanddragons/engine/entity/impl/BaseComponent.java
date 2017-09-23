@@ -43,9 +43,4 @@ public abstract class BaseComponent implements IComponent {
 
     }
 
-    @Override
-    public void dispose() {
-
-    }
-
 }

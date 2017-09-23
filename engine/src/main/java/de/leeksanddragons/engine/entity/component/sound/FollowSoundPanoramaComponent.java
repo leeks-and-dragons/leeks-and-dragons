@@ -35,4 +35,8 @@ public class FollowSoundPanoramaComponent extends BaseComponent implements IUpda
         return ECSUpdatePriority.VERY_LOW;
     }
 
+    @Override
+    public void dispose() {
+
+    }
 }
