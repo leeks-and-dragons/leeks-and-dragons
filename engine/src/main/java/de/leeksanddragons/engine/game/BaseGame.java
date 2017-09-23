@@ -2,17 +2,13 @@ package de.leeksanddragons.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
-import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.ExternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.Logger;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
@@ -25,11 +21,9 @@ import de.leeksanddragons.engine.data.DefaultSharedData;
 import de.leeksanddragons.engine.data.SharedData;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
-import de.leeksanddragons.engine.preferences.IPreferences;
 import de.leeksanddragons.engine.preferences.WindowConfig;
 import de.leeksanddragons.engine.sound.SoundManager;
 import de.leeksanddragons.engine.sound.impl.DefaultSoundManager;
-import de.leeksanddragons.engine.sound.impl.DummySoundManager;
 import de.leeksanddragons.engine.timer.*;
 import de.leeksanddragons.engine.utils.FileUtils;
 import de.leeksanddragons.engine.utils.GameTime;
@@ -274,6 +268,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
                 e.printStackTrace();
             }
         }
+
+        //update sound manager
+        this.soundManager.udpate(this.time);
 
         //update asset manager, so asset manager can load assets from queue
         if(this.assetManager.updateLoading()) {

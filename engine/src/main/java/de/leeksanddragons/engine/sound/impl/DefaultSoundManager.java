@@ -11,6 +11,10 @@ public class DefaultSoundManager implements SoundManager {
     //game preferences
     protected GamePreferences prefs = null;
 
+    //target position (mostly players position)
+    protected float targetX = 0;
+    protected float targetY = 0;
+
     public DefaultSoundManager (GamePreferences prefs) {
         this.prefs = prefs;
     }
@@ -33,6 +37,17 @@ public class DefaultSoundManager implements SoundManager {
     @Override
     public boolean isMusicMuted() {
         return prefs.getBoolean("music_muted", false);
+    }
+
+    @Override
+    public void setTargetPos(float x, float y) {
+        this.targetX = x;
+        this.targetY = y;
+    }
+
+    @Override
+    public void udpate() {
+
     }
 
 }

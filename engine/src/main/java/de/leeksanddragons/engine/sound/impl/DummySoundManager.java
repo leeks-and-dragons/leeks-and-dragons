@@ -27,4 +27,14 @@ public class DummySoundManager implements SoundManager {
         return false;
     }
 
+    @Override
+    public void setTargetPos(float x, float y) {
+
+    }
+
+    @Override
+    public void udpate() {
+
+    }
+
 }

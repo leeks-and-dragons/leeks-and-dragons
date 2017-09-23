@@ -1,5 +1,8 @@
 package de.leeksanddragons.engine.sound;
 
+import de.leeksanddragons.engine.screen.IScreenGame;
+import de.leeksanddragons.engine.utils.GameTime;
+
 /**
  * Created by Justin on 15.09.2017.
  */
@@ -32,5 +35,18 @@ public interface SoundManager {
      * @return true, if music is muted
      */
     public boolean isMusicMuted ();
+
+    /**
+    * set player target position
+     *
+     * @param x player x position
+     * @param y player y position
+    */
+    public void setTargetPos (float x, float y);
+
+    /**
+    * update sound manager
+    */
+    public void udpate (GameTime time);
 
 }
