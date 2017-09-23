@@ -62,7 +62,7 @@ public class DrawComponent extends BaseDrawComponent {
      * @param region instance of texture region
     */
     public DrawComponent (TextureRegion region) {
-        //
+        setTextureRegion(region, true);
     }
 
     @Override
