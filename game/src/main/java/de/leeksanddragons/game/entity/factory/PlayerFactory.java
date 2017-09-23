@@ -2,6 +2,7 @@ package de.leeksanddragons.game.entity.factory;
 
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
+import de.leeksanddragons.engine.entity.camera.FollowCameraComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.impl.ECS;
 
@@ -16,6 +17,9 @@ public class PlayerFactory {
 
         //add position component
         player.addComponent(new PositionComponent(x, y), PositionComponent.class);
+
+        //add camera component, so camera follows player
+        player.addComponent(new FollowCameraComponent(), FollowCameraComponent.class);
 
         return player;
     }
