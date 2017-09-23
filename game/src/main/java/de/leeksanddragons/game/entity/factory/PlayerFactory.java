@@ -1,9 +1,13 @@
 package de.leeksanddragons.game.entity.factory;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
+import de.leeksanddragons.engine.entity.component.MoveComponent;
 import de.leeksanddragons.engine.entity.component.camera.FollowCameraComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
+import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
 import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaComponent;
 
 /**
@@ -23,6 +27,12 @@ public class PlayerFactory {
 
         //add sound panorama component, so sound panorama follows player
         player.addComponent(new FollowSoundPanoramaComponent(), FollowSoundPanoramaComponent.class);
+
+        //add draw component to draw player
+        player.addComponent(new DrawComponent((TextureRegion) null), DrawComponent.class);
+
+        //add movement component, so entity can be moved
+        player.addComponent(new MoveComponent(1, 0, 1));
 
         return player;
     }
