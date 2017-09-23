@@ -32,7 +32,7 @@ public class PlayerFactory {
         player.addComponent(new DrawComponent((TextureRegion) null), DrawComponent.class);
 
         //add movement component, so entity can be moved
-        player.addComponent(new MoveComponent(1, 0, 1));
+        player.addComponent(new MoveComponent(0, 0, 1));
 
         return player;
     }
