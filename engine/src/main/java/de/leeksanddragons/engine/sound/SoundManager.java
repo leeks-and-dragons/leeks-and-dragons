@@ -55,4 +55,20 @@ public interface SoundManager {
 
     public void clearAllEffects ();
 
+    public void setMusicTransition (SoundTransition transition);
+
+    public SoundTransition getMusicTransition ();
+
+    /**
+    * load background music and after loading, playing background music
+    */
+    public void loadAndPlayBackgroundMusic (String musicPath, boolean looping);
+
+    /**
+    * stop background music
+    */
+    public void stopBackgroundMusic ();
+
+    public void dispose ();
+
 }

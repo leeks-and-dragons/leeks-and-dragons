@@ -1,10 +1,16 @@
 package de.leeksanddragons.engine.sound.impl;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
+import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.sound.SoundEffect;
 import de.leeksanddragons.engine.sound.SoundManager;
+import de.leeksanddragons.engine.sound.SoundTransition;
 import de.leeksanddragons.engine.utils.GameTime;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +26,38 @@ public class DefaultSoundManager implements SoundManager {
     protected float targetX = 0;
     protected float targetY = 0;
 
+    //asset manager
+    protected GameAssetManager assetManager = null;
+
     //list with sound effects
     protected List<SoundEffect> effectList = new ArrayList<>();
 
-    public DefaultSoundManager (GamePreferences prefs) {
+    //sound transition mode
+    protected SoundTransition transition = SoundTransition.FADE_OUT_FADE_IN;
+
+    //current sound track
+    protected Music currentMusic = null;
+    protected String currentMusicPath = "";
+
+    //next music sound track
+    protected Music nextMusic = null;
+    protected String nextMusicPath = "";
+
+    protected boolean looping = true;
+
+    //elapsed fade-out time in ms
+    protected long elapsedFadeOutTime = 0;
+    protected long maxFadeoutTime = 3000;
+
+    //elapsed fade-in time in ms
+    protected long elapsedFadeInTime = 0;
+    protected long maxFadeInTime = 3000;
+
+    protected boolean isFadingOut = false;
+    protected boolean isFadingIn = false;
+
+    public DefaultSoundManager (GameAssetManager assetManager, GamePreferences prefs) {
+        this.assetManager = assetManager;
         this.prefs = prefs;
     }
 
@@ -68,7 +102,101 @@ public class DefaultSoundManager implements SoundManager {
 
     @Override
     public void udpate(GameTime time) {
-        //play background sound
+        if (!this.nextMusicPath.isEmpty() && isFadingOut && !isFadingIn) {
+            //check, if soundtrack was loaded
+            if (assetManager.isLoaded(this.nextMusicPath, Music.class)) {
+                this.nextMusic = assetManager.get(this.nextMusicPath, Music.class);
+
+                switch (this.transition) {
+                    case STOP_AND_PLAY:
+                        //stop old soundtrack
+                        if (this.currentMusic != null) {
+                            if (this.currentMusic.isPlaying()) {
+                                this.currentMusic.stop();
+                            }
+
+                            this.currentMusic = null;
+
+                            //unload music
+                            this.assetManager.unload(this.currentMusicPath);
+                        }
+
+                        this.currentMusic = this.nextMusic;
+                        this.currentMusicPath = nextMusicPath;
+                        this.nextMusicPath = "";
+
+                        //start new soundtrack
+                        this.currentMusic.setVolume(getMusicVolume());
+                        this.currentMusic.setLooping(this.looping);
+                        this.currentMusic.play();
+
+                        break;
+
+                    case FADE_OUT_FADE_IN:
+
+                        isFadingOut = true;
+
+                        break;
+
+                    default:
+                        throw new UnsupportedOperationException("transition method " + transition.name() + " isnt supported yet.");
+                }
+            }
+        }
+
+        if (isFadingOut) {
+            this.elapsedFadeOutTime += time.getDeltaTime() * 1000;
+
+            float percent = this.elapsedFadeOutTime / this.maxFadeoutTime;
+            Gdx.app.debug("Sound Manager", "fade out progress: " + percent);
+
+            //calculate volume
+            float volume = (1 - Math.max(1, percent)) * getMusicVolume();
+
+            //set volume of current soundtrack
+            this.currentMusic.setVolume(volume);
+
+            if (volume == 0) {
+                //fading out has finished
+                this.isFadingOut = false;
+                this.isFadingIn = true;
+
+                //unload old soundtrack
+                assetManager.unload(this.currentMusicPath);
+
+                //set next music to current music
+                this.currentMusic = this.nextMusic;
+                this.currentMusicPath = this.nextMusicPath;
+
+                //reset values for next soundtrack
+                this.nextMusicPath = "";
+                this.nextMusic = null;
+
+                this.elapsedFadeOutTime = 0;
+            }
+        } else if (isFadingIn) {
+            this.elapsedFadeInTime += time.getDeltaTime() * 1000;
+
+            float percent = this.elapsedFadeInTime / this.maxFadeInTime;
+            Gdx.app.debug("Sound Manager", "fade in progress: " + percent);
+
+            //calculate volume
+            float volume = Math.max(1, percent) * getMusicVolume();
+
+            //set volume of current soundtrack
+            this.currentMusic.setVolume(volume);
+
+            if (volume == 1) {
+                //fading in has finished
+                this.isFadingIn = false;
+
+                this.elapsedFadeInTime = 0;
+            }
+        } else {
+            if (this.currentMusic != null && this.currentMusic.isPlaying()) {
+                this.currentMusic.setVolume(getMusicVolume());
+            }
+        }
 
         //iterate through all sound effects
         for (SoundEffect effect : this.effectList) {
@@ -95,6 +223,67 @@ public class DefaultSoundManager implements SoundManager {
         }
 
         this.effectList.clear();
+    }
+
+    @Override
+    public void setMusicTransition(SoundTransition transition) {
+        this.transition = transition;
+    }
+
+    @Override
+    public SoundTransition getMusicTransition() {
+        return this.transition;
+    }
+
+    @Override
+    public void loadAndPlayBackgroundMusic(String musicPath, boolean looping) {
+        if (this.currentMusicPath.equals(musicPath)) {
+            return;
+        }
+
+        if (!new File(musicPath).exists()) {
+            throw new IllegalArgumentException("music path doesnt exists.");
+        }
+
+        this.nextMusicPath = musicPath;
+
+        //load soundtrack
+        this.assetManager.load(musicPath, Music.class);
+    }
+
+    @Override
+    public void stopBackgroundMusic() {
+        if (this.currentMusic.isPlaying()) {
+            //stop music
+            this.currentMusic.stop();
+
+            this.currentMusic = null;
+        }
+
+        if (this.nextMusic.isPlaying()) {
+            //stop music
+            this.nextMusic.stop();
+
+            this.nextMusic = null;
+        }
+
+        //unload all soundtracks
+        if (!this.currentMusicPath.isEmpty()) {
+            this.assetManager.unload(this.currentMusicPath);
+
+            this.currentMusicPath = "";
+        }
+
+        if (!this.nextMusicPath.isEmpty()) {
+            this.assetManager.unload(this.nextMusicPath);
+
+            this.nextMusicPath = "";
+        }
+    }
+
+    @Override
+    public void dispose() {
+        this.clearAllEffects();
     }
 
 }

@@ -165,7 +165,7 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
         Gdx.app.log("Files", "app.home: " + getAppHomeDir());
 
         //create new sound manager
-        this.soundManager = new DefaultSoundManager(this.getGeneralPreferences());
+        this.soundManager = new DefaultSoundManager(this.assetManager, this.getGeneralPreferences());
 
         // create sprite batcher
         this.batch = new SpriteBatch();
@@ -269,8 +269,14 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             }
         }
 
-        //update sound manager
-        this.soundManager.udpate(this.time);
+        try {
+            //update sound manager
+            this.soundManager.udpate(this.time);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Gdx.app.error("BaseGame", "exception thrown while updating sound manager: " + e.getLocalizedMessage(), e);
+        }
 
         //update asset manager, so asset manager can load assets from queue
         if(this.assetManager.updateLoading()) {
@@ -313,8 +319,14 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             runnable = uiQueue.poll();
         }
 
-        //update game
-        this.update(this.time);
+        try {
+            //update game
+            this.update(this.time);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Gdx.app.error("BaseGame", "exception thrown while updating game: " + e.getLocalizedMessage(), e);
+        }
 
         // set cursor
         this.cursorManager.update(this, this.time);
@@ -332,8 +344,14 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
         //set camera projection matrix
         this.batch.setProjectionMatrix(this.getCameraManager().getMainCamera().getCombined());
 
-        //draw game
-        this.draw(time, this.batch);
+        try {
+            //draw game
+            this.draw(time, this.batch);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Gdx.app.error("BaseGame", "exception thrown while drawing game: " + e.getLocalizedMessage(), e);
+        }
 
         //flush rendering
         this.batch.end();
