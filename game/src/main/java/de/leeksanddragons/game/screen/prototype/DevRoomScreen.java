@@ -161,7 +161,7 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             return;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        /*if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             game.getCameraManager().getMainCamera().translate(-2, 0, 0);
         }
 
@@ -175,7 +175,7 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             game.getCameraManager().getMainCamera().translate(0, -2, 0);
-        }
+        }*/
 
         //check, if region contains water
         if (region.hasWater()) {
