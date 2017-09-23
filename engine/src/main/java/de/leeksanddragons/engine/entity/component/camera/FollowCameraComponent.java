@@ -1,4 +1,4 @@
-package de.leeksanddragons.engine.entity.camera;
+package de.leeksanddragons.engine.entity.component.camera;
 
 import de.leeksanddragons.engine.camera.CameraMode;
 import de.leeksanddragons.engine.entity.Entity;

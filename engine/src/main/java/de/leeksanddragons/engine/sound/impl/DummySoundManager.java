@@ -1,6 +1,7 @@
 package de.leeksanddragons.engine.sound.impl;
 
 import de.leeksanddragons.engine.sound.SoundManager;
+import de.leeksanddragons.engine.utils.GameTime;
 
 /**
  * Created by Justin on 15.09.2017.
@@ -33,7 +34,7 @@ public class DummySoundManager implements SoundManager {
     }
 
     @Override
-    public void udpate() {
+    public void udpate(GameTime time) {
 
     }
 

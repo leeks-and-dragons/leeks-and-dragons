@@ -49,4 +49,10 @@ public interface SoundManager {
     */
     public void udpate (GameTime time);
 
+    public void addEffect (SoundEffect effect);
+
+    public void removeEffect (SoundEffect effect);
+
+    public void clearAllEffects ();
+
 }
