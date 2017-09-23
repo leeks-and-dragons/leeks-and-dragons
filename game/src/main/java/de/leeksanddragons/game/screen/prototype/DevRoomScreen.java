@@ -185,6 +185,9 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
         //update region
         this.region.update(game, time);
+
+        //update entity-component-system
+        this.ecs.update(game, time);
     }
 
     @Override
@@ -217,6 +220,9 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
         //draw region
         this.region.draw(game, time, batch);
+
+        //draw entity-component-system
+        this.ecs.draw(game, time, batch);
     }
 
     @Override
