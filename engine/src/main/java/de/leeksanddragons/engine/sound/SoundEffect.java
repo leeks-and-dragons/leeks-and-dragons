@@ -224,6 +224,10 @@ public class SoundEffect {
             }
         }
 
+        if (isPlaying) {
+            this.sound.stop(this.soundID);
+        }
+
         this.looping = looping;
 
         this.isPlaying = true;
