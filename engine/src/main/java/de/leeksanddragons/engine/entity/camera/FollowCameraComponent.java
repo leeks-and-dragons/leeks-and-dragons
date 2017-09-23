@@ -1,5 +1,6 @@
 package de.leeksanddragons.engine.entity.camera;
 
+import de.leeksanddragons.engine.camera.CameraMode;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.IUpdateComponent;
 import de.leeksanddragons.engine.entity.annotation.InjectComponent;
@@ -23,6 +24,9 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
 
     @Override
     public void update(IScreenGame game, GameTime time) {
+        //set camera mode
+        game.getMainCamera().setMode(CameraMode.DIRECT_CAMERA);
+
         //set camera middle position to entity
         game.getMainCamera().setTargetMiddlePos(entityPosition.getMiddleX(), entityPosition.getMiddleY());
     }
