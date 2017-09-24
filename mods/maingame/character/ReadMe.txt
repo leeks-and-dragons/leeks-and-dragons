@@ -1,0 +1,1 @@
+Directory with images, animations and data for all characters.
