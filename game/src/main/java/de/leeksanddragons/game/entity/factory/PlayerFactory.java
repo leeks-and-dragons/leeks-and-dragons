@@ -9,6 +9,7 @@ import de.leeksanddragons.engine.entity.component.camera.FollowCameraComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.component.draw.AtlasAnimationComponent;
 import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
+import de.leeksanddragons.engine.entity.component.input.SetMousePositionComponent;
 import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaComponent;
 
 /**
@@ -33,10 +34,10 @@ public class PlayerFactory {
         player.addComponent(new DrawComponent((TextureRegion) null), DrawComponent.class);
 
         //add atlas animation component, so player can be animated
-        player.addComponent(new AtlasAnimationComponent("./mods/maingame/character/cedric/cedric.atlas", "standingDown", 200f));
+        player.addComponent(new AtlasAnimationComponent("./mods/maingame/character/cedric/cedric.atlas", "standingDown", 200f), AtlasAnimationComponent.class);
 
         //add movement component, so entity can be moved
-        player.addComponent(new MoveComponent(0, 0, 1));
+        player.addComponent(new MoveComponent(0, 0, 1), MoveComponent.class);
 
         return player;
     }
