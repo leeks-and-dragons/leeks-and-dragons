@@ -144,6 +144,10 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         this.speed = speed;
     }
 
+    public void setPixelsPerUnit (float pixelsPerUnit) {
+        this.PIXELS_PER_UNIT = pixelsPerUnit;
+    }
+
     @Override
     public ECSUpdatePriority getUpdateOrder() {
         return ECSUpdatePriority.NORMAL;
