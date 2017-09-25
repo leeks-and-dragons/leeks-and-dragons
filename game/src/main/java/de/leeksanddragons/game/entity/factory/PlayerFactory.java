@@ -13,6 +13,7 @@ import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
 import de.leeksanddragons.engine.entity.component.draw.SetAnimationByDirectionComponent;
 import de.leeksanddragons.engine.entity.component.input.SetMousePositionComponent;
 import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaComponent;
+import de.leeksanddragons.game.entity.component.InputMoveComponent;
 
 /**
  * Created by Justin on 22.09.2017.
@@ -43,6 +44,9 @@ public class PlayerFactory {
 
         //add component to set animation dependend by move direction
         player.addComponent(new SetAnimationByDirectionComponent(), SetAnimationByDirectionComponent.class);
+
+        //add component to convert input --> movement
+        player.addComponent(new InputMoveComponent(), InputMoveComponent.class);
 
         return player;
     }

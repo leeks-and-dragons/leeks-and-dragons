@@ -30,7 +30,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected Vector2 tmpVector = new Vector2();
 
     //pixels per unit
-    protected float PIXELS_PER_UNIT = 128;
+    protected float PIXELS_PER_UNIT = 256;
 
     /**
     * default constructor

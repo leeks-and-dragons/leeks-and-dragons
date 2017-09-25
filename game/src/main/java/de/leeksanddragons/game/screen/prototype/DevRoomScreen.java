@@ -23,6 +23,7 @@ import de.leeksanddragons.engine.screen.impl.BaseScreen;
 import de.leeksanddragons.engine.shader.ShaderFactory;
 import de.leeksanddragons.engine.utils.GameTime;
 import de.leeksanddragons.game.entity.factory.PlayerFactory;
+import de.leeksanddragons.game.input.DefaultInputMapper;
 
 import java.io.IOException;
 
@@ -106,6 +107,12 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
         if (this.playerCharacter == null) {
             //create new player character
             this.playerCharacter = new PlayerCharacter();
+
+            //create input mapper
+            DefaultInputMapper inputMapper = new DefaultInputMapper(this.game);
+
+            //add input mapper
+            game.getInputManager().putInputMapper(inputMapper, DefaultInputMapper.class);
 
             //load player character
             try {
