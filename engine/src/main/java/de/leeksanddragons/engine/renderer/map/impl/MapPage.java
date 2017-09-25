@@ -220,6 +220,8 @@ public class MapPage implements IMapPage {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.texture = fbo.getColorBufferTexture();
+        
+        this.texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         //save screenshot
         //ScreenshotUtils.saveTexture(ScreenshotUtils.getScreenshotPath(game.getAppName()) + "/page_" + x + "_" + y + ".png", this.texture);
