@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.leeksanddragons.engine.entity.Entity;
+import de.leeksanddragons.engine.entity.annotation.InjectComponent;
+import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.listener.TextureChangedListener;
 import de.leeksanddragons.engine.entity.listener.TextureRegionChangedListener;
 import de.leeksanddragons.engine.entity.priority.ECSDrawPriority;
@@ -21,6 +23,9 @@ public class DrawComponent extends BaseDrawComponent {
     //texture / texture region
     protected Texture texture = null;
     protected TextureRegion region = null;
+
+    @InjectComponent(nullable = false)
+    protected PositionComponent positionComponent = null;
 
     //flag, if texture / texture region is managed by asset manager
     protected boolean isManaged = true;
@@ -62,7 +67,7 @@ public class DrawComponent extends BaseDrawComponent {
      * @param region instance of texture region
     */
     public DrawComponent (TextureRegion region) {
-        setTextureRegion(region, true);
+        setTextureRegion(region, true, true);
     }
 
     @Override
@@ -123,12 +128,24 @@ public class DrawComponent extends BaseDrawComponent {
         });
     }
 
+    public void setTextureRegion (TextureRegion region, boolean setNewDimension) {
+        this.setTextureRegion(region, setNewDimension, false);
+    }
+
     /**
     * set texture region
      *
      * @param region texture region to draw
     */
-    public void setTextureRegion (TextureRegion region, boolean setNewDimension) {
+    public void setTextureRegion (TextureRegion region, boolean setNewDimension, boolean allowNull) {
+        if (region == null && !allowNull) {
+            throw new NullPointerException("region cannot be null.");
+        }
+
+        if (region != null && !region.getTexture().isManaged()) {
+            throw new IllegalStateException("texture isnt managed, maybe you have disposed asset before?");
+        }
+
         //first, save old texture region for listeners
         TextureRegion oldTextureRegion = this.region;
 

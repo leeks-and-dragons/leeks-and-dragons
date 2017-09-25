@@ -1,7 +1,7 @@
 {
     "name": "Cedric",
+    "atlas": "mods/maingame/character/cedric/cedric.atlas",
     "attributes": {
-        "baseSpeed": 330,
-        "atlas": "mod/maingame/character/cedric/cedric.atlas"
+        "baseSpeed": 330
     }
 }

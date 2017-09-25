@@ -29,6 +29,9 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     //temporary vector for calculations
     protected Vector2 tmpVector = new Vector2();
 
+    //pixels per unit
+    protected float PIXELS_PER_UNIT = 128;
+
     /**
     * default constructor
      *
@@ -41,7 +44,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         this.setDirection(x, y);
 
         //set speed
-        this.setSpeed(speed);
+        this.setBaseSpeed(speed);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         tmpVector.set(moveDirection.x, moveDirection.y);
 
         //normalize and scale move vector
-        tmpVector.scl(this.speed * dt * 100f);
+        tmpVector.scl(this.getSpeedInPixels() * dt * 100f);
 
         //move entity
         positionComponent.move(tmpVector.x, tmpVector.y);
@@ -119,16 +122,21 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
      *
      * @return movement speed
     */
-    public float getSpeed() {
-        return this.speed;
+    public float getSpeedInPixels () {
+        //TODO: add boost effects
+
+        //TODO: calculate speed in units
+        float speedInUnits = this.speed;
+
+        return speedInUnits / PIXELS_PER_UNIT;
     }
 
     /**
-    * set movement speed
+    * set movement speed in units
      *
      * @param speed movement speed
     */
-    public void setSpeed(float speed) {
+    public void setBaseSpeed(float speed) {
         if (speed < 0) {
             throw new IllegalArgumentException("speed has to be >= 0.");
         }

@@ -2,6 +2,7 @@ package de.leeksanddragons.game.entity.factory;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import de.leeksanddragons.engine.character.ICharacter;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
 import de.leeksanddragons.engine.entity.component.MoveComponent;
@@ -17,7 +18,7 @@ import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaCompo
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (EntityManager ecs, float x, float y) {
+    public static Entity createPlayer (EntityManager ecs, ICharacter character, float x, float y) {
         //create new entity
         Entity player = new Entity(ecs);
 
@@ -34,10 +35,10 @@ public class PlayerFactory {
         player.addComponent(new DrawComponent((TextureRegion) null), DrawComponent.class);
 
         //add atlas animation component, so player can be animated
-        player.addComponent(new AtlasAnimationComponent("./mods/maingame/character/cedric/cedric.atlas", "standingDown", 200f), AtlasAnimationComponent.class);
+        player.addComponent(new AtlasAnimationComponent(character.getAtlasPath(), "standingDown", 200f), AtlasAnimationComponent.class);
 
         //add movement component, so entity can be moved
-        player.addComponent(new MoveComponent(0, 0, 1), MoveComponent.class);
+        player.addComponent(new MoveComponent(0, 0, character.getBaseSpeed()), MoveComponent.class);
 
         return player;
     }

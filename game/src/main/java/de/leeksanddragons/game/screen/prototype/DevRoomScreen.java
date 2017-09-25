@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
 import de.leeksanddragons.engine.camera.ResizeListener;
+import de.leeksanddragons.engine.character.ICharacter;
+import de.leeksanddragons.engine.character.impl.PlayerCharacter;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
 import de.leeksanddragons.engine.entity.impl.ECS;
@@ -47,6 +50,9 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
     //player entity
     protected Entity player = null;
+
+    //player character
+    protected ICharacter playerCharacter = null;
 
     @Override
     protected void onInit(IScreenGame game, GameAssetManager assetManager) {
@@ -97,12 +103,25 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             this.createWaterRenderer();
         }
 
+        if (this.playerCharacter == null) {
+            //create new player character
+            this.playerCharacter = new PlayerCharacter();
+
+            //load player character
+            try {
+                this.playerCharacter.load("./mods/maingame/character/cedric/cedric.json");
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new GdxRuntimeException("IOException thrown while loading player character: " + e.getLocalizedMessage(), e);
+            }
+        }
+
         if (this.ecs == null) {
             //create new entity-component-system
             this.ecs = new ECS(game);
 
             //create new player entity
-            this.player = PlayerFactory.createPlayer(this.ecs, 100, 100);
+            this.player = PlayerFactory.createPlayer(this.ecs, this.playerCharacter, 100, 100);
             this.ecs.addEntity("player", this.player);
         }
     }

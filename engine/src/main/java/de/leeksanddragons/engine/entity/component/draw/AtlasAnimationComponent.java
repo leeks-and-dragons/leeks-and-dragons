@@ -105,6 +105,15 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
                 this.createCachedAnimations(map);
 
                 this.isLoaded = true;
+
+                //get current animation
+                if (!this.animationName.isEmpty()) {
+                    this.currentAnimation = getAnimationByName(this.animationName);
+
+                    if (this.currentAnimation == null) {
+                        throw new NullPointerException("current animation cannot be null.");
+                    }
+                }
             } else {
                 //we dont need to do anything, while atlas file wasnt loaded
                 return;
@@ -131,6 +140,10 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
 
         if (currentTextureRegion == null) {
             throw new NullPointerException("current texture region is null.");
+        }
+
+        if (!currentTextureRegion.getTexture().isManaged()) {
+            throw new IllegalStateException("current texture region isnt managed.");
         }
 
         // set current frame
