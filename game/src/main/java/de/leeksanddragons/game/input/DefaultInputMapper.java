@@ -23,7 +23,7 @@ public class DefaultInputMapper implements InputMapper {
     }
 
     public boolean isMouseMoving () {
-        return false;
+        return Gdx.input.isKeyPressed(Input.Keys.M);
     }
 
     public boolean isMovingDown () {

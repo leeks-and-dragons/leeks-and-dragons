@@ -1,13 +1,16 @@
 package de.leeksanddragons.game.entity.component;
 
+import com.badlogic.gdx.math.Vector2;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.IUpdateComponent;
 import de.leeksanddragons.engine.entity.annotation.InjectComponent;
 import de.leeksanddragons.engine.entity.component.MoveComponent;
+import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.impl.BaseComponent;
 import de.leeksanddragons.engine.entity.priority.ECSUpdatePriority;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
+import de.leeksanddragons.engine.utils.MouseUtils;
 import de.leeksanddragons.game.input.DefaultInputMapper;
 
 /**
@@ -16,6 +19,9 @@ import de.leeksanddragons.game.input.DefaultInputMapper;
  * Created by Justin on 25.09.2017.
  */
 public class InputMoveComponent extends BaseComponent implements IUpdateComponent {
+
+    @InjectComponent(nullable = false)
+    protected PositionComponent positionComponent;
 
     @InjectComponent(nullable = false)
     protected MoveComponent moveComponent;
@@ -47,7 +53,11 @@ public class InputMoveComponent extends BaseComponent implements IUpdateComponen
                 x = 1;
             }
         } else {
-            //TODO: get mouse angle
+            //TODO: get mouse direction
+
+            Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
+            x = vec.x;
+            y = vec.y;
         }
 
         //set direction
