@@ -146,7 +146,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     @Override
     public ECSUpdatePriority getUpdateOrder() {
-        return ECSUpdatePriority.LOW;
+        return ECSUpdatePriority.NORMAL;
     }
 
     @Override

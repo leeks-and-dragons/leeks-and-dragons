@@ -10,6 +10,7 @@ import de.leeksanddragons.engine.entity.component.camera.FollowCameraComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.component.draw.AtlasAnimationComponent;
 import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
+import de.leeksanddragons.engine.entity.component.draw.SetAnimationByDirectionComponent;
 import de.leeksanddragons.engine.entity.component.input.SetMousePositionComponent;
 import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaComponent;
 
@@ -39,6 +40,9 @@ public class PlayerFactory {
 
         //add movement component, so entity can be moved
         player.addComponent(new MoveComponent(0, 0, character.getBaseSpeed()), MoveComponent.class);
+
+        //add component to set animation dependend by move direction
+        player.addComponent(new SetAnimationByDirectionComponent(), SetAnimationByDirectionComponent.class);
 
         return player;
     }

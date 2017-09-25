@@ -108,11 +108,16 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
 
                 //get current animation
                 if (!this.animationName.isEmpty()) {
-                    this.currentAnimation = getAnimationByName(this.animationName);
+                    //this.currentAnimation = getAnimationByName(this.animationName);
 
-                    if (this.currentAnimation == null) {
+                    /*if (this.currentAnimation == null) {
                         throw new NullPointerException("current animation cannot be null.");
-                    }
+                    }*/
+
+                    String oldAnimationName = this.animationName;
+                    this.animationName = "";
+
+                    this.setCurrentAnimationName(oldAnimationName);
                 }
             } else {
                 //we dont need to do anything, while atlas file wasnt loaded
