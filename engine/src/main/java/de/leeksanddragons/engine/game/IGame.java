@@ -6,6 +6,7 @@ import de.leeksanddragons.engine.camera.ResizeListener;
 import de.leeksanddragons.engine.camera.manager.CameraManager;
 import de.leeksanddragons.engine.controller.ControllerManager;
 import de.leeksanddragons.engine.data.SharedData;
+import de.leeksanddragons.engine.input.InputManager;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.IPreferences;
@@ -115,6 +116,13 @@ public interface IGame {
      * @return instance of controller manager
     */
     public ControllerManager getControllerManager ();
+
+    /**
+    * get input manager
+     *
+     * @return instance of input manager
+    */
+    public InputManager getInputManager ();
 
     /**
     * get sprite batch. Only use this method, if it is really neccessarry!

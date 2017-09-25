@@ -1,0 +1,117 @@
+
+cedric.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+runningDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningLeft
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningLeftDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningLeftUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningRight
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningRightDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningRightUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+runningUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingLeft
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingLeftDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingLeftUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingRight
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingRightUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standingUp
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+standungRightDown
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1

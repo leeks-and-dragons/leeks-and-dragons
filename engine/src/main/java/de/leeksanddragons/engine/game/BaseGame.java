@@ -19,6 +19,8 @@ import de.leeksanddragons.engine.cursor.CursorManager;
 import de.leeksanddragons.engine.cursor.DefaultCursorManager;
 import de.leeksanddragons.engine.data.DefaultSharedData;
 import de.leeksanddragons.engine.data.SharedData;
+import de.leeksanddragons.engine.input.InputManager;
+import de.leeksanddragons.engine.input.impl.DefaultInputManager;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.preferences.GamePreferences;
 import de.leeksanddragons.engine.preferences.WindowConfig;
@@ -102,6 +104,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
     //executor service
     protected ExecutorService executorService = null;
 
+    //input manager
+    protected InputManager inputManager = null;
+
     public BaseGame (WindowConfig windowConfig, String appName) {
         this.windowConfig = windowConfig;
         this.appName = appName.toLowerCase();
@@ -120,6 +125,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
 
         //create new controller manager
         this.controllerManager = new DefaultControllerManager();
+
+        //create new input manager
+        this.inputManager = new DefaultInputManager();
 
         //create new asset manager
         this.assetManager = new GameAssetManager();
@@ -441,6 +449,15 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
      */
     public ControllerManager getControllerManager () {
         return this.controllerManager;
+    }
+
+    /**
+     * get input manager
+     *
+     * @return instance of input manager
+     */
+    public InputManager getInputManager () {
+        return this.inputManager;
     }
 
     /**
