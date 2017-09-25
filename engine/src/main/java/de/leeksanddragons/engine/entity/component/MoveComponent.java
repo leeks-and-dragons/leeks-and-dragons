@@ -1,6 +1,8 @@
 package de.leeksanddragons.engine.entity.component;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import de.leeksanddragons.engine.boosts.ISpeedBoost;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.IUpdateComponent;
 import de.leeksanddragons.engine.entity.annotation.InjectComponent;
@@ -8,6 +10,9 @@ import de.leeksanddragons.engine.entity.impl.BaseComponent;
 import de.leeksanddragons.engine.entity.priority.ECSUpdatePriority;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 24.09.2017.
@@ -30,7 +35,10 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected Vector2 tmpVector = new Vector2();
 
     //pixels per unit
-    protected float PIXELS_PER_UNIT = 256;
+    protected float PIXELS_PER_UNIT = 512;//256;
+
+    //list with all boosts
+    protected List<ISpeedBoost> boostList = new ArrayList<>();
 
     /**
     * default constructor
@@ -64,6 +72,17 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
         //set vector values to temporary vector
         tmpVector.set(moveDirection.x, moveDirection.y);
+
+        //udpate boosts
+        for (ISpeedBoost boost : this.boostList) {
+            if (boost.canRemoved()) {
+                this.boostList.remove(boost);
+
+                Gdx.app.debug("MoveComponent", "removed speed bonus: " + boost.toString());
+            }
+
+            boost.update(time);
+        }
 
         //normalize and scale move vector
         tmpVector.scl(this.getSpeedInPixels() * dt * 100f);
@@ -123,10 +142,19 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
      * @return movement speed
     */
     public float getSpeedInPixels () {
-        //TODO: add boost effects
+        float flatBonus = 0;
+        float percentageBonus = 0;
 
-        //TODO: calculate speed in units
-        float speedInUnits = this.speed;
+        for (ISpeedBoost boost : this.boostList) {
+            flatBonus += boost.getFlatBonusSpeed();
+            percentageBonus += boost.getPercentageBonusSpeed();
+        }
+
+        //percentage bonus can have maximum 100%
+        percentageBonus = Math.max(1, percentageBonus);
+
+        //calculate speed in units
+        float speedInUnits = (this.speed + flatBonus) * (1 + percentageBonus);
 
         return speedInUnits / PIXELS_PER_UNIT;
     }
@@ -146,6 +174,14 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     public void setPixelsPerUnit (float pixelsPerUnit) {
         this.PIXELS_PER_UNIT = pixelsPerUnit;
+    }
+
+    public void addBoost (ISpeedBoost boost) {
+        this.boostList.add(boost);
+    }
+
+    public void removeBoost (ISpeedBoost boost) {
+        this.boostList.remove(boost);
     }
 
     @Override
