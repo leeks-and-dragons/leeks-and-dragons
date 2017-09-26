@@ -53,11 +53,27 @@ public class InputMoveComponent extends BaseComponent implements IUpdateComponen
                 x = 1;
             }
         } else {
-            //TODO: get mouse direction
+            //check controller state
+            if (this.game.getControllerManager().isConnected()) {
+                //get controller axis direction
+                Vector2 dirVec = this.game.getControllerManager().getRightAxisDirection();
 
-            Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
-            x = vec.x;
-            y = vec.y;
+                if (dirVec.x != 0 && dirVec.y != 0) {
+                    //use controller direction
+                    x = dirVec.x;
+                    y = dirVec.y;
+                } else {
+                    //use mouse direction
+                    Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
+                    x = vec.x;
+                    y = vec.y;
+                }
+            } else {
+                //get mouse direction
+                Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
+                x = vec.x;
+                y = vec.y;
+            }
         }
 
         //set direction

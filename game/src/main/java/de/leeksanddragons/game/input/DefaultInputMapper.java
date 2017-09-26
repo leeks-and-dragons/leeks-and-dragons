@@ -23,7 +23,7 @@ public class DefaultInputMapper implements InputMapper {
     }
 
     public boolean isMouseMoving () {
-        return Gdx.input.isKeyPressed(Input.Keys.M);
+        return Gdx.input.isKeyPressed(Input.Keys.M) || this.game.getControllerManager().getRightAxisDirection().len() != 0;
     }
 
     public boolean isMovingDown () {
