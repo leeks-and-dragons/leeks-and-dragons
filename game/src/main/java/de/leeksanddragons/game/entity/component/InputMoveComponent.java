@@ -29,6 +29,8 @@ public class InputMoveComponent extends BaseComponent implements IUpdateComponen
     //input mapper
     protected DefaultInputMapper inputMapper = null;
 
+    protected float minMouseDistance = 50;
+
     @Override
     protected void onInit(IScreenGame game, Entity entity) {
         //get input mapper
@@ -65,14 +67,20 @@ public class InputMoveComponent extends BaseComponent implements IUpdateComponen
                 } else {
                     //use mouse direction
                     Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
-                    x = vec.x;
-                    y = vec.y;
+
+                    if (vec.len() > minMouseDistance) {
+                        x = vec.x;
+                        y = vec.y;
+                    }
                 }
             } else {
                 //get mouse direction
                 Vector2 vec = MouseUtils.getRelativePositionToEntity(game.getCameraManager().getMainCamera(), positionComponent.getMiddleX(), positionComponent.getMiddleY());
-                x = vec.x;
-                y = vec.y;
+
+                if (vec.len() > minMouseDistance) {
+                    x = vec.x;
+                    y = vec.y;
+                }
             }
         }
 
