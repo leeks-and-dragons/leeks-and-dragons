@@ -169,8 +169,15 @@ public class DefaultSoundManager implements SoundManager {
                     this.isFadingOut = false;
                     this.isFadingIn = true;
 
+                    //stop music
+                    this.currentMusic.stop();
+
+                    Gdx.app.debug("SoundManager", "unload soundtrack: " + this.currentMusicPath);
+
                     //unload old soundtrack
                     assetManager.unload(this.currentMusicPath);
+
+                    Gdx.app.debug("SoundManager", "is loaded: " + assetManager.isLoaded(this.currentMusicPath));
 
                     //set next music to current music
                     this.currentMusic = this.nextMusic;
@@ -212,6 +219,10 @@ public class DefaultSoundManager implements SoundManager {
 
                 //start music, if music isnt playing already
                 if (!this.currentMusic.isPlaying()) {
+                    if (!assetManager.isLoaded(this.currentMusicPath)) {
+                        Gdx.app.error("SoundManager", "fade in soundtrack, but soundtrack isnt loaded: " + this.currentMusicPath);
+                    }
+
                     this.currentMusic.setLooping(this.looping);
                     this.currentMusic.play();
                 }
