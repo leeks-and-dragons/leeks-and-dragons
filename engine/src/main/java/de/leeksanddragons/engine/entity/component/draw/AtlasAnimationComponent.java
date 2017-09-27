@@ -33,7 +33,7 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     protected String animationName = "";
 
     //duration of one frame in ms
-    protected float frameDuration = 0;
+    protected float frameDuration = 100;
 
     //texture atlas
     protected TextureAtlas atlas = null;
