@@ -212,6 +212,8 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             //check, if map has an soundtrack
             if (currentMap.hasGlobalMusicPath()) {
                 this.game.getSoundManager().loadAndPlayBackgroundMusic(currentMap.getGlobalMusicPath(), true);
+            } else {
+                this.game.getSoundManager().loadAndPlayBackgroundMusic("", true);
             }
         } else {
             Gdx.app.error("DevRoomScreen", "current map is null.");

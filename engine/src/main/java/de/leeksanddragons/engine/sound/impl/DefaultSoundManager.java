@@ -159,12 +159,12 @@ public class DefaultSoundManager implements SoundManager {
                 Gdx.app.debug("Sound Manager", "fade out progress: " + percent);
 
                 //calculate volume
-                float volume = (1 - Math.max(1, percent)) * getMusicVolume();
+                float volume = (1 - Math.max(0, percent)) * getMusicVolume();
 
                 //set volume of current soundtrack
                 this.currentMusic.setVolume(volume);
 
-                if (volume == 0) {
+                if (volume <= 0) {
                     //fading out has finished
                     this.isFadingOut = false;
                     this.isFadingIn = true;
@@ -199,28 +199,33 @@ public class DefaultSoundManager implements SoundManager {
                 this.elapsedFadeOutTime = 0;
             }
         } else if (isFadingIn) {
-            this.elapsedFadeInTime += time.getDeltaTime() * 1000;
+            if (this.currentMusic != null) {
+                this.elapsedFadeInTime += time.getDeltaTime() * 1000;
 
-            float percent = this.elapsedFadeInTime / this.maxFadeInTime;
+                float percent = this.elapsedFadeInTime / this.maxFadeInTime;
 
-            //calculate volume
-            float volume = Math.min(1, percent) * getMusicVolume();
+                //calculate volume
+                float volume = Math.min(1, percent) * getMusicVolume();
 
-            //set volume of current soundtrack
-            this.currentMusic.setVolume(volume);
+                //set volume of current soundtrack
+                this.currentMusic.setVolume(volume);
 
-            //start music, if music isnt playing already
-            if (!this.currentMusic.isPlaying()) {
-                this.currentMusic.setLooping(this.looping);
-                this.currentMusic.play();
-            }
+                //start music, if music isnt playing already
+                if (!this.currentMusic.isPlaying()) {
+                    this.currentMusic.setLooping(this.looping);
+                    this.currentMusic.play();
+                }
 
-            if (volume == 1) {
-                Gdx.app.debug("SoundManager", "fade in was finished.");
+                if (volume == 1) {
+                    Gdx.app.debug("SoundManager", "fade in was finished.");
 
-                //fading in has finished
+                    //fading in has finished
+                    this.isFadingIn = false;
+
+                    this.elapsedFadeInTime = 0;
+                }
+            } else {
                 this.isFadingIn = false;
-
                 this.elapsedFadeInTime = 0;
             }
         } else {
@@ -268,7 +273,14 @@ public class DefaultSoundManager implements SoundManager {
 
     @Override
     public void loadAndPlayBackgroundMusic(String musicPath, boolean looping) {
-        if (this.currentMusicPath.equals(musicPath) || this.currentLoadingSoundtrack.equals(musicPath)) {
+        if (this.currentMusicPath.equals(musicPath) || (this.currentLoadingSoundtrack.equals(musicPath) && !this.currentLoadingSoundtrack.isEmpty())) {
+            return;
+        }
+
+        if (musicPath == null || musicPath.isEmpty()) {
+            this.isFadingIn = false;
+            this.isFadingOut = true;
+
             return;
         }
 
