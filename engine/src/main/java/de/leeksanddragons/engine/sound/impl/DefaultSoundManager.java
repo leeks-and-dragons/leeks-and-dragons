@@ -47,11 +47,10 @@ public class DefaultSoundManager implements SoundManager {
 
     //elapsed fade-out time in ms
     protected float elapsedFadeOutTime = 0;
-    protected float maxFadeoutTime = 3000;
-
+    protected float maxFadeoutTime = 5000;
     //elapsed fade-in time in ms
     protected float elapsedFadeInTime = 0;
-    protected float maxFadeInTime = 3000;
+    protected float maxFadeInTime = 5000;
 
     protected boolean isFadingOut = false;
     protected boolean isFadingIn = false;
