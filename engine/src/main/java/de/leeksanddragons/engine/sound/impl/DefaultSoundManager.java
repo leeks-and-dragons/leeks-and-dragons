@@ -175,7 +175,7 @@ public class DefaultSoundManager implements SoundManager {
                     Gdx.app.debug("SoundManager", "unload soundtrack: " + this.currentMusicPath);
 
                     //unload old soundtrack
-                    assetManager.unload(this.currentMusicPath);
+                    //assetManager.unload(this.currentMusicPath);
 
                     Gdx.app.debug("SoundManager", "is loaded: " + assetManager.isLoaded(this.currentMusicPath));
 
