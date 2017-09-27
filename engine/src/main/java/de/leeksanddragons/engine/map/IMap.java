@@ -65,6 +65,20 @@ public interface IMap {
     public BoundingBox getBoundingBox ();
 
     /**
+    * check, if map has an global music path
+     *
+     * @return true, if map has an music path set in map properties
+    */
+    public boolean hasGlobalMusicPath ();
+
+    /**
+    * get global music path for map from map properties
+     *
+     * @return path to music file
+    */
+    public String getGlobalMusicPath ();
+
+    /**
      * update map
      */
     public void update (IScreenGame game, GameTime time);

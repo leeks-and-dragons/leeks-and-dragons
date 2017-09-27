@@ -62,6 +62,10 @@ public class LADMap implements IMap {
     protected Vector3 maxVector = new Vector3(100, 100, 0);
     protected BoundingBox boundingBox = new BoundingBox(minVector, maxVector);
 
+    //map specific music information (global)
+    protected String musicPath = "";
+    protected boolean hasMusic = false;
+
     /**
     * default constructor
      *
@@ -152,6 +156,15 @@ public class LADMap implements IMap {
 
         Gdx.app.debug("LADMap", "map loading finished: " + this.tmxPath);
 
+        //get music path
+        if (this.mapProperties.containsKey("music_path")) {
+            this.hasMusic = true;
+            this.musicPath = this.mapProperties.get("music_path", String.class);
+        } else {
+            this.hasMusic = false;
+            this.musicPath = "";
+        }
+
         //TODO: find object layers for sound and so on
 
         //TODO: add code here
@@ -172,6 +185,16 @@ public class LADMap implements IMap {
     @Override
     public BoundingBox getBoundingBox() {
         return this.boundingBox;
+    }
+
+    @Override
+    public boolean hasGlobalMusicPath() {
+        return this.hasMusic;
+    }
+
+    @Override
+    public String getGlobalMusicPath() {
+        return this.musicPath;
     }
 
     @Override
