@@ -216,7 +216,7 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
                 this.game.getSoundManager().loadAndPlayBackgroundMusic("", true);
             }
         } else {
-            Gdx.app.error("DevRoomScreen", "current map is null.");
+            //Gdx.app.error("DevRoomScreen", "current map is null.");
         }
     }
 
