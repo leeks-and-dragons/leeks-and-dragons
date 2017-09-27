@@ -153,10 +153,10 @@ public class DefaultSoundManager implements SoundManager {
             if (this.currentMusic != null) {
                 this.elapsedFadeOutTime += time.getDeltaTime() * 1000;
 
-                Gdx.app.debug("SoundManager", "fade out soundtrack.");
+                //Gdx.app.debug("SoundManager", "fade out soundtrack.");
 
                 float percent = this.elapsedFadeOutTime / this.maxFadeoutTime;
-                Gdx.app.debug("Sound Manager", "fade out progress: " + percent);
+                //Gdx.app.debug("Sound Manager", "fade out progress: " + percent);
 
                 //calculate volume
                 float volume = (1 - Math.max(0, percent)) * getMusicVolume();
