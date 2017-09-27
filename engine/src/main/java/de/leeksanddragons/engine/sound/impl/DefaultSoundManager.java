@@ -50,7 +50,7 @@ public class DefaultSoundManager implements SoundManager {
     protected float maxFadeoutTime = 5000;
     //elapsed fade-in time in ms
     protected float elapsedFadeInTime = 0;
-    protected float maxFadeInTime = 5000;
+    protected float maxFadeInTime = 10000;
 
     protected boolean isFadingOut = false;
     protected boolean isFadingIn = false;
@@ -153,7 +153,7 @@ public class DefaultSoundManager implements SoundManager {
             if (this.currentMusic != null) {
                 this.elapsedFadeOutTime += time.getDeltaTime() * 1000;
 
-                Gdx.app.debug("SoundManager", "fade in soundtrack.");
+                Gdx.app.debug("SoundManager", "fade out soundtrack.");
 
                 float percent = this.elapsedFadeOutTime / this.maxFadeoutTime;
                 Gdx.app.debug("Sound Manager", "fade out progress: " + percent);
