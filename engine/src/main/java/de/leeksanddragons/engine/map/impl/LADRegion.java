@@ -271,6 +271,24 @@ public class LADRegion extends BaseRegion {
     }
 
     @Override
+    public IMap getMapByPosition(float playerX, float playerY) {
+        //TODO: integrate offset
+
+        if (playerX < 0) {
+            playerX -= getMapWidth();
+        }
+
+        if (playerY < 0) {
+            playerY -= getMapHeight();
+        }
+
+        int mapXIndex = (int) (playerX / getMapWidth());
+        int mapYIndex = (int) (playerY / getMapHeight());
+
+        return getMap(mapXIndex, mapYIndex);
+    }
+
+    @Override
     public boolean hasPreLoadingFinished (CameraHelper camera) {
         return getCurrentMap(camera) == null || getCurrentMap(camera).isLoaded();
     }

@@ -124,6 +124,16 @@ public interface IRegion {
     public IMap getCurrentMap (CameraHelper camera);
 
     /**
+    * get map by player position
+     *
+     * @param playerX x position of player
+     * @param playerY y position of player
+     *
+     * @return instance of map or null, if map doesnt exists
+    */
+    public IMap getMapByPosition (float playerX, float playerY);
+
+    /**
     * check, if region has finished pre-loading
      *
      * @return true, if region has finished pre-loading

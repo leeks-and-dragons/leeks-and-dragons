@@ -13,7 +13,9 @@ import de.leeksanddragons.engine.character.ICharacter;
 import de.leeksanddragons.engine.character.impl.PlayerCharacter;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
+import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.impl.ECS;
+import de.leeksanddragons.engine.map.IMap;
 import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.engine.map.impl.LADRegion;
 import de.leeksanddragons.engine.memory.GameAssetManager;
@@ -51,6 +53,7 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
     //player entity
     protected Entity player = null;
+    protected PositionComponent playerPos = null;
 
     //player character
     protected ICharacter playerCharacter = null;
@@ -130,6 +133,9 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             //create new player entity
             this.player = PlayerFactory.createPlayer(this.ecs, this.playerCharacter, 100, 100);
             this.ecs.addEntity("player", this.player);
+
+            //get position component of player to get map soundtrack
+            this.playerPos = this.player.getComponent(PositionComponent.class);
         }
     }
 
@@ -187,22 +193,6 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             return;
         }
 
-        /*if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            game.getCameraManager().getMainCamera().translate(-2, 0, 0);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            game.getCameraManager().getMainCamera().translate(2, 0, 0);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            game.getCameraManager().getMainCamera().translate(0, 2, 0);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            game.getCameraManager().getMainCamera().translate(0, -2, 0);
-        }*/
-
         //check, if region contains water
         if (region.hasWater()) {
             //update water renderer
@@ -214,6 +204,18 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
         //update entity-component-system
         this.ecs.update(game, time);
+
+        //get current map
+        IMap currentMap = this.region.getMapByPosition(this.playerPos.getMiddleX(), this.playerPos.getMiddleY());
+
+        if (currentMap != null) {
+            //check, if map has an soundtrack
+            if (currentMap.hasGlobalMusicPath()) {
+                this.game.getSoundManager().loadAndPlayBackgroundMusic(currentMap.getGlobalMusicPath(), true);
+            }
+        } else {
+            Gdx.app.error("DevRoomScreen", "current map is null.");
+        }
     }
 
     @Override

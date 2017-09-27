@@ -43,6 +43,11 @@ public class DummyRegion extends BaseRegion {
     }
 
     @Override
+    public IMap getMapByPosition(float playerX, float playerY) {
+        return null;
+    }
+
+    @Override
     public boolean hasPreLoadingFinished(CameraHelper camera) {
         return true;
     }
