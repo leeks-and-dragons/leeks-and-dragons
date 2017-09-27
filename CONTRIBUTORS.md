@@ -47,3 +47,11 @@ Arial is an font from microsoft.\
   
 **License**: CC-BY-SA 3.0 / GNU GPL 3.0\
 **Source / Link**: https://opengameart.org/content/tiled-terrains
+
+### RPG Village Exploration (Soundtrack)
+
+**Path**: mods/maingame/music/rpg_village_exploration\
+**Author**: Hitctrl\
+**License**: CC-BY 3.0\
+**Source / Link**: found at: http://opengameart.org/content/rpgvillageexplorationmusic
+

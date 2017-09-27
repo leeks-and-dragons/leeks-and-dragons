@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="4">
+ <properties>
+  <property name="music_path" value="mods/maingame/music/rpg_village_exploration/RPG_Village_Exploration_Music.mp3"/>
+ </properties>
  <tileset firstgid="1" source="../../tilesets/LPC_Terrain/Terrain.tsx"/>
  <layer name="Kachelebene 1" width="30" height="30">
   <data encoding="base64">
@@ -20,6 +23,5 @@
   <properties>
    <property name="music_path" value="mods/maingame/music/"/>
   </properties>
-  <object id="3" x="9" y="8" width="935" height="930"/>
  </objectgroup>
 </map>

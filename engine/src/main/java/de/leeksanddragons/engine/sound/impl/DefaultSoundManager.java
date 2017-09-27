@@ -245,6 +245,8 @@ public class DefaultSoundManager implements SoundManager {
             throw new IllegalArgumentException("music path doesnt exists.");
         }
 
+        Gdx.app.debug("SoundManager", "load new soundtrack: " + musicPath);
+
         this.nextMusicPath = musicPath;
 
         //load soundtrack
