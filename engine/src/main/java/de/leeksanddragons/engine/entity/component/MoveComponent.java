@@ -40,6 +40,12 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     //list with all boosts
     protected List<ISpeedBoost> boostList = new ArrayList<>();
 
+    //bounds
+    protected float minX = -Float.MAX_VALUE;
+    protected float maxX = Float.MAX_VALUE;
+    protected float minY = -Float.MAX_VALUE;
+    protected float maxY = Float.MAX_VALUE;
+
     /**
     * default constructor
      *
@@ -89,6 +95,43 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
         //move entity
         positionComponent.move(tmpVector.x, tmpVector.y);
+
+        //check, if player is in bounds, if not, correct position
+        if (positionComponent.getX() < this.minX) {
+            positionComponent.setX(this.minX);
+        }
+
+        if (positionComponent.getX() + positionComponent.getWidth() > this.maxX) {
+            positionComponent.setX(this.maxX);
+        }
+
+        if (positionComponent.getY() < this.minY) {
+            positionComponent.setY(this.minY);
+        }
+
+        if (positionComponent.getY() + positionComponent.getHeight() > this.maxY) {
+            positionComponent.setY(this.maxY);
+        }
+    }
+
+    /**
+    * set bounds, entity should be in
+    */
+    public void setBounds (float minX, float maxX, float minY, float maxY) {
+        this.minX = minX;
+        this.maxX = maxX;
+        this.minY = minY;
+        this.maxY = maxY;
+    }
+
+    /**
+    * reset bounds, so bounds arent used
+    */
+    public void resetBounds () {
+        this.minX = -Float.MAX_VALUE;
+        this.maxX = Float.MAX_VALUE;
+        this.minY = -Float.MAX_VALUE;
+        this.maxY = Float.MAX_VALUE;
     }
 
     /**

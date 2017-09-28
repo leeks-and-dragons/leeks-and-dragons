@@ -13,6 +13,7 @@ import de.leeksanddragons.engine.character.ICharacter;
 import de.leeksanddragons.engine.character.impl.PlayerCharacter;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.EntityManager;
+import de.leeksanddragons.engine.entity.component.MoveComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
 import de.leeksanddragons.engine.entity.impl.ECS;
 import de.leeksanddragons.engine.map.IMap;
@@ -136,6 +137,9 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
 
             //get position component of player to get map soundtrack
             this.playerPos = this.player.getComponent(PositionComponent.class);
+
+            //set player bounds
+            this.player.getComponent(MoveComponent.class).setBounds(region.getX(), region.getX() + region.getWidth(), region.getY(), region.getY() + region.getHeight());
         }
     }
 
