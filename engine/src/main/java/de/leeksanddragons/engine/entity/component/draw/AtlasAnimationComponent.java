@@ -33,7 +33,7 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     protected String animationName = "";
 
     //duration of one frame in ms
-    protected float frameDuration = 100;
+    protected float frameDuration = 0.1f;
 
     //texture atlas
     protected TextureAtlas atlas = null;
@@ -125,6 +125,8 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
             }
         }
 
+        //System.out.println("elapsed time: " + this.elapsed);
+
         //calculate elapsed time
         this.elapsed += time.getDeltaTime();
 
@@ -200,7 +202,7 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         this.currentAnimation = this.getAnimationByName(animationName);
 
         // reset elapsed time
-        this.elapsed = 0;
+        //this.elapsed = 0;
 
         this.onAnimationStateChanged(oldAnimationName, animationName);
     }

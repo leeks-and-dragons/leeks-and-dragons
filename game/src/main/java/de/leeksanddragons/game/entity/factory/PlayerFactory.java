@@ -37,7 +37,7 @@ public class PlayerFactory {
         player.addComponent(new DrawComponent((TextureRegion) null), DrawComponent.class);
 
         //add atlas animation component, so player can be animated
-        player.addComponent(new AtlasAnimationComponent(character.getAtlasPath(), "standingDown", 200f), AtlasAnimationComponent.class);
+        player.addComponent(new AtlasAnimationComponent(character.getAtlasPath(), "standingDown", 0.1f), AtlasAnimationComponent.class);
 
         //add movement component, so entity can be moved
         player.addComponent(new MoveComponent(0, 0, character.getBaseSpeed()), MoveComponent.class);
