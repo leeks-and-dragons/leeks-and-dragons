@@ -101,16 +101,16 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
             positionComponent.setX(this.minX);
         }
 
-        if (positionComponent.getX() + positionComponent.getWidth() > this.maxX) {
-            positionComponent.setX(this.maxX);
+        if (positionComponent.getX() + positionComponent.getWidth() >= this.maxX) {
+            positionComponent.setX(this.maxX - positionComponent.getWidth());
         }
 
         if (positionComponent.getY() < this.minY) {
             positionComponent.setY(this.minY);
         }
 
-        if (positionComponent.getY() + positionComponent.getHeight() > this.maxY) {
-            positionComponent.setY(this.maxY);
+        if (positionComponent.getY() + positionComponent.getHeight() >= this.maxY) {
+            positionComponent.setY(this.maxY - positionComponent.getHeight());
         }
     }
 
