@@ -216,7 +216,11 @@ public class LADMap implements IMap {
             return;
         }
 
-        //TODO: update map
+        //update map
+        if (this.renderMethod == RENDER_METHOD.LAD_RENDERER) {
+            //update (pre-load) map
+            this.ladMapRenderer.update(game, time);
+        }
     }
 
     @Override

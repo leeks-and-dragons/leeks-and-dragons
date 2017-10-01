@@ -43,6 +43,9 @@ public class LADMapRenderer implements IMapRenderer {
     protected int pagesX = 0;
     protected int pagesY = 0;
 
+    //distance in pages which should be pre-loaded
+    protected int preLoadPageDistance = 1;
+
     protected List<String> excludedLayers = new ArrayList<>();
 
     protected IScreenGame game = null;
@@ -182,6 +185,65 @@ public class LADMapRenderer implements IMapRenderer {
     @Override
     public void update(IScreenGame game, GameTime time) {
         //TODO: remove old pages with distance > maxDistance and load near pages
+
+        //get camera
+        CameraHelper camera = game.getCameraManager().getMainCamera();
+
+        //calculate relative position in map
+        float x2 = camera.getX() - this.mapX;
+        float y2 = camera.getY() - this.mapY;
+
+        //System.out.println("x2: " + x2 + ", y2: " + y2);
+
+        int requiredTilesToRenderX = (int) ((float) camera.getViewportWidth() / (float) (pageTilesWidth * tileWidth)) + 1;
+        int requiredTilesToRenderY = (int) ((float) camera.getViewportHeight() / (float) (pageTilesHeight * tileHeight)) + 2;
+
+        //calculate start page
+        int startPageX = (int) (x2 / (float) (pageTilesWidth * tileWidth));
+        int startPageY = (int) (y2 / (float) (pageTilesHeight * tileHeight));
+
+        //pre-load near maps
+        for (int x = startPageX - this.preLoadPageDistance; x < startPageX + requiredTilesToRenderX + this.preLoadPageDistance; x++) {
+            for (int y = startPageY - this.preLoadPageDistance; y < startPageY + requiredTilesToRenderY + this.preLoadPageDistance; y++) {
+                //check, if page exists
+                if (x < 0 || x >= this.pagesX) {
+                    continue;
+                }
+
+                if (y < 0 || y >= this.pagesY) {
+                    continue;
+                }
+
+                //get page
+                MapPage page = getPage(x, y);
+
+                //check, if page exists
+                if (page == null) {
+                    Gdx.app.debug("LADMapRenderer", "create page X: " + x + ", Y: " + y);
+
+                    //create new page
+                    MapPage newPage = new MapPage(this.mapX + (x * getPageWidthInPixels()), this.mapY + (y * getPageHeightInPixels()), pageTilesWidth, pageTilesHeight);
+
+                    //add page to array
+                    this.pages[x][y] = newPage;
+
+                    //load page asynchronous
+                    newPage.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                } else {
+                    //check, if page is loaded
+                    if (!page.isPageLoaded()) {
+                        Gdx.app.debug("LADMapRenderer", "pre-load page X: " + x + ", Y: " + y);
+
+                        //check, if page isnt loading
+                        if (!page.isPageLoading()) {
+                            //load page asynchronous
+                            page.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     @Override
