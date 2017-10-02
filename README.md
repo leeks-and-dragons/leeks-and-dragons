@@ -2,6 +2,7 @@
 
 **[Leeks & Dragons](http://leeks-and-dragons.de)** is an 2D Singleplayer RPG game in **PixelArt** style (Work in Progress).\
 **Website**: [http://leeks-and-dragons.de](http://leeks-and-dragons.de) (WIP)\
+**Build State**: [![Build Status](https://travis-ci.org/leeks-and-dragons/leeks-and-dragons.svg?branch=master)](https://travis-ci.org/leeks-and-dragons/leeks-and-dragons)\
 \
 **Important! This project is currently in pre-production phase!**\
 \
