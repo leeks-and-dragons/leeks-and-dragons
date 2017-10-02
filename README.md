@@ -37,3 +37,11 @@ be dragons, too.
 ## License
 
 Code & internal assets are licensed under **[CC-BY-SA 3.0 license](https://creativecommons.org/licenses/by-sa/3.0/)**, external assets can use another license. Please look into specific asset directory for an LICENSE file.
+
+## First In-Game Screenshots
+
+![Main Menu](./docs/images/screenshot_1.png)\
+\
+![In-Game Screenshot](./docs/images/screenshot_3.png)\
+\
+![In-Game Screenshot](./docs/images/screenshot_2.png)
