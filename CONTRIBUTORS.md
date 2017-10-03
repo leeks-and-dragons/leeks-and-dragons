@@ -61,3 +61,10 @@ Arial is an font from microsoft.\
 **Author**: Corsica_S\
 **License**: CC0\
 **Source / Link**: https://opengameart.org/content/42-snow-and-gravel-footsteps
+
+### Grass Footstep (Sound Effect)
+
+**Path**: mods/maingame/sounds/footsteps/grass\
+**Author**: TinyWorlds\
+**License**: CC0\
+**Source / Link**: https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud
