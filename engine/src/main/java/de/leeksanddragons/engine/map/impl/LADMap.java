@@ -64,6 +64,10 @@ public class LADMap implements IMap {
     protected float mapWidth = 0;
     protected float mapHeight = 0;
 
+    //tile dimension
+    protected int tileWidth = 0;
+    protected int tileHeight = 0;
+
     //bounding box of map
     protected Vector3 minVector = new Vector3(0, 0, 0);
     protected Vector3 maxVector = new Vector3(100, 100, 0);
@@ -76,6 +80,7 @@ public class LADMap implements IMap {
     //footstep sonds
     protected List<String> requiredFootstepSounds = new ArrayList<>();
     protected int[][] footsteps = null;
+    protected String[] footstepSounds = null;
 
     /**
     * default constructor
@@ -212,15 +217,29 @@ public class LADMap implements IMap {
             }
         }
 
+        //create new array for all footstep sounds
+        this.footstepSounds = new String[this.requiredFootstepSounds.size() + 1];
+
+        //start with 1, because 0 means "no footstep sound"
+        int i = 1;
+
         //load footsteps
         for (String path : this.requiredFootstepSounds) {
             this.game.getAssetManager().load(path, Sound.class);
+
+            this.footstepSounds[i] = path;
+
+            i++;
         }
 
         //get properties
         MapProperties props = map.getProperties();
         int width = props.get("width", Integer.class);//get width in tiles
         int height = props.get("height", Integer.class);//get height in tiles
+
+        //get width and hight of an single tile
+        this.tileWidth = props.get("tilewidth", Integer.class);
+        this.tileHeight = props.get("tileheight", Integer.class);
 
         //create new integer array
         this.footsteps = new int[width][height];
@@ -255,7 +274,36 @@ public class LADMap implements IMap {
 
     @Override
     public String getFootstepSound(float playerX, float playerY) {
-        return null;
+        //calculate relative position on map
+        float relX = playerX - this.x;
+        float relY = playerY - this.y;
+
+        //get cell
+        int x = (int) relX / this.tileWidth;
+        int y = (int) relY / this.tileHeight;
+
+        //check, if cell is in bounds
+        if (x < 0 || x > this.getWidth()) {
+            Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+
+            return null;
+        }
+
+        if (y < 0 || y > this.getHeight()) {
+            Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+
+            return null;
+        }
+
+        //get footstep number of cell
+        int k = this.footsteps[x][y];
+
+        if (k <= 0) {
+            return null;
+        }
+
+        //get path to footstep sound
+        return this.footstepSounds[k];
     }
 
     @Override
