@@ -55,3 +55,9 @@ Arial is an font from microsoft.\
 **License**: CC-BY 3.0\
 **Source / Link**: found at: http://opengameart.org/content/rpgvillageexplorationmusic
 
+### Snow Footstep (Sound Effect)
+
+**Path**: mods/maingame/sounds/footsteps/snow\
+**Author**: Corsica_S\
+**License**: CC0\
+**Source / Link**: https://opengameart.org/content/42-snow-and-gravel-footsteps
