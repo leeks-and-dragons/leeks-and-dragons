@@ -248,56 +248,61 @@ public class LADMap implements IMap {
             i++;
         }
 
-        //get properties
-        MapProperties props = map.getProperties();
-        int width = props.get("width", Integer.class);//get width in tiles
-        int height = props.get("height", Integer.class);//get height in tiles
+        //do the following code in an separate thread, so UI thread isnt  blocked
+        this.game.getExecutorService().submit(() -> {
+            //get properties
+            MapProperties props = map.getProperties();
+            int width = props.get("width", Integer.class);//get width in tiles
+            int height = props.get("height", Integer.class);//get height in tiles
 
-        //get width and hight of an single tile
-        this.tileWidth = props.get("tilewidth", Integer.class);
-        this.tileHeight = props.get("tileheight", Integer.class);
+            //get width and hight of an single tile
+            this.tileWidth = props.get("tilewidth", Integer.class);
+            this.tileHeight = props.get("tileheight", Integer.class);
 
-        //create new integer array
-        this.footsteps = new int[width][height];
+            //create new integer array
+            this.footsteps = new int[width][height];
 
-        //fill array
-        for (MapObject obj : mapObjects) {
+            //fill array
+            for (MapObject obj : mapObjects) {
             /*obj.getProperties().getKeys().forEachRemaining((String key) -> {
                 System.out.println("object property: " + key);
             });*/
 
-            //calculate start tile
-            int startX = (int) (obj.getProperties().get("x", Float.class) / tileWidth);
-            int startY = (int) (obj.getProperties().get("y", Float.class) / tileHeight);
+                //calculate start tile
+                int startX = (int) (obj.getProperties().get("x", Float.class) / tileWidth);
+                int startY = (int) (obj.getProperties().get("y", Float.class) / tileHeight);
 
-            //get width and height of object
-            float objWidth = obj.getProperties().get("width", Float.class);
-            float objHeight = obj.getProperties().get("height", Float.class);
+                //get width and height of object
+                float objWidth = obj.getProperties().get("width", Float.class);
+                float objHeight = obj.getProperties().get("height", Float.class);
 
-            float x2 = obj.getProperties().get("x", Float.class) + objWidth;
-            float y2 = obj.getProperties().get("y", Float.class) + objHeight;
+                float x2 = obj.getProperties().get("x", Float.class) + objWidth;
+                float y2 = obj.getProperties().get("y", Float.class) + objHeight;
 
-            if (x2 % tileWidth != 0) {
-                x2 += (x2 % tileWidth);
-            }
+                if (x2 % tileWidth != 0) {
+                    x2 += (x2 % tileWidth);
+                }
 
-            if (y2 % tileHeight != 0) {
-                y2 += (y2 % tileHeight);
-            }
+                if (y2 % tileHeight != 0) {
+                    y2 += (y2 % tileHeight);
+                }
 
-            //get sound ID
-            int soundID = tmpMap.get(obj.getProperties().get("footstep_sound", String.class));
+                //get sound ID
+                int soundID = tmpMap.get(obj.getProperties().get("footstep_sound", String.class));
 
-            //calculate end tile
-            int endX = (int) (x2 / tileWidth);
-            int endY = (int) (y2 / tileHeight);
+                //calculate end tile
+                int endX = (int) (x2 / tileWidth);
+                int endY = (int) (y2 / tileHeight);
 
-            for (int x = startX; x < endX; x++) {
-                for (int y = startY; y < endY; y++) {
-                    this.footsteps[x][y] = soundID;
+                for (int x = startX; x < endX; x++) {
+                    for (int y = startY; y < endY; y++) {
+                        this.footsteps[x][y] = soundID;
+                    }
                 }
             }
-        }
+
+            Gdx.app.debug("LADMap", "footstep sound definitions loaded successfully.");
+        });
     }
 
     @Override
