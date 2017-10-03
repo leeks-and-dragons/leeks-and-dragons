@@ -75,6 +75,7 @@ public class LADMap implements IMap {
 
     //footstep sonds
     protected List<String> requiredFootstepSounds = new ArrayList<>();
+    protected int[][] footsteps = null;
 
     /**
     * default constructor
@@ -215,6 +216,16 @@ public class LADMap implements IMap {
         for (String path : this.requiredFootstepSounds) {
             this.game.getAssetManager().load(path, Sound.class);
         }
+
+        //get properties
+        MapProperties props = map.getProperties();
+        int width = props.get("width", Integer.class);//get width in tiles
+        int height = props.get("height", Integer.class);//get height in tiles
+
+        //create new integer array
+        this.footsteps = new int[width][height];
+
+        //fill array
     }
 
     @Override
