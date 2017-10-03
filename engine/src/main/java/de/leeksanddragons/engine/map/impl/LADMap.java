@@ -20,7 +20,10 @@ import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Created by Justin on 18.09.2017.
@@ -191,6 +194,11 @@ public class LADMap implements IMap {
     }
 
     protected void loadFootsteps () {
+        List<MapObject> mapObjects = new ArrayList<>();
+
+        //temporary map which contains sound path to sound id
+        Map<String,Integer> tmpMap = new HashMap<>();
+
         //iterate through all map layers
         for (MapLayer layer : map.getLayers()) {
             //iterate through all layer objects
@@ -205,6 +213,9 @@ public class LADMap implements IMap {
 
                         continue;
                     }
+
+                    //add footstep sound object to list
+                    mapObjects.add(obj);
 
                     //check, if footstep path is already in list
                     if (!this.requiredFootstepSounds.contains(footstepPath)) {
@@ -229,6 +240,9 @@ public class LADMap implements IMap {
 
             this.footstepSounds[i] = path;
 
+            //add path to temporary map to find sound ID later
+            tmpMap.put(path, i);
+
             i++;
         }
 
@@ -245,6 +259,43 @@ public class LADMap implements IMap {
         this.footsteps = new int[width][height];
 
         //fill array
+        for (MapObject obj : mapObjects) {
+            /*obj.getProperties().getKeys().forEachRemaining((String key) -> {
+                System.out.println("object property: " + key);
+            });*/
+
+            //calculate start tile
+            int startX = (int) (obj.getProperties().get("x", Float.class) / tileWidth);
+            int startY = (int) (obj.getProperties().get("y", Float.class) / tileHeight);
+
+            //get width and height of object
+            float objWidth = obj.getProperties().get("width", Float.class);
+            float objHeight = obj.getProperties().get("height", Float.class);
+
+            float x2 = obj.getProperties().get("x", Float.class) + objWidth;
+            float y2 = obj.getProperties().get("y", Float.class) + objHeight;
+
+            if (x2 % tileWidth != 0) {
+                x2 += (x2 % tileWidth);
+            }
+
+            if (y2 % tileHeight != 0) {
+                y2 += (y2 % tileHeight);
+            }
+
+            //get sound ID
+            int soundID = tmpMap.get(obj.getProperties().get("footstep_sound", String.class));
+
+            //calculate end tile
+            int endX = (int) (x2 / tileWidth);
+            int endY = (int) (y2 / tileHeight);
+
+            for (int x = startX; x < endX; x++) {
+                for (int y = startY; y < endY; y++) {
+                    this.footsteps[x][y] = soundID;
+                }
+            }
+        }
     }
 
     @Override
