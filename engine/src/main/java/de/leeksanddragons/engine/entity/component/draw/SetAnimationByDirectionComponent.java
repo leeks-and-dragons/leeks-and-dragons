@@ -66,8 +66,10 @@ public class SetAnimationByDirectionComponent extends BaseComponent implements I
         //set last direction
         this.lastDirection = direction;
 
-        //set animation
-        atlasAnimationComponent.setCurrentAnimationName(animationName);
+        if (atlasAnimationComponent.isLoaded()) {
+            //set animation
+            atlasAnimationComponent.setCurrentAnimationName(animationName);
+        }
     }
 
     @Override

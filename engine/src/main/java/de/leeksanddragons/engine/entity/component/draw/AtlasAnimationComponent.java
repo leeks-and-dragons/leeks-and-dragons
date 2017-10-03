@@ -190,6 +190,10 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
      * @param animationName current animation name
     */
     public void setCurrentAnimationName(String animationName) {
+        if (!isLoaded) {
+            throw new IllegalStateException("texture atlas isnt loaded yet, check isLoaded() before set animation name.");
+        }
+
         // check if animation name was changed
         if (this.animationName.equals(animationName)) {
             return;
