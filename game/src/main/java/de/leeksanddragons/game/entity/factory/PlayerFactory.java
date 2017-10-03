@@ -13,6 +13,8 @@ import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
 import de.leeksanddragons.engine.entity.component.draw.SetAnimationByDirectionComponent;
 import de.leeksanddragons.engine.entity.component.input.SetMousePositionComponent;
 import de.leeksanddragons.engine.entity.component.sound.FollowSoundPanoramaComponent;
+import de.leeksanddragons.engine.entity.component.sound.FootstepSoundComponent;
+import de.leeksanddragons.engine.map.IRegion;
 import de.leeksanddragons.game.entity.component.InputMoveComponent;
 
 /**
@@ -20,7 +22,7 @@ import de.leeksanddragons.game.entity.component.InputMoveComponent;
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (EntityManager ecs, ICharacter character, float x, float y) {
+    public static Entity createPlayer (EntityManager ecs, ICharacter character, IRegion region, float x, float y) {
         //create new entity
         Entity player = new Entity(ecs);
 
@@ -44,6 +46,9 @@ public class PlayerFactory {
 
         //add component to set animation dependend by move direction
         player.addComponent(new SetAnimationByDirectionComponent(), SetAnimationByDirectionComponent.class);
+
+        //add component to play footstep sounds
+        player.addComponent(new FootstepSoundComponent(region), FootstepSoundComponent.class);
 
         //add component to convert input --> movement
         player.addComponent(new InputMoveComponent(), InputMoveComponent.class);

@@ -132,7 +132,7 @@ public class DevRoomScreen extends BaseScreen implements ResizeListener {
             this.ecs = new ECS(game);
 
             //create new player entity
-            this.player = PlayerFactory.createPlayer(this.ecs, this.playerCharacter, 100, 100);
+            this.player = PlayerFactory.createPlayer(this.ecs, this.playerCharacter, this.region, 100, 100);
             this.ecs.addEntity("player", this.player);
 
             //get position component of player to get map soundtrack

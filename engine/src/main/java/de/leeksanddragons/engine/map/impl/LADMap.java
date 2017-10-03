@@ -348,16 +348,24 @@ public class LADMap implements IMap {
         int y = (int) relY / this.tileHeight;
 
         //check, if cell is in bounds
-        if (x < 0 || x > this.getWidth()) {
-            Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+        if (x < 0 || x >= this.footsteps.length) {
+            if (x >= this.footsteps.length) {
+                x = this.footsteps.length - 1;
+            }
 
-            return 0;
+            //Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+
+            //return 0;
         }
 
-        if (y < 0 || y > this.getHeight()) {
-            Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+        if (y < 0 || y >= this.footsteps[0].length) {
+            if (y > this.footsteps[x].length) {
+                y = this.footsteps[x].length - 1;
+            }
 
-            return 0;
+            //Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
+
+            //return 0;
         }
 
         //get footstep number of cell
