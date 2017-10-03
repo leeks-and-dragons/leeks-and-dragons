@@ -605,6 +605,9 @@ public abstract class BaseGame extends ApplicationAdapter implements IGame {
             }
         }
 
+        //shutdowwn exector service
+        this.executorService.shutdown();
+
         this.destroyGame();
     }
 
