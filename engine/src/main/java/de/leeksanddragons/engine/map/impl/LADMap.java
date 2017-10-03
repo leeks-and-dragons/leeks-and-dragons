@@ -175,6 +175,16 @@ public class LADMap implements IMap {
             this.musicPath = "";
         }
 
+        this.loadFootsteps();
+
+        //TODO: find object layers for sound and so on
+
+        //TODO: add code here
+
+        this.loading_state = LOADING_STATE.LOADING_FINISHED;
+    }
+
+    protected void loadFootsteps () {
         //iterate through all map layers
         for (MapLayer layer : map.getLayers()) {
             //iterate through all layer objects
@@ -201,16 +211,10 @@ public class LADMap implements IMap {
             }
         }
 
-        //TODO: find object layers for sound and so on
-
-        //TODO: add code here
-
         //load footsteps
         for (String path : this.requiredFootstepSounds) {
             this.game.getAssetManager().load(path, Sound.class);
         }
-
-        this.loading_state = LOADING_STATE.LOADING_FINISHED;
     }
 
     @Override
