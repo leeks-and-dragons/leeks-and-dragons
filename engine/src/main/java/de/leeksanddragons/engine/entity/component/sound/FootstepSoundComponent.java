@@ -54,7 +54,8 @@ public class FootstepSoundComponent extends BaseComponent implements IUpdateComp
     public void update(IScreenGame game, GameTime time) {
         //we dont need to play footstep sounds, if player isnt moving
         if (!moveComponent.isMoving()) {
-            this.elapsed = 0;
+            //first step should be played
+            this.elapsed = timeBetweenSounds;
 
             return;
         }
@@ -80,7 +81,7 @@ public class FootstepSoundComponent extends BaseComponent implements IUpdateComp
             float volume = RandomUtils.randomFloat(0.8f, 1f) * game.getSoundManager().getSoundVolume();
 
             //calculate random pitch
-            float pitch = RandomUtils.randomFloat(0.8f, 1.1f);
+            float pitch = RandomUtils.randomFloat(0.6f, 1.2f);
 
             //play sound
             long soundID = sound.play(volume, pitch, 0);
