@@ -1,5 +1,6 @@
 package de.leeksanddragons.engine.map;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -79,9 +80,24 @@ public interface IMap {
     public String getGlobalMusicPath ();
 
     /**
-    * get footstep sound
+    * get footstep sound path by player position
+     *
+     * @param playerX x position of player
+     * @param playerY y position of player
+     *
+     * @return path to footstep sound
     */
-    public String getFootstepSound (float playerX, float playerY);
+    public String getFootstepSoundPath (float playerX, float playerY);
+
+    /**
+    * get footstep sound by player position
+     *
+     * @param playerX x position of player
+     * @param playerY y position of player
+     *
+     * @return instance of sound or null, if tile doesnt have an footstep sound effect
+    */
+    public Sound getFootstepSound (float playerX, float playerY);
 
     /**
      * update map
