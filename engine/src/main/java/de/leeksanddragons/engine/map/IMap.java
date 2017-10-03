@@ -79,6 +79,11 @@ public interface IMap {
     public String getGlobalMusicPath ();
 
     /**
+    * get footstep sound
+    */
+    public String getFootstepSound (float playerX, float playerY);
+
+    /**
      * update map
      */
     public void update (IScreenGame game, GameTime time);

@@ -1,10 +1,14 @@
 package de.leeksanddragons.engine.map.impl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
@@ -14,6 +18,9 @@ import de.leeksanddragons.engine.map.IMap;
 import de.leeksanddragons.engine.renderer.map.impl.LADMapRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 18.09.2017.
@@ -65,6 +72,9 @@ public class LADMap implements IMap {
     //map specific music information (global)
     protected String musicPath = "";
     protected boolean hasMusic = false;
+
+    //footstep sonds
+    protected List<String> requiredFootstepSounds = new ArrayList<>();
 
     /**
     * default constructor
@@ -165,9 +175,40 @@ public class LADMap implements IMap {
             this.musicPath = "";
         }
 
+        //iterate through all map layers
+        for (MapLayer layer : map.getLayers()) {
+            //iterate through all layer objects
+            for (MapObject obj : layer.getObjects()) {
+                //check, if object has attribute "footstep_sound"
+                if (obj.getProperties().containsKey("footstep_sound")) {
+                    String footstepPath = obj.getProperties().get("footstep_sound", String.class);
+
+                    //check, if path is null or empty
+                    if (footstepPath == null || footstepPath.isEmpty()) {
+                        Gdx.app.error("LADMap", "map '" + this.tmxPath + "' contains a footstep layer with wrong footstep definition: " + layer.getName());
+
+                        continue;
+                    }
+
+                    //check, if footstep path is already in list
+                    if (!this.requiredFootstepSounds.contains(footstepPath)) {
+                        Gdx.app.debug("LADMap", "new footstep sound path found: " + footstepPath);
+
+                        //add sound to list, so it will be loaded
+                        this.requiredFootstepSounds.add(footstepPath);
+                    }
+                }
+            }
+        }
+
         //TODO: find object layers for sound and so on
 
         //TODO: add code here
+
+        //load footsteps
+        for (String path : this.requiredFootstepSounds) {
+            this.game.getAssetManager().load(path, Sound.class);
+        }
 
         this.loading_state = LOADING_STATE.LOADING_FINISHED;
     }
@@ -195,6 +236,11 @@ public class LADMap implements IMap {
     @Override
     public String getGlobalMusicPath() {
         return this.musicPath;
+    }
+
+    @Override
+    public String getFootstepSound(float playerX, float playerY) {
+        return null;
     }
 
     @Override
@@ -275,6 +321,11 @@ public class LADMap implements IMap {
             this.ladMapRenderer.dispose();
 
             this.ladMapRenderer = null;
+        }
+
+        //unload footstep sounds
+        for (String path : this.requiredFootstepSounds) {
+            this.game.getAssetManager().unload(path);
         }
     }
 

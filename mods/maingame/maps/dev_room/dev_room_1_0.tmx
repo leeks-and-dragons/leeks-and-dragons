@@ -19,12 +19,12 @@
  <objectgroup name="footsteps">
   <object id="1" x="397" y="224" width="202" height="738">
    <properties>
-    <property name="footstep_sound" value="mods/maingame/sound/footsteps/snow/Walking_on_Snow.ogg"/>
+    <property name="footstep_sound" value="mods/maingame/sounds/footsteps/snow/Walking_on_Snow.ogg"/>
    </properties>
   </object>
   <object id="3" x="591" y="478" width="275" height="481">
    <properties>
-    <property name="footstep_sound" value="mods/maingame/sound/footsteps/snow/Walking_on_Snow.ogg"/>
+    <property name="footstep_sound" value="mods/maingame/sounds/footsteps/snow/Walking_on_Snow.ogg"/>
    </properties>
   </object>
  </objectgroup>
