@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="20">
  <properties>
   <property name="music_path" value="mods/maingame/music/rpg_village_exploration/RPG_Village_Exploration_Music.mp3"/>
  </properties>
@@ -23,5 +23,14 @@
   <properties>
    <property name="music_path" value="mods/maingame/music/"/>
   </properties>
+ </objectgroup>
+ <objectgroup name="collisions">
+  <object id="4" x="-96" y="656" width="385" height="298"/>
+  <object id="5" x="-90" y="567" width="324" height="135"/>
+  <object id="11" x="5" y="3" width="127" height="683"/>
+  <object id="15" x="108" y="-5" width="157" height="211"/>
+  <object id="16" x="130" y="207" width="42" height="57"/>
+  <object id="18" x="237" y="-4" width="62" height="54"/>
+  <object id="19" x="112" y="510" width="75" height="56"/>
  </objectgroup>
 </map>

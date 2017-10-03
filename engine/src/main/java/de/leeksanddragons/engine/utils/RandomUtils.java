@@ -31,4 +31,16 @@ public class RandomUtils {
         return getRandomNumber(1, x) == 1;
     }
 
+    /**
+    * generate a random float number
+     *
+     * @param min min range
+     * @param max max range
+     *
+     * @return random float number
+    */
+    public static float randomFloat (float min, float max) {
+        return ((float) Math.random() * (max - min)) + min;
+    }
+
 }
