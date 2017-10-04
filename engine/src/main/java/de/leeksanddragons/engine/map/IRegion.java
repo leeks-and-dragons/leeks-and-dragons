@@ -121,6 +121,7 @@ public interface IRegion {
      *
      * @return instance of current map
     */
+    @Deprecated
     public IMap getCurrentMap (CameraHelper camera);
 
     /**

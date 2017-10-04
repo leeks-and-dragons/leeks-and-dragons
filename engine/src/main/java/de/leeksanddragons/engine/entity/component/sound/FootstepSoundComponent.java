@@ -74,7 +74,7 @@ public class FootstepSoundComponent extends BaseComponent implements IUpdateComp
         float middleY = positionComponent.getMiddleY();
 
         //get sound
-        Sound sound = this.region.getCurrentMap(game.getCameraManager().getMainCamera()).getFootstepSound(middleX, middleY);
+        Sound sound = this.region.getMapByPosition(positionComponent.getMiddleX(), positionComponent.getMiddleY()).getFootstepSound(middleX, middleY);
 
         if (sound != null) {
             //calculate random volume

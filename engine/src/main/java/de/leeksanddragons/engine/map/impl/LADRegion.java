@@ -253,6 +253,7 @@ public class LADRegion extends BaseRegion {
     }
 
     @Override
+    @Deprecated
     public IMap getCurrentMap(CameraHelper camera) {
         //get mittle coordinates of camera
         float middleX = camera.getX() + (camera.getViewportWidth() / 2) - this.offsetX;

@@ -377,9 +377,9 @@ public class LADMap implements IMap {
         if (x < 0 || x >= this.footsteps.length) {
             if (x >= this.footsteps.length) {
                 x = this.footsteps.length - 1;
+            } else {
+                Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
             }
-
-            //Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
 
             //return 0;
         }
@@ -387,9 +387,9 @@ public class LADMap implements IMap {
         if (y < 0 || y >= this.footsteps[0].length) {
             if (y > this.footsteps[x].length) {
                 y = this.footsteps[x].length - 1;
+            } else {
+                Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
             }
-
-            //Gdx.app.error("LADMap", "getFootstepSound: cell (" + x + ", " + y + ") isnt in bounds.");
 
             //return 0;
         }
