@@ -1,6 +1,7 @@
 package de.leeksanddragons.engine.listener;
 
 import com.badlogic.gdx.math.Vector2;
+import de.leeksanddragons.engine.entity.component.PositionComponent;
 
 /**
  * Created by Justin on 04.10.2017.
@@ -16,6 +17,6 @@ public interface BeforeMoveListener {
      *
      * @return new position of entity
     */
-    public Vector2 beforeMove (Vector2 oldPosition, Vector2 newPosition);
+    public Vector2 beforeMove (Vector2 oldPosition, Vector2 newPosition, PositionComponent positionComponent);
 
 }

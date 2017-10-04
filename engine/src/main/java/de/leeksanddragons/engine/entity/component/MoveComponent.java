@@ -8,6 +8,8 @@ import de.leeksanddragons.engine.entity.IUpdateComponent;
 import de.leeksanddragons.engine.entity.annotation.InjectComponent;
 import de.leeksanddragons.engine.entity.impl.BaseComponent;
 import de.leeksanddragons.engine.entity.priority.ECSUpdatePriority;
+import de.leeksanddragons.engine.listener.AfterMoveListener;
+import de.leeksanddragons.engine.listener.BeforeMoveListener;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 
@@ -33,6 +35,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     //temporary vector for calculations
     protected Vector2 tmpVector = new Vector2();
+    protected Vector2 tmpOldPosVector = new Vector2();
+    protected Vector2 tmpNewPosVector = new Vector2();
 
     //pixels per unit
     protected float PIXELS_PER_UNIT = 512;//256;
@@ -45,6 +49,10 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected float maxX = Float.MAX_VALUE;
     protected float minY = -Float.MAX_VALUE;
     protected float maxY = Float.MAX_VALUE;
+
+    //list with all move listener hooks, for example for collision system
+    protected List<BeforeMoveListener> beforeMoveListeners = new ArrayList<>();
+    protected List<AfterMoveListener> afterMoveListeners = new ArrayList<>();
 
     /**
     * default constructor
@@ -93,8 +101,25 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         //normalize and scale move vector
         tmpVector.scl(this.getSpeedInPixels() * dt * 100f);
 
+        //set old position to temporary vectors
+        this.tmpOldPosVector.set(positionComponent.getX(), positionComponent.getY());
+        this.tmpNewPosVector.set(positionComponent.getX() + tmpVector.x, positionComponent.getY() + tmpVector.y);
+
+        //call listeners
+        this.beforeMoveListeners.forEach((BeforeMoveListener listener) -> {
+            this.tmpNewPosVector = listener.beforeMove(this.tmpOldPosVector, this.tmpNewPosVector, this.positionComponent);
+        });
+
         //move entity
         positionComponent.move(tmpVector.x, tmpVector.y);
+
+        //set new position to temporary vector
+        this.tmpNewPosVector.set(positionComponent.getX(), positionComponent.getY());
+
+        //call listeners
+        this.afterMoveListeners.forEach((AfterMoveListener listener) -> {
+            listener.afterMove(this.tmpOldPosVector, this.tmpNewPosVector, this.positionComponent);
+        });
 
         //check, if player is in bounds, if not, correct position
         if (positionComponent.getX() < this.minX) {
