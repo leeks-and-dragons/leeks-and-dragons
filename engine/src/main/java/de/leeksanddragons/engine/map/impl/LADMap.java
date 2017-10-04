@@ -2,6 +2,7 @@ package de.leeksanddragons.engine.map.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import de.leeksanddragons.engine.camera.CameraHelper;
+import de.leeksanddragons.engine.collision.MapCollision;
+import de.leeksanddragons.engine.collision.tiled.TiledMapCollision;
 import de.leeksanddragons.engine.map.IMap;
 import de.leeksanddragons.engine.renderer.map.impl.LADMapRenderer;
 import de.leeksanddragons.engine.screen.IScreenGame;
@@ -85,6 +88,12 @@ public class LADMap implements IMap {
     protected int[][] footsteps = null;
     protected String[] footstepSoundPaths = null;
     protected Sound[] footstepSounds = null;
+
+    //flag, if collision overlay should be drawn
+    protected boolean drawCollisionOverlay = true;
+
+    //map collision
+    protected TiledMapCollision mapCollision = null;
 
     /**
     * default constructor
@@ -189,7 +198,8 @@ public class LADMap implements IMap {
 
         //TODO: find object layers for sound and so on
 
-        //TODO: add code here
+        //create & load map collisions
+        this.loadMapCollisions();
 
         this.loading_state = LOADING_STATE.LOADING_FINISHED;
     }
@@ -264,10 +274,6 @@ public class LADMap implements IMap {
 
             //fill array
             for (MapObject obj : mapObjects) {
-            /*obj.getProperties().getKeys().forEachRemaining((String key) -> {
-                System.out.println("object property: " + key);
-            });*/
-
                 //calculate start tile
                 int startX = (int) (obj.getProperties().get("x", Float.class) / tileWidth);
                 int startY = (int) (obj.getProperties().get("y", Float.class) / tileHeight);
@@ -302,6 +308,26 @@ public class LADMap implements IMap {
             }
 
             Gdx.app.debug("LADMap", "footstep sound definitions loaded successfully.");
+        });
+    }
+
+    protected void loadMapCollisions () {
+        Gdx.app.debug("LADMap", "try to load map collisions.");
+
+        //create new map collisions
+        this.mapCollision = new TiledMapCollision(this.x, this.y);
+
+        //load in another thread
+        this.game.getExecutorService().submit(() -> {
+            Gdx.app.debug("LADMap", "start loading map collisions in executor service.");
+
+            synchronized (this.map) {
+                try {
+                    this.mapCollision.load(this.map);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -417,6 +443,16 @@ public class LADMap implements IMap {
     }
 
     @Override
+    public MapCollision getMapCollisions() {
+        return this.mapCollision;
+    }
+
+    @Override
+    public void setDrawCollisionOverlay(boolean drawCollisionOverlay) {
+        this.drawCollisionOverlay = drawCollisionOverlay;
+    }
+
+    @Override
     public void update(IScreenGame game, GameTime time) {
         //check, if map is in loading process
         if (isLoading()) {
@@ -474,6 +510,13 @@ public class LADMap implements IMap {
             this.ladMapRenderer.draw(game, time, batch);
         } else {
             throw new UnsupportedOperationException("other renderer methods arent supported yet.");
+        }
+
+        //draw collision overlay, if enabled
+        if (this.drawCollisionOverlay) {
+            if (this.mapCollision.isLoaded()) {
+                this.mapCollision.drawDebugOverlay(batch, Color.GREEN, Color.RED);
+            }
         }
     }
 

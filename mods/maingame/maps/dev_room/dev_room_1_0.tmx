@@ -58,4 +58,5 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup name="collision"/>
 </map>

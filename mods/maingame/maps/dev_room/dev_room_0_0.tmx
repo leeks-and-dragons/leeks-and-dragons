@@ -24,8 +24,8 @@
    <property name="music_path" value="mods/maingame/music/"/>
   </properties>
  </objectgroup>
- <objectgroup name="collisions" visible="0">
-  <object id="4" x="-96" y="656" width="385" height="298"/>
+ <objectgroup name="collisions">
+  <object id="4" x="8" y="669" width="280" height="278"/>
   <object id="5" x="-90" y="567" width="324" height="135"/>
   <object id="11" x="5" y="3" width="127" height="683"/>
   <object id="15" x="108" y="-5" width="157" height="211"/>
@@ -33,7 +33,7 @@
   <object id="18" x="237" y="-4" width="62" height="54"/>
   <object id="19" x="112" y="510" width="75" height="56"/>
  </objectgroup>
- <objectgroup name="footsteps">
+ <objectgroup name="footsteps" visible="0">
   <object id="23" x="460.5" y="77" width="31" height="825">
    <properties>
     <property name="footstep_sound" value="mods/maingame/sounds/footsteps/grass/grass.ogg"/>

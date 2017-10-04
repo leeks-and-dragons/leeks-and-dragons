@@ -3,6 +3,7 @@ package de.leeksanddragons.engine.map;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import de.leeksanddragons.engine.collision.MapCollision;
 import de.leeksanddragons.engine.screen.IScreenGame;
 import de.leeksanddragons.engine.utils.GameTime;
 import javafx.scene.shape.Rectangle;
@@ -28,8 +29,18 @@ public interface IMap {
      */
     public float getY ();
 
+    /**
+    * get width of map in pixels
+     *
+     * @return width of map in pixels
+    */
     public float getWidth ();
 
+    /**
+    * get height of map in pixels
+     *
+     * @return height of map in pixels
+    */
     public float getHeight ();
 
     /**
@@ -98,6 +109,20 @@ public interface IMap {
      * @return instance of sound or null, if tile doesnt have an footstep sound effect
     */
     public Sound getFootstepSound (float playerX, float playerY);
+
+    /**
+    * get instance of map collision
+     *
+     * @return instance of map collision
+    */
+    public MapCollision getMapCollisions ();
+
+    /**
+    * set flag, if collision debug overlay should be drawn
+     *
+     * @param drawCollisionOverlay flag, if collision overlay should be drawn
+    */
+    public void setDrawCollisionOverlay (boolean drawCollisionOverlay);
 
     /**
      * update map
