@@ -171,11 +171,11 @@ public class TiledMapCollision implements MapCollision {
     public boolean canPass(float xPos, float yPos) {
         //check, if coordinates belongs to this map
         if (xPos < this.mapX || xPos > this.mapX + this.getMapWidth()) {
-            throw new IllegalArgumentException("x position is wrong, this coordinates doesnt belongs to this map.");
+            throw new IllegalArgumentException("x position is wrong, this coordinates doesnt belongs to this map, X: " + xPos + ", mapX: " + this.mapX + ", mapX2: " + (this.mapX + this.getMapWidth()));
         }
 
         if (yPos < this.mapY || yPos > this.mapY + this.getMapHeight()) {
-            throw new IllegalArgumentException("y position is wrong, this coordinates doesnt belongs to this map.");
+            throw new IllegalArgumentException("y position is wrong, this coordinates doesnt belongs to this map, Y: " + yPos + ", mapY: " + this.mapY + ", mapY2: " + (this.mapY + this.getMapHeight()));
         }
 
         //calculate relative position

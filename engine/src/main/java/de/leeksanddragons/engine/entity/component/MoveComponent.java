@@ -111,7 +111,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         });
 
         //move entity
-        positionComponent.move(tmpVector.x, tmpVector.y);
+        //positionComponent.move(tmpVector.x, tmpVector.y);
+        positionComponent.setPosition(this.tmpNewPosVector.x, this.tmpNewPosVector.y);
 
         //set new position to temporary vector
         this.tmpNewPosVector.set(positionComponent.getX(), positionComponent.getY());

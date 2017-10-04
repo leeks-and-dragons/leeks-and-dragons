@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="34">
  <properties>
   <property name="music_path" value="mods/maingame/music/rpg_village_exploration/RPG_Village_Exploration_Music.mp3"/>
  </properties>
@@ -32,8 +32,10 @@
   <object id="16" x="130" y="207" width="42" height="57"/>
   <object id="18" x="237" y="-4" width="62" height="54"/>
   <object id="19" x="112" y="510" width="75" height="56"/>
+  <object id="32" x="838" y="840" width="86" height="74"/>
+  <object id="33" x="844" y="45" width="79" height="71"/>
  </objectgroup>
- <objectgroup name="footsteps" visible="0">
+ <objectgroup name="footsteps">
   <object id="23" x="460.5" y="77" width="31" height="825">
    <properties>
     <property name="footstep_sound" value="mods/maingame/sounds/footsteps/grass/grass.ogg"/>
