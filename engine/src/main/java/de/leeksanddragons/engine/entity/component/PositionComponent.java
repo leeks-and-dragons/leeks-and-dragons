@@ -1,8 +1,10 @@
 package de.leeksanddragons.engine.entity.component;
 
+import com.badlogic.gdx.math.Rectangle;
 import de.leeksanddragons.engine.entity.Entity;
 import de.leeksanddragons.engine.entity.annotation.ThreadSafeComponent;
 import de.leeksanddragons.engine.entity.impl.BaseComponent;
+import de.leeksanddragons.engine.entity.listener.DimensionChangedListener;
 import de.leeksanddragons.engine.entity.listener.PositionChangedListener;
 import de.leeksanddragons.engine.exception.InvalidJSONException;
 import de.leeksanddragons.engine.exception.ReadOnlyException;
@@ -26,12 +28,15 @@ import java.util.concurrent.locks.ReentrantLock;
 @ThreadSafeComponent
 public class PositionComponent extends BaseComponent implements JSONSerializable, JSONLoadable, Cloneable {
 
+    //position of entity
     protected volatile float x = 0;
     protected volatile float y = 0;
 
+    //width and height of entity
     protected volatile float width = 0;
     protected volatile float height = 0;
 
+    //scale of entity
     protected volatile float scale = 1;
 
     // list with listeners
@@ -42,6 +47,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     protected static final String COMPONENT_NAME = "PositionComponent";
 
     protected AtomicBoolean readOnly = new AtomicBoolean(false);
+
+    //listeners if entity size was changed
+    protected List<DimensionChangedListener> dimensionChangedListeners = new ArrayList<>();
+
+    //bounding box
 
     // protected Vector3 min = new Vector3(0, 0, 0);
     // protected Vector3 max = new Vector3(0, 0, 0);
@@ -154,7 +164,9 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         float oldWidth = this.width;
         this.width = width;
 
-        this.notifyDimensionChangedListener(oldWidth, this.height, this.width, this.height);
+        if (oldWidth != this.width) {
+            this.notifyDimensionChangedListener(oldWidth, this.height, this.width, this.height);
+        }
     }
 
     public float getHeight() {
@@ -165,13 +177,15 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         float oldHeight = this.height;
         this.height = heigth;
 
-        this.notifyDimensionChangedListener(this.width, oldHeight, this.width, this.height);
+        if (oldHeight != this.height) {
+            this.notifyDimensionChangedListener(this.width, oldHeight, this.width, this.height);
+        }
     }
 
     public void setDimension(float width, float height) {
         // save old values
-        float oldWidth = width;
-        float oldHeight = height;
+        float oldWidth = this.width;
+        float oldHeight = this.height;
 
         this.width = width;
         this.height = height;
@@ -218,7 +232,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         // update bounding box
         this.updateBoundingBox();
 
-        // TODO: call listeners
+        //call listeners
+        for (DimensionChangedListener listener : this.dimensionChangedListeners) {
+            listener.onDimensionChanged(oldWidth, oldHeight, newWidth, newHeight);
+        }
     }
 
     public void addPositionChangedListener(PositionChangedListener listener) {
@@ -282,9 +299,13 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         // this.boundingBox.set(this.min, this.max);
     }
 
-    /*
-     * public BoundingBox getBoundingBox () { return this.boundingBox; }
-     */
+    public void addDimensionChangedListener (DimensionChangedListener listener) {
+        this.dimensionChangedListeners.add(listener);
+    }
+
+    public void removeDimensionChangedListener (DimensionChangedListener listener) {
+        this.dimensionChangedListeners.remove(listener);
+    }
 
     @Override
     public void loadFromJSON(JSONObject json) {

@@ -8,6 +8,8 @@ import de.leeksanddragons.engine.entity.EntityManager;
 import de.leeksanddragons.engine.entity.component.MoveComponent;
 import de.leeksanddragons.engine.entity.component.camera.FollowCameraComponent;
 import de.leeksanddragons.engine.entity.component.PositionComponent;
+import de.leeksanddragons.engine.entity.component.collision.MapCollisionComponent;
+import de.leeksanddragons.engine.entity.component.collision.MoveBoundingBoxComponent;
 import de.leeksanddragons.engine.entity.component.draw.AtlasAnimationComponent;
 import de.leeksanddragons.engine.entity.component.draw.DrawComponent;
 import de.leeksanddragons.engine.entity.component.draw.SetAnimationByDirectionComponent;
@@ -46,6 +48,12 @@ public class PlayerFactory {
 
         //add component to set animation dependend by move direction
         player.addComponent(new SetAnimationByDirectionComponent(), SetAnimationByDirectionComponent.class);
+
+        //add component for bounding box
+        player.addComponent(new MoveBoundingBoxComponent(), MoveBoundingBoxComponent.class);
+
+        //add component for map collisions
+        player.addComponent(new MapCollisionComponent(region), MapCollisionComponent.class);
 
         //add component to play footstep sounds
         player.addComponent(new FootstepSoundComponent(region), FootstepSoundComponent.class);
