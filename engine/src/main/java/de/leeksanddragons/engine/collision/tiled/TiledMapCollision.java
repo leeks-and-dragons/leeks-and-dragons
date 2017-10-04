@@ -72,11 +72,11 @@ public class TiledMapCollision implements MapCollision {
 
         //iterate through all layers
         for (MapLayer layer : map.getLayers()) {
-            Gdx.app.debug("TiledMapCollision", "check layer '" + layer.getName() + "' for map collisions.");
+            //Gdx.app.debug("TiledMapCollision", "check layer '" + layer.getName() + "' for map collisions.");
 
             //check, if it is an collision layer
             if (layer.getName().contains("collision")) {
-                Gdx.app.debug("TiledMapCollision", "collision layer found: " + layer.getName());
+                //Gdx.app.debug("TiledMapCollision", "collision layer found: " + layer.getName());
 
                 //iterate through objects
                 for (MapObject obj : layer.getObjects()) {
@@ -124,7 +124,7 @@ public class TiledMapCollision implements MapCollision {
                         endY = this.canPassTiles[0].length - 1;
                     }
 
-                    System.out.println("collision object found, X: " + startX + ", Y: " + startY + ", endX: " + endX + ", endY: " + endY);
+                    //System.out.println("collision object found, X: " + startX + ", Y: " + startY + ", endX: " + endX + ", endY: " + endY);
 
                     //set boolean for every tile
                     for (int i = startX; i < endX; i++) {

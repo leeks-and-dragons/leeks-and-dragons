@@ -53,6 +53,16 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
 
     @Override
     public Vector2 beforeMove(Vector2 oldPosition, Vector2 newPosition, PositionComponent positionComponent) {
+        //calculate speed of entity
+        float deltaX = newPosition.x - oldPosition.x;
+        float deltaY = newPosition.y - oldPosition.y;
+
+        if (deltaX < 0) {
+            //TODO: check left top and left bottom corner
+        } else if (deltaX > 0) {
+            //TODO: check right top and right bottom corner
+        }
+
         return newPosition;
     }
 
