@@ -252,6 +252,22 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         this.boostList.remove(boost);
     }
 
+    public void addBeforeMoveListener (BeforeMoveListener listener) {
+        this.beforeMoveListeners.add(listener);
+    }
+
+    public void removeBeforeMoveListener (BeforeMoveListener listener) {
+        this.beforeMoveListeners.remove(listener);
+    }
+
+    public void addAfterMoveListener (AfterMoveListener listener) {
+        this.afterMoveListeners.add(listener);
+    }
+
+    public void removeAfterMoveListener (AfterMoveListener listener) {
+        this.afterMoveListeners.remove(listener);
+    }
+
     @Override
     public ECSUpdatePriority getUpdateOrder() {
         return ECSUpdatePriority.NORMAL;
