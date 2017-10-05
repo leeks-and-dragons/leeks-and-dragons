@@ -109,9 +109,40 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
 
         //check x axis
         if (deltaX < 0) {
-            for (float x = newPosition.x; x < positionComponent.getX(); x = x + 32) {
+            //initalize variables
+            /*float x = newPosition.x;
+            float width = moveBoundingBoxComponent.getWidth();
+
+            while (x <= positionComponent.getX()) {
                 //check, if all vertical tiles doesnt collides
                 for (int y = 0; y < heightInTiles + 1; y++) {
+                    //check tile
+                    if (!canPass(x, positionComponent.getY() + (y * this.tileHeight))) {
+                        if (-(newPosition.x - positionComponent.getX()) < this.tileWidth) {
+                            newPosition.x -= (newPosition.x - positionComponent.getX()) % this.tileWidth;
+                        } else {
+                            newPosition.x += this.tileWidth;
+                        }
+
+                        break;
+                    }
+                }
+
+                //increment x
+                if (width > tileWidth) {
+                    x += tileWidth;
+                    width -= tileWidth;
+                } else {
+                    x += width % tileWidth;
+                    width = 0;
+                }
+
+                System.out.println("width: " + width + ", X: " + x + ", posX: " + positionComponent.getX());
+            }*/
+
+            for (float x = newPosition.x; x < positionComponent.getX(); x = x + 32) {
+                //check, if all vertical tiles doesnt collides
+                for (int y = 0; y < heightInTiles; y++) {
                     //check tile
                     if (!canPass(x, positionComponent.getY() + (y * this.tileHeight))) {
                         if (-(newPosition.x - positionComponent.getX()) < this.tileWidth) {
@@ -127,7 +158,7 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
         } else if (deltaX > 0) {
             for (float x = newPosition.x; x > positionComponent.getX(); x = x - this.tileWidth) {
                 //check, if all vertical tiles doesnt collides
-                for (int y = 0; y < heightInTiles + 1; y++) {
+                for (int y = 0; y < heightInTiles; y++) {
                     //check tile
                     if (!canPass(x + moveBoundingBoxComponent.getWidth(), positionComponent.getY() + (y * this.tileHeight))) {
                         if (newPosition.x - positionComponent.getX() < this.tileWidth) {
