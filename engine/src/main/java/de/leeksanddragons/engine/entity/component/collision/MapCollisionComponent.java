@@ -74,10 +74,15 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
             widthInTiles++;
         }
 
+        //increment, because every entity has 2 edges
+        widthInTiles++;
+
         //correct height, every started tile is counted
         if (moveBoundingBoxComponent.getHeight() % this.tileHeight != 0) {
             heightInTiles++;
-        }
+        }/* else {
+            heightInTiles++;
+        }*/
 
         /*float maxSpeedX = deltaX;
         float maxSpeedY = deltaY;
@@ -137,6 +142,9 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
             }
         }
 
+        //increment, because every entity has 2 edges
+        heightInTiles++;
+
         //check y axis
         if (deltaY < 0) {
             for (float y = newPosition.y; y < positionComponent.getY(); y = y + this.tileHeight) {
@@ -144,8 +152,6 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
                 for (int x = 0; x < widthInTiles; x++) {
                     //check tile
                     if (!canPass(positionComponent.getX() + (x * this.tileWidth), y)) {
-                        System.out.println("cannot pass.");
-
                         if (-(newPosition.y - positionComponent.getY()) < this.tileHeight) {
                             newPosition.y -= (newPosition.y - positionComponent.getY()) % this.tileHeight;
                         } else {
@@ -163,12 +169,9 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
                     //check tile
                     if (!canPass(positionComponent.getX() + (x * this.tileWidth), y + moveBoundingBoxComponent.getHeight())) {
                         if (newPosition.y - positionComponent.getY() < this.tileHeight) {
-                            float k = (newPosition.y - positionComponent.getY()) % moveBoundingBoxComponent.getHeight();
-                            System.out.println("newY: " + newPosition.y + ", posY: " + positionComponent.getY() + ", delta: " + k);
-
                             newPosition.y -= (newPosition.y - positionComponent.getY()) % moveBoundingBoxComponent.getHeight();
                         } else {
-                            System.out.println("test");
+                            //System.out.println("test");
                             newPosition.y -= this.tileHeight;
                         }
 
