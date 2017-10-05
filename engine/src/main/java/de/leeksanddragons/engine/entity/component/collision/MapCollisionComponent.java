@@ -75,7 +75,7 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
         }
 
         //increment, because every entity has 2 edges
-        widthInTiles++;
+        //widthInTiles++;
 
         //correct height, every started tile is counted
         if (moveBoundingBoxComponent.getHeight() % this.tileHeight != 0) {
@@ -111,7 +111,7 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
         if (deltaX < 0) {
             for (float x = newPosition.x; x < positionComponent.getX(); x = x + 32) {
                 //check, if all vertical tiles doesnt collides
-                for (int y = 0; y < heightInTiles; y++) {
+                for (int y = 0; y < heightInTiles + 1; y++) {
                     //check tile
                     if (!canPass(x, positionComponent.getY() + (y * this.tileHeight))) {
                         if (-(newPosition.x - positionComponent.getX()) < this.tileWidth) {
@@ -127,7 +127,7 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
         } else if (deltaX > 0) {
             for (float x = newPosition.x; x > positionComponent.getX(); x = x - this.tileWidth) {
                 //check, if all vertical tiles doesnt collides
-                for (int y = 0; y < heightInTiles; y++) {
+                for (int y = 0; y < heightInTiles + 1; y++) {
                     //check tile
                     if (!canPass(x + moveBoundingBoxComponent.getWidth(), positionComponent.getY() + (y * this.tileHeight))) {
                         if (newPosition.x - positionComponent.getX() < this.tileWidth) {
@@ -147,9 +147,13 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
 
         //check y axis
         if (deltaY < 0) {
-            for (float y = newPosition.y; y < positionComponent.getY(); y = y + this.tileHeight) {
+            //initalize variables
+            float y = newPosition.y;
+            float height = moveBoundingBoxComponent.getHeight();
+
+            while (y <= positionComponent.getY()) {
                 //check, if all horizontal tiles doesnt collides
-                for (int x = 0; x < widthInTiles; x++) {
+                for (int x = 0; x < widthInTiles + 1; x++) {
                     //check tile
                     if (!canPass(positionComponent.getX() + (x * this.tileWidth), y)) {
                         if (-(newPosition.y - positionComponent.getY()) < this.tileHeight) {
@@ -161,11 +165,40 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
                         break;
                     }
                 }
+
+                //increment y
+                if (height > tileHeight) {
+                    y += tileHeight;
+                    height -= tileHeight;
+                } else {
+                    y += height % tileHeight;
+                    height = 0;
+                }
             }
+
+            /*for (float y = newPosition.y; y < positionComponent.getY(); y = y + this.tileHeight) {
+                //check, if all horizontal tiles doesnt collides
+                for (int x = 0; x < widthInTiles + 1; x++) {
+                    //check tile
+                    if (!canPass(positionComponent.getX() + (x * this.tileWidth), y)) {
+                        if (-(newPosition.y - positionComponent.getY()) < this.tileHeight) {
+                            newPosition.y -= (newPosition.y - positionComponent.getY()) % this.tileHeight;
+                        } else {
+                            newPosition.y += this.tileHeight;
+                        }
+
+                        break;
+                    }
+                }
+            }*/
         } else if (deltaY > 0) {
-            for (float y = newPosition.y; y > positionComponent.getY(); y = y - this.tileHeight) {
+            //initialize variables
+            float y = newPosition.y;
+            float height = moveBoundingBoxComponent.getHeight();
+
+            while (y >= positionComponent.getY()) {
                 //check, if all vertical tiles doesnt collides
-                for (int x = 0; x < widthInTiles; x++) {
+                for (int x = 0; x < widthInTiles + 1; x++) {
                     //check tile
                     if (!canPass(positionComponent.getX() + (x * this.tileWidth), y + moveBoundingBoxComponent.getHeight())) {
                         if (newPosition.y - positionComponent.getY() < this.tileHeight) {
@@ -178,7 +211,33 @@ public class MapCollisionComponent extends BaseComponent implements BeforeMoveLi
                         break;
                     }
                 }
+
+                //decrement y
+                if (height > tileHeight) {
+                    y -= tileHeight;
+                    height -= tileHeight;
+                } else {
+                    y -= height % tileHeight;
+                    height = 0;
+                }
             }
+
+            /*for (float y = newPosition.y; y > positionComponent.getY(); y = y - this.tileHeight) {
+                //check, if all vertical tiles doesnt collides
+                for (int x = 0; x < widthInTiles + 1; x++) {
+                    //check tile
+                    if (!canPass(positionComponent.getX() + (x * this.tileWidth), y + moveBoundingBoxComponent.getHeight())) {
+                        if (newPosition.y - positionComponent.getY() < this.tileHeight) {
+                            newPosition.y -= (newPosition.y - positionComponent.getY()) % moveBoundingBoxComponent.getHeight();
+                        } else {
+                            //System.out.println("test");
+                            newPosition.y -= this.tileHeight;
+                        }
+
+                        break;
+                    }
+                }
+            }*/
         }
 
         return newPosition;
