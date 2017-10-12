@@ -1,11 +1,6 @@
 package de.leeksanddragons.game.loading.tasks;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import de.leeksanddragons.engine.memory.AssetInfo;
 import de.leeksanddragons.engine.memory.GameAssetManager;
 import de.leeksanddragons.engine.memory.LoadingAssetParser;
