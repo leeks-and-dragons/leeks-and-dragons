@@ -46,6 +46,9 @@ public class LADMapRenderer implements IMapRenderer {
     //distance in pages which should be pre-loaded
     protected int preLoadPageDistance = 1;
 
+    //multiplier in which pages should be removed
+    protected int maxDistanceMultiplier = 1;
+
     protected List<String> excludedLayers = new ArrayList<>();
 
     protected IScreenGame game = null;
@@ -182,16 +185,50 @@ public class LADMapRenderer implements IMapRenderer {
         }
     }
 
+    private float calculateDistance(float x1, float x2, float y1, float y2) {
+
+        return (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
+
     @Override
     public void update(IScreenGame game, GameTime time) {
-        //TODO: remove old pages with distance > maxDistance and load near pages
-
         //get camera
         CameraHelper camera = game.getCameraManager().getMainCamera();
 
-        //calculate relative position in map
+        //relative left bottom corner
         float x2 = camera.getX() - this.mapX;
         float y2 = camera.getY() - this.mapY;
+
+        //relative right top corner
+        float cameraXWidth = camera.getX() + camera.getViewportWidth() - this.mapX;
+        float cameraYHeight = camera.getY() + camera.getViewportHeight() - this.mapY;
+
+        //midpoint
+        float xMid = (x2 + cameraXWidth) / 2;
+        float yMid = (y2 + cameraYHeight) / 2;
+
+        //iterate through all pages and remove old pages with distance > maxDistance
+        for (int x = 0; x < pages.length; x++) {
+            for (int y = 0; y < pages[0].length; y++) {
+                MapPage mapPage = pages[x][y];
+
+                //check, whether page exists
+                if (mapPage != null) {
+
+                    //distance between reference point and map page
+                    float distance = calculateDistance(xMid, mapPage.x, yMid, mapPage.y);
+
+                    //distance between left bottom corner and right top corner
+                    float maxDistance = calculateDistance(x2, cameraXWidth, y2, cameraYHeight);
+
+                    if (mapPage.isPageLoaded() && distance > maxDistance * maxDistanceMultiplier) {
+                        //remove page
+                        mapPage.dispose();
+                        pages[x][y] = null;
+                    }
+                }
+            }
+        }
 
         //System.out.println("x2: " + x2 + ", y2: " + y2);
 
@@ -227,17 +264,33 @@ public class LADMapRenderer implements IMapRenderer {
                     //add page to array
                     this.pages[x][y] = newPage;
 
-                    //load page asynchronous
-                    newPage.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                    //distance between reference point and map page
+                    float distance = calculateDistance(xMid, newPage.x, yMid, newPage.y);
+
+                    //distance between left bottom corner and right top corner
+                    float maxDistance = calculateDistance(x2, cameraXWidth, y2, cameraYHeight);
+
+                    if (distance < maxDistance * maxDistanceMultiplier) {
+                        //load page asynchronous
+                        newPage.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                    }
+
                 } else {
                     //check, if page is loaded
                     if (!page.isPageLoaded()) {
-                        Gdx.app.debug("LADMapRenderer", "pre-load page X: " + x + ", Y: " + y);
-
                         //check, if page isnt loading
                         if (!page.isPageLoading()) {
-                            //load page asynchronous
-                            page.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+
+                            //distance between reference point and map page
+                            float distance = calculateDistance(xMid, page.x, yMid, page.y);
+
+                            //distance between left bottom corner and right top corner
+                            float maxDistance = calculateDistance(x2, cameraXWidth, y2, cameraYHeight);
+
+                            if (distance < maxDistance * maxDistanceMultiplier) {
+                                //load page asynchronous
+                                page.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                            }
                         }
                     }
                 }
@@ -259,6 +312,14 @@ public class LADMapRenderer implements IMapRenderer {
         //calculate relative position in map
         float x2 = camera.getX() - this.mapX;
         float y2 = camera.getY() - this.mapY;
+
+        //calculate right top corner
+        float cameraXWidth = camera.getX() + camera.getViewportWidth() - this.mapX;
+        float cameraYHeight = camera.getY() + camera.getViewportHeight() - this.mapY;
+
+        //midpoint between left bottom corner and right top corner
+        float xMid = (x2 + cameraXWidth) / 2;
+        float yMid = (y2 + cameraYHeight) / 2;
 
         //System.out.println("x2: " + x2 + ", y2: " + y2);
 
@@ -291,18 +352,36 @@ public class LADMapRenderer implements IMapRenderer {
                     //create new page
                     MapPage newPage = new MapPage(this.mapX + (x * getPageWidthInPixels()), this.mapY + (y * getPageHeightInPixels()), pageTilesWidth, pageTilesHeight);
 
-                    //add page to array
-                    this.pages[x][y] = newPage;
+                    //distance between reference point and map page
+                    float distance = calculateDistance(xMid, newPage.x, yMid, newPage.y);
 
-                    //load page asynchronous
-                    newPage.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                    //distance between left bottom corner and right top corner
+                    float maxDistance = calculateDistance(x2, cameraXWidth, y2, cameraYHeight);
+
+                    if (distance < maxDistance * maxDistanceMultiplier) {
+                        //load page asynchronous
+                        newPage.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+
+                        //add page to array
+                        this.pages[x][y] = newPage;
+                    }
+
                 } else {
                     //check, if page is loaded
                     if (!page.isPageLoaded()) {
                         //check, if page isnt loading
                         if (!page.isPageLoading()) {
-                            //load page asynchronous
-                            page.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+
+                            //distance between reference point and map page
+                            float distance = calculateDistance(xMid, page.x, yMid, page.y);
+
+                            //distance between left bottom corner and right top corner
+                            float maxDistance = calculateDistance(x2, cameraXWidth, y2, cameraYHeight);
+
+                            if (distance < maxDistance * maxDistanceMultiplier) {
+                                //load page asynchronous
+                                page.generatePage(game, this.map, this.excludedLayers, x * pageTilesWidth, y* pageTilesHeight);
+                            }
                         }
                     } else {
                         //render page
